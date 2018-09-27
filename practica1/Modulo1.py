@@ -103,22 +103,50 @@ def check_sparse_factor(n_grafos,n_nodes, sparse_factor):
 def m_g_2_d_g(m_g):
     """
     """
-    pass
+    d_g = {}
+
+    n_v = m_g.shape[0]
+    for i in range(n_v):
+        for j in range(n_v):
+            if i != j and m_g[i][j] != np.inf:
+               if d_g.get(i) == None:
+                   d_g.update({i:{j:m_g[i][j]}})
+               else:
+                   d_g[i].update({j:m_g[i][j]})
+
+    return d_g
 
 
 def d_g_2_m_g(d_g):
     """
     """
-    pass
+    nkeys = len(d_g.keys())
+
+    m_g = np.empty((nkeys, nkeys), np.float32)
+
+    for i in range(nkeys):
+        for j in range(nkeys):
+            if d_g[i].get(j) != None and i != j:
+                m_g[i][j] = d_g[i].get(j)
+            elif i != j:
+                m_g[i][j] = np.inf
+            else:
+                m_g[i][j] = 0
+
+    return m_g
 
 
-#m_g = rand_matr_pos_graph(n_nodes=5, sparse_factor=0.5, max_weight=10.,decimals = 2)
+
+m_g = rand_matr_pos_graph(n_nodes=5, sparse_factor=0.5, max_weight=10.,decimals = 2)
+
+print(m_g)
 # d_g = m_g_2_d_g(m_g)
 # m_g_2 = d_g_2_m_g(d_g)
 
 #print_m_g(m_g)
 #print(cuenta_ramas(m_g))
-print(check_sparse_factor(5,5,0.5))
+#print(check_sparse_factor(5,5,0.5))
+print(d_g_2_m_g(m_g_2_d_g(m_g)))
 #mu1 = np.random.randint(0, 5, (5, 5))
 #mu2 = np.random.binomial(1, 0.5, size=(5, 5))
 #print(mu1)
