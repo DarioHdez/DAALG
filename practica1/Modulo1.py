@@ -1,13 +1,16 @@
 import matplotlib as matplotlib
-#%matplotlib inline
-#%load_ext autoreload
-#%autoreload 2
+
+#matplotlib inline
+#load_ext autoreload
+#autoreload 2
 
 import string, random
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import time
+import pickle
+import gzip
 
 import queue as qe
 
@@ -136,22 +139,72 @@ def d_g_2_m_g(d_g):
     return m_g
 
 
+def save_object(obj, f_name="obj.pklz", save_path='.'):
+    """"""
+    file_path = save_path + f_name
+
+    final_file = gzip.open(file_path, 'wb')
+
+    pickle.dump(obj, final_file)
+
+    final_file.close()
+
+
+
+def read_object(f_name, save_path='.'):
+    """"""
+    file_path = save_path + f_name
+
+    final_file = gzip.open(file_path, 'rb')
+
+    data = pickle.load(final_file)
+
+    final_file.close()
+
+    return data
+
+
+def d_g_2_TGF(d_g, f_name):
+    """
+    """
+    nNodos = len(d_g.keys())
+
+    data = ''
+
+    for key, value in d_g.items():
+        data = data + str(key) + '\n'
+
+    data = data + '#\n'
+
+    for key, value in d_g.items():
+        nkeys = len(value.keys())
+        for key2, value2 in value.items():
+            data = data + str(key) + ' ' + str(key2) + ' ' + str(value2) + '\n'
+
+    save_object(data, f_name)
+
+
 
 m_g = rand_matr_pos_graph(n_nodes=5, sparse_factor=0.5, max_weight=10.,decimals = 2)
 
 print(m_g)
-# d_g = m_g_2_d_g(m_g)
+d_g = m_g_2_d_g(m_g)
 # m_g_2 = d_g_2_m_g(d_g)
 
 #print_m_g(m_g)
 #print(cuenta_ramas(m_g))
 #print(check_sparse_factor(5,5,0.5))
-print(d_g_2_m_g(m_g_2_d_g(m_g)))
+#print(d_g_2_m_g(m_g_2_d_g(m_g)))
 #mu1 = np.random.randint(0, 5, (5, 5))
 #mu2 = np.random.binomial(1, 0.5, size=(5, 5))
 #print(mu1)
 #print(mu2)
-# print_d_g(d_g)
+print('\n\n')
+print(d_g)
+print('\n\n')
 # print("\nnum_elem_iguales:\t%d" % (m_g_2 == m_g).sum() )
+#save_object(m_g)
+#print(read_object('obj.pklz'))
+d_g_2_TGF(d_g)
 
 
