@@ -67,10 +67,11 @@ def print_d_g(d_g):
 #print_m_g(m_g)
 #print_d_g(d_g)
 
+
 def rand_matr_pos_graph(n_nodes, sparse_factor, max_weight=50., decimals=0):
     """
     """
-    grafo_completo = np.random.random_integers(1, max_weight, (n_nodes, n_nodes))
+    grafo_completo = np.random.randint(1, max_weight, (n_nodes, n_nodes))
     decimales = np.around(np.random.random_sample((n_nodes,n_nodes)),decimals)
     ramas = np.random.binomial(1, sparse_factor, size=(n_nodes, n_nodes))  # dicta si hay ramas o no
 
@@ -184,8 +185,67 @@ def d_g_2_TGF(d_g, f_name):
     save_object(data, f_name)
 
 
+def TGF_2_d_g(f_name):
+    """
 
-m_g = rand_matr_pos_graph(n_nodes=5, sparse_factor=0.5, max_weight=10.,decimals = 2)
+    """
+
+    d_g = {}
+
+
+    data = read_object(f_name)
+
+    data = data.split('\n')
+    aux  = []
+
+    for i in data:
+        aux.append(i)
+        if i != '#':
+            d_g.update({i:{}})
+
+        else:
+            break
+
+    data = data[len(aux):-1]
+
+    for i in data:
+        s = i.split(' ')
+        d_g[s[0]].update({s[1]:s[2]})
+
+    return d_g
+
+
+def dijkstra_d(d_g, u):
+    """
+    """
+    d_dist = {}
+    distancias = []
+    vistos = []
+    padre = []
+
+    for i in len(d_g.keys()):
+        distancias[i] = np.inf
+        padre[i] = None
+        vistos[i] = False
+
+    q = qe.PriorityQueue()
+    distancias[u] = 0.
+    q.put(0.,u)
+
+    while not q.empty():
+        u = q.get()
+        visto[u] = True
+
+        for keys,values in d_g[u].items():
+            if u in values[u]:
+                if distancias[key] > distancias[u] + values[u]
+
+
+
+    return d_dist
+
+
+m_g = rand_matr_pos_graph(n_nodes=6, sparse_factor=0.5, max_weight=10.,decimals = 2)
 
 print(m_g)
 d_g = m_g_2_d_g(m_g)
@@ -200,11 +260,12 @@ d_g = m_g_2_d_g(m_g)
 #print(mu1)
 #print(mu2)
 print('\n\n')
-print(d_g)
+#print_d_g(d_g)
 print('\n\n')
 # print("\nnum_elem_iguales:\t%d" % (m_g_2 == m_g).sum() )
 #save_object(m_g)
 #print(read_object('obj.pklz'))
-d_g_2_TGF(d_g)
+#d_g_2_TGF(d_g, "prueba.pklz")
+#TGF_2_d_g("prueba.pklz")
 
-
+dist_d = dijkstra_d(d_g,3)
