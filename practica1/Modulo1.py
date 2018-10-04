@@ -4,12 +4,12 @@
 # In[1]:
 
 
-get_ipython().magic('matplotlib inline')
-get_ipython().magic('load_ext autoreload')
-get_ipython().magic('autoreload 2')
+get_ipython().run_line_magic('matplotlib', 'inline')
+get_ipython().run_line_magic('load_ext', 'autoreload')
+get_ipython().run_line_magic('autoreload', '2')
 
 
-# In[132]:
+# In[2]:
 
 
 import string, random
@@ -45,7 +45,7 @@ def n2_log_n(n):
     return n**2. * np.log(n)
 
 
-# In[96]:
+# In[4]:
 
 
 l = [
@@ -82,7 +82,7 @@ print_m_g(m_g)
 print_d_g(d_g)
 
 
-# In[151]:
+# In[5]:
 
 
 
@@ -342,10 +342,57 @@ def time_dijktra_d(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
     return dijktras
 
 
-# In[152]:
+# In[39]:
 
 
-m_g = rand_matr_pos_graph(n_nodes=5, sparse_factor=0.6, max_weight=10.,decimals = 2)
+g = nx.DiGraph()
+l_e = [(0, 1, 10), (0, 2, 1), (1, 2, 1), (2, 3, 1), (3, 1, 1)]
+g.add_weighted_edges_from(l_e)
+
+"""
+{0:{1:5,6:4}}
+
+{0:{1:{'weight':5}}}
+"""
+
+print(g.nodes())
+
+for keys,values in g[0].items():
+    print(keys)
+
+
+# In[62]:
+
+
+def d_g_2_nx_g(d_g):
+    l_e = []
+    g = nx.DiGraph()
+    
+    for keys,values in d_g.items():
+        for keys2,values2 in values.items():
+            l_e.append((keys,keys2,values2))
+
+    g.add_weighted_edges_from(l_e)
+    return g
+    
+def nx_g_2_d_g(nx_g):
+    
+    d_g = {}
+    
+    for i in nx_g.nodes():
+        for keys,values in nx_g[i].items():
+            if d_g.get(i) == None: 
+                d_g.update({i:{}})
+            for keys2,values2 in values.items():
+                d_g[i].update({keys:values2})
+                
+    return d_g
+
+
+# In[63]:
+
+
+m_g = rand_matr_pos_graph(n_nodes=4, sparse_factor=0.4, max_weight=10.,decimals = 2)
 
 #print(m_g)
 d_g = m_g_2_d_g(m_g)
@@ -368,12 +415,18 @@ print("\n\n")
 
 #dist_d ,d_prev = dijkstra_m(m_g,1)
 #print(dist_d)
-#print('\n\n')
 #print(d_prev)
 
 #time_dijktra_m(1000,100, 10000, 10, sparse_factor=.25)
 
 #d = time_dijktra_m(100,1,100,1,sparse_factor=.5)
-d = time_dijktra_d(100,1,100,1,sparse_factor=.5)
-print(d)
+#d = time_dijktra_d(100,1,100,1,sparse_factor=.5)
+#print(d)
+
+print(d_g)
+print('\n\n')
+g = d_g_2_nx_g(d_g)
+print(g[0])
+print('\n\n')
+print(nx_g_2_d_g(g))
 
