@@ -1,16 +1,25 @@
-import matplotlib as matplotlib
 
-#matplotlib inline
-#load_ext autoreload
-#autoreload 2
+# coding: utf-8
+
+# In[1]:
+
+
+get_ipython().magic('matplotlib inline')
+get_ipython().magic('load_ext autoreload')
+get_ipython().magic('autoreload 2')
+
+
+# In[132]:
+
 
 import string, random
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import time
-import pickle
 import gzip
+import pickle
+import itertools
 
 import queue as qe
 
@@ -19,19 +28,25 @@ from sklearn.linear_model import LinearRegression
 import networkx as nx
 
 
-def fit_plot(l, func_2_fit, size_ini, size_fin, step):
-    l_func_values = [i * func_2_fit(i) for i in range(size_ini, size_fin + 1, step)]
+# In[3]:
 
+
+def fit_plot(l, func_2_fit, size_ini, size_fin, step):
+    l_func_values =[i*func_2_fit(i) for i in range(size_ini, size_fin+1, step)]
+    
     lr_m = LinearRegression()
-    X = np.array(l_func_values).reshape(len(l_func_values), -1)
+    X = np.array(l_func_values).reshape( len(l_func_values), -1 )
     lr_m.fit(X, l)
     y_pred = lr_m.predict(X)
-
+    
     plt.plot(l, '*', y_pred, '-')
 
-
 def n2_log_n(n):
-    return n ** 2. * np.log(n)
+    return n**2. * np.log(n)
+
+
+# In[96]:
+
 
 l = [
 [0, 10, 1, np.inf],
@@ -51,8 +66,8 @@ def print_m_g(m_g):
                 print("(", u, v, ")", m_g[u, v])
 
 d_g = {
-0: {1: 10, 2: 1},
-1: {2: 1},
+0: {1: 10, 2: 1}, 
+1: {2: 1}, 
 2: {3: 1},
 3: {1: 1}
 }
@@ -63,19 +78,19 @@ def print_d_g(d_g):
         for v in d_g[u].keys():
             print("(", u, v, ")", d_g[u][v])
 
+print_m_g(m_g)
+print_d_g(d_g)
 
-#print_m_g(m_g)
-#print_d_g(d_g)
+
+# In[151]:
+
 
 
 def rand_matr_pos_graph(n_nodes, sparse_factor, max_weight=50., decimals=0):
     """
     """
-    grafo_completo = np.random.randint(1, max_weight, (n_nodes, n_nodes))
-    decimales = np.around(np.random.random_sample((n_nodes,n_nodes)),decimals)
-    ramas = np.random.binomial(1, sparse_factor, size=(n_nodes, n_nodes))  # dicta si hay ramas o no
-
-    grafo_completo = np.add(grafo_completo,decimales)
+    grafo_completo = np.around(max_weight * np.random.rand(n_nodes, n_nodes),decimals)
+    ramas = np.random.binomial(1, sparse_factor, size=(n_nodes, n_nodes)).astype(np.float32)  # dicta si hay ramas o no
 
     for u in range(n_nodes):
         for v in range(n_nodes):
@@ -83,8 +98,7 @@ def rand_matr_pos_graph(n_nodes, sparse_factor, max_weight=50., decimals=0):
                 grafo_completo[u][v] = np.inf
 
     np.fill_diagonal(grafo_completo, 0)
-    #print(grafo_completo)
-    #print("\n")
+
     return grafo_completo
 
 def cuenta_ramas(m_g):
@@ -112,11 +126,10 @@ def m_g_2_d_g(m_g):
     n_v = m_g.shape[0]
     for i in range(n_v):
         for j in range(n_v):
+            if d_g.get(i) == None:
+                d_g.update({i:{}})
             if i != j and m_g[i][j] != np.inf:
-               if d_g.get(i) == None:
-                   d_g.update({i:{j:m_g[i][j]}})
-               else:
-                   d_g[i].update({j:m_g[i][j]})
+                d_g[i].update({j:m_g[i][j]})
 
     return d_g
 
@@ -183,89 +196,184 @@ def d_g_2_TGF(d_g, f_name):
             data = data + str(key) + ' ' + str(key2) + ' ' + str(value2) + '\n'
 
     save_object(data, f_name)
-
+    
 
 def TGF_2_d_g(f_name):
+    """   
+    
     """
-
-    """
-
+    
     d_g = {}
 
-
+    
     data = read_object(f_name)
-
+    
     data = data.split('\n')
     aux  = []
-
+    
     for i in data:
         aux.append(i)
         if i != '#':
             d_g.update({i:{}})
-
+            
         else:
             break
-
+        
     data = data[len(aux):-1]
-
+    
     for i in data:
         s = i.split(' ')
         d_g[s[0]].update({s[1]:s[2]})
-
+    
     return d_g
-
+    
 
 def dijkstra_d(d_g, u):
     """
     """
     d_dist = {}
-    distancias = []
-    vistos = []
-    padre = []
-
-    for i in len(d_g.keys()):
-        distancias[i] = np.inf
-        padre[i] = None
-        vistos[i] = False
-
+    d_prev = {}
+    distancias = np.full(len(d_g.keys()), np.inf)    
+    vistos = np.full(len(d_g.keys()), False)
+    padre = np.full(len(d_g.keys()), None)
+    
     q = qe.PriorityQueue()
     distancias[u] = 0.
-    q.put(0.,u)
-
+    q.put((0.0,u))
+    
     while not q.empty():
-        u = q.get()
-        visto[u] = True
+        n = q.get()
+        vistos[n[1]] = True
+        
+        for keys,values in d_g[n[1]].items():
+            if distancias[keys] > distancias[n[1]] + values:
+                distancias[keys] = distancias[n[1]] + values
+                padre[keys] = n[1]
+                q.put((distancias[keys], keys))
+    
+    for i in range(len(distancias)):
+        d_dist.update({i:distancias[i]})
+        d_prev.update({i:padre[i]})
+    
+    return d_dist,d_prev
 
-        for keys,values in d_g[u].items():
-            if u in values[u]:
-                if distancias[key] > distancias[u] + values[u]
+def dijkstra_m(m_g,u):
+    """
+    """
+    d_dist = {}
+    d_prev = {}
+    n_v = m_g.shape[0]
+    distancias = np.full(n_v, np.inf)    
+    vistos = np.full(n_v, False)
+    padre = np.full(n_v, None)
+    
+    q = qe.PriorityQueue()
+    distancias[u] = 0.
+    q.put((0.0,u))
+    
+    while not q.empty():
+        n = q.get()
+        vistos[n[1]] = True
+
+        for i in m_g[n[1]]:
+            if distancias[m_g[n[1]].tolist().index(i)] > distancias[n[1]] + i:
+                distancias[m_g[n[1]].tolist().index(i)] = distancias[n[1]] + i
+                padre[m_g[n[1]].tolist().index(i)] = n[1]
+                q.put((distancias[m_g[n[1]].tolist().index(i)], m_g[n[1]].tolist().index(i)))
 
 
+    for i in range(len(distancias)):
+        d_dist.update({i:distancias[i]})
+        d_prev.update({i:padre[i]})
+    
+    return d_dist,d_prev
 
-    return d_dist
+def min_paths(d_prev):
+    """
+    
+    d_path = {}
+    
+    for keys,values in d_prev.items():
+        n = keys
+        while d_prev[n] != None:
+            p.update({keys:p[keys].append(d_prev[n])})
+            n = d_prev[n]
+    """        
+    pass
+
+def time_dijktra_m(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
+    grafos = []
+    dijktras = []
+    i = 0
+    n_nodes_act = n_nodes_ini
+    
+    while n_nodes_act <= n_nodes_fin:
+        grafos.append(rand_matr_pos_graph(n_nodes_act, sparse_factor, max_weight=10., decimals=2))
+            
+        inicio = time.time()
+        dijkstra_m(grafos[i],0)
+        fin = time.time()
+        
+        dijktras.append(fin-inicio)
+        
+        i += 1
+        n_nodes_act += step
+    
+    return dijktras
+
+def time_dijktra_d(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
+    grafos = []
+    dijktras = []
+    i = 0
+    n_nodes_act = n_nodes_ini
+    
+    while n_nodes_act <= n_nodes_fin:
+        grafos.append(m_g_2_d_g(rand_matr_pos_graph(n_nodes_act, sparse_factor, max_weight=10., decimals=2)))
+            
+        inicio = time.time()
+        dijkstra_d(grafos[i],0)
+        fin = time.time()
+        
+        dijktras.append(fin-inicio)
+        
+        i += 1
+        n_nodes_act += step
+    
+    return dijktras
 
 
-m_g = rand_matr_pos_graph(n_nodes=6, sparse_factor=0.5, max_weight=10.,decimals = 2)
+# In[152]:
 
-print(m_g)
+
+m_g = rand_matr_pos_graph(n_nodes=5, sparse_factor=0.6, max_weight=10.,decimals = 2)
+
+#print(m_g)
 d_g = m_g_2_d_g(m_g)
+print("\n\n")
+#print(d_g)
 # m_g_2 = d_g_2_m_g(d_g)
 
 #print_m_g(m_g)
 #print(cuenta_ramas(m_g))
 #print(check_sparse_factor(5,5,0.5))
 #print(d_g_2_m_g(m_g_2_d_g(m_g)))
-#mu1 = np.random.randint(0, 5, (5, 5))
-#mu2 = np.random.binomial(1, 0.5, size=(5, 5))
-#print(mu1)
-#print(mu2)
-print('\n\n')
+
 #print_d_g(d_g)
-print('\n\n')
+#print('\n\n')
 # print("\nnum_elem_iguales:\t%d" % (m_g_2 == m_g).sum() )
 #save_object(m_g)
 #print(read_object('obj.pklz'))
 #d_g_2_TGF(d_g, "prueba.pklz")
 #TGF_2_d_g("prueba.pklz")
 
-dist_d = dijkstra_d(d_g,3)
+#dist_d ,d_prev = dijkstra_m(m_g,1)
+#print(dist_d)
+#print('\n\n')
+#print(d_prev)
+
+#time_dijktra_m(1000,100, 10000, 10, sparse_factor=.25)
+
+#d = time_dijktra_m(100,1,100,1,sparse_factor=.5)
+d = time_dijktra_d(100,1,100,1,sparse_factor=.5)
+print(d)
+
