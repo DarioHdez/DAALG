@@ -4,12 +4,37 @@
 # In[1]:
 
 
-#get_ipython().run_line_magic('matplotlib', 'inline')
-#get_ipython().run_line_magic('load_ext', 'autoreload')
-#get_ipython().run_line_magic('autoreload', '2')
+from IPython.display import HTML
 
+HTML('''
+<script>code_show=true; 
+
+function code_toggle() {
+    if (code_show){
+    $('div.input').hide();
+    } else {
+    $('div.input').show();
+    }
+    code_show = !code_show
+} 
+
+$( document ).ready(code_toggle);
+</script>
+<form action="javascript:code_toggle()"><input type="submit" value="Click here to toggle on/off the raw code."></form>
+''')
+
+
+# # Práctica 1
 
 # In[2]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
+get_ipython().run_line_magic('load_ext', 'autoreload')
+get_ipython().run_line_magic('autoreload', '2')
+
+
+# In[3]:
 
 
 import string, random
@@ -28,7 +53,7 @@ from sklearn.linear_model import LinearRegression
 import networkx as nx
 
 
-# In[3]:
+# In[4]:
 
 
 def fit_plot(l, func_2_fit, size_ini, size_fin, step):
@@ -45,7 +70,35 @@ def n2_log_n(n):
     return n**2. * np.log(n)
 
 
-# In[4]:
+# En esta parte vamos a trabajar con grafos ponderados usando dos EdD:
+# 
+# - Una matriz numpy de adyacencia, donde el elemento i, j indica el peso c_{ij`
+#   de la rama (i, j)
+# - Un diccionario de diccionarios de diccionarios donde las claves del primer diccionario G son índices de nodos, las claves de los diccionarios G[i] son los vértices de su lista de adyacencia y un diccionario G[i][j] contiene el peso de la rama (i, j).
+# 
+# Por ejemplo, para el grafo:
+# 
+# el código
+# 
+# l = [[0, 10, 1, np.inf],
+# [np.inf, 0, 1, np.inf],
+# [np.inf, np.inf, 0, 1 ],
+# [np.inf, 1, np.inf, 0]]
+# 
+# m_g = np.array(l)
+# 
+# generaría su matriz de adyacencia según se describe arriba, mientras que
+# 
+# d_g = {
+# 0: {1: 10, 2:1}, 
+# 1: {2: 1}, 
+# 2: {3: 1},
+# 3: {1: 1}
+# }
+# 
+# generaría su descripción como un dict.
+
+# In[5]:
 
 
 l = [
@@ -82,8 +135,7 @@ print_m_g(m_g)
 print_d_g(d_g)
 
 
-# In[5]:
-
+# In[6]:
 
 
 def rand_matr_pos_graph(n_nodes, sparse_factor, max_weight=50., decimals=0):
@@ -107,37 +159,6 @@ def rand_matr_pos_graph(n_nodes, sparse_factor, max_weight=50., decimals=0):
     np.fill_diagonal(grafo_completo, 0)
 
     return grafo_completo
-
-def cuenta_ramas(m_g):
-    """
-    Método que cuenta las ramas que hay en el grafo
-
-    :param m_g: Grafo
-    :return: Número de ramas que tiene el grafo
-    """
-    return len(np.flatnonzero(np.where(m_g == np.inf,0,1))) - m_g.shape[0]
-
-
-def check_sparse_factor(n_grafos,n_nodes, sparse_factor):
-    """
-    Método que calcula la proporción de ramas según una serie de grafos
-
-    :param n_grafos: Número de grafos
-    :param n_nodes: Número de nodos de cada grafo
-    :param sparse_factor: Proporción de ramas
-    :return: La proporción de ramas que hay en los grafos
-    """
-    grafos = [None]*n_grafos
-    ramas = [None]*n_grafos
-    factores = [None]*n_grafos
-
-    for i in range(n_grafos):
-        grafos[i] = rand_matr_pos_graph(n_nodes,sparse_factor,10.,decimals=2)
-        ramas[i] = cuenta_ramas(grafos[i])
-        factores[i] = ramas[i] / (n_nodes**2 - n_nodes)
-
-    return 1 - np.average(factores)
-
 
 def m_g_2_d_g(m_g):
     """
@@ -182,15 +203,68 @@ def d_g_2_m_g(d_g):
     return m_g
 
 
-def save_object(obj, f_name="obj.pklz", save_path='.'):
-    """
-    Método que guardará un objeto (En este caso un grafo) en un fichero dado
+################################################# cheking
+m_g = rand_matr_pos_graph(n_nodes=5,sparse_factor=0.5,max_weight=50.)
+d_g = m_g_2_d_g(m_g)
+m_g_2 = d_g_2_m_g(d_g)
 
-    :param obj: Objeto a guardar
-    :param f_name: Nombre del fichero
-    :param save_path: Ruta en donde se guardará el fichero
-    :return:
+print_m_g(m_g)
+print_d_g(d_g)
+print("\num_elem_iguales:\t%d" % (m_g_2 == m_g).sum() )
+
+
+# In[7]:
+
+
+def cuenta_ramas(m_g):
     """
+    Método que cuenta las ramas que hay en el grafo
+
+    :param m_g: Grafo
+    :return: Número de ramas que tiene el grafo
+    """
+    return len(np.flatnonzero(np.where(m_g == np.inf,0,1))) - m_g.shape[0]
+
+
+def check_sparse_factor(n_grafos,n_nodes, sparse_factor):
+    """
+    Método que calcula la proporción de ramas según una serie de grafos
+
+    :param n_grafos: Número de grafos
+    :param n_nodes: Número de nodos de cada grafo
+    :param sparse_factor: Proporción de ramas
+    :return: La proporción de ramas que hay en los grafos
+    """
+    grafos = [None]*n_grafos
+    ramas = [None]*n_grafos
+    factores = [None]*n_grafos
+
+    for i in range(n_grafos):
+        grafos[i] = rand_matr_pos_graph(n_nodes,sparse_factor,10.,decimals=2)
+        ramas[i] = cuenta_ramas(grafos[i])
+        factores[i] = ramas[i] / (n_nodes**2 - n_nodes)
+
+    return 1 - np.average(factores)
+
+############################################################ checking
+print(cuenta_ramas(m_g))
+
+n_grafos=50
+n_nodes=20
+sparse_factor = 0.75
+
+print("\ntrue_sparse_factor: %.3f" % sparse_factor, 
+      "\nexp_sparse_factor:  %.3f" % check_sparse_factor(n_grafos=n_grafos, n_nodes=n_nodes, sparse_factor=sparse_factor))
+
+
+# # 2 Guardando y leyendo grafos
+# ## 2.1 Guardando y leyendo grafos con pickle
+
+# In[10]:
+
+
+def save_object(obj, f_name="obj.pklz", save_path='.'):
+    """"""
     file_path = save_path + f_name
 
     final_file = gzip.open(file_path, 'wb')
@@ -202,13 +276,7 @@ def save_object(obj, f_name="obj.pklz", save_path='.'):
 
 
 def read_object(f_name, save_path='.'):
-    """
-    Método que lee un objeto de un fichero
-
-    :param f_name: Nombre del fichero
-    :param save_path: Ruta del fichero
-    :return: Objeto guardado
-    """
+    """"""
     file_path = save_path + f_name
 
     final_file = gzip.open(file_path, 'rb')
@@ -220,13 +288,13 @@ def read_object(f_name, save_path='.'):
     return data
 
 
+# ## 2.2 The Trivial Graph Fromat
+
+# In[11]:
+
+
 def d_g_2_TGF(d_g, f_name):
     """
-    Método que se encarga de pasar de un grafo en formato de diccionario a uno en formato TGF y de guardarlo en un fichero
-
-    :param d_g: Grafo
-    :param f_name: Nombre del fichero donde se guardará el grafo
-    :return:
     """
     nNodos = len(d_g.keys())
 
@@ -246,11 +314,8 @@ def d_g_2_TGF(d_g, f_name):
     
 
 def TGF_2_d_g(f_name):
-    """
-    Método que se encarga de leer un grafo en formato TGF de un fichero y pasarlo a formato de diccionario
-
-    :param f_name: Nombre del fichero
-    :return: Grafo en formato de diccionario
+    """   
+    
     """
     
     d_g = {}
@@ -277,14 +342,23 @@ def TGF_2_d_g(f_name):
     
     return d_g
     
+############################################################ checking
+f_name = "gr.tgf"
+d_g_2_TGF(d_g, f_name)
+                       
+d_g_2 = TGF_2_d_g(f_name)            
+print_d_g(d_g)
+print_d_g(d_g_2)
+
+
+# # 3 Distancias Mínimas en Grafos
+# ## 3.1 Programming and Timing Dijstra
+
+# In[16]:
+
 
 def dijkstra_d(d_g, u):
     """
-    Método que aplica el algoritmo de Dijkstra a un grafo en formato de diccionario a partir de un nodo inicial dado
-
-    :param d_g: Grafo en formato de diccionario
-    :param u: Nodo inicial
-    :return: un diccionario con las distancias mínimas al resto de nodos, y un diccionario con los nodos precios
     """
     d_dist = {}
     d_prev = {}
@@ -314,11 +388,6 @@ def dijkstra_d(d_g, u):
 
 def dijkstra_m(m_g,u):
     """
-    Método que aplica el algoritmo de Dijkstra a un grafo en formato de matriz a partir de un nodo inicial dado
-
-    :param m_g: Grafo en formato de matriz
-    :param u: Nodo inicial
-    :return: un diccionario con las distancias mínimas al resto de nodos, y un diccionario con los nodos precios
     """
     d_dist = {}
     d_prev = {}
@@ -362,16 +431,6 @@ def min_paths(d_prev):
     pass
 
 def time_dijktra_m(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
-    """
-    Método que mide los tiempos de aplicar Dijkstra a un número de grafos en formato de matriz con varios parámetros dados
-
-    :param n_graphs: Número de grafos a generar
-    :param n_nodes_ini: Número de nodos inicial
-    :param n_nodes_fin: Número de nodos final
-    :param step: Incremento en el número de nodos después de cada turno
-    :param sparse_factor: Proporción de ramas
-    :return: Lista con los tiempos devueltos para cada grafo al que se le aplicó Dijkstra
-    """
     grafos = []
     dijktras = []
     i = 0
@@ -392,16 +451,6 @@ def time_dijktra_m(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
     return dijktras
 
 def time_dijktra_d(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
-    """
-        Método que mide los tiempos de aplicar Dijkstra a un número de grafos en formato de diccionario con varios parámetros dados
-
-        :param n_graphs: Número de grafos a generar
-        :param n_nodes_ini: Número de nodos inicial
-        :param n_nodes_fin: Número de nodos final
-        :param step: Incremento en el número de nodos después de cada turno
-        :param sparse_factor: Proporción de ramas
-        :return: Lista con los tiempos devueltos para cada grafo al que se le aplicó Dijkstra
-        """
     grafos = []
     dijktras = []
     i = 0
@@ -421,30 +470,70 @@ def time_dijktra_d(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
     
     return dijktras
 
+############################################################ checking
+d_g = {
+0: {1: 10, 2: 1}, 
+1: {2: 1}, 
+2: {3: 1},
+3: {1: 1}
+}
 
-# In[39]:
+u_ini = 3
+
+d_dist, d_prev = dijkstra_d(d_g, u_ini)
+print(d_dist, '\n', min_paths(d_prev))
+
+d_g_nx = nx.DiGraph()
+l_e = [(0, 1, 10), (0, 2, 1), (1, 2, 1), (2, 3, 1), (3, 1, 1)]
+d_g_nx.add_weighted_edges_from(l_e)
+
+d, p = nx.single_source_dijkstra(d_g_nx, u_ini, weight='weight')    
+print(d, '\n', p)
+
+
+# ## 3.2 Plotting Dijkstra's Execution Times
+# Fit below a linear model An^2 logn+B to the times in the returned lists and plot the real and fitted times discussing the results.
+
+# In[17]:
+
+
+n_graphs=20
+n_nodes_ini=10 
+n_nodes_fin=100
+step=10
+sparse_f= 0.25
+l_t_d = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f)
+
+
+# In[18]:
+
+
+fit_plot(l_t_d, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+
+
+# # 4 The networkx Library
+# We are going to use the networkx library to check our Dijkstra results and to get alternative times.
+# 
+# An example of loading a networkx directed graph is to use a list (i, j, w) of (i, j) edges with weights w can be seen in the following cell:
+
+# In[19]:
 
 
 g = nx.DiGraph()
+
 l_e = [(0, 1, 10), (0, 2, 1), (1, 2, 1), (2, 3, 1), (3, 1, 1)]
 g.add_weighted_edges_from(l_e)
 
-"""
-{0:{1:5,6:4}}
+for k1 in g.nodes():
+    for k2 in g[k1].keys():
+        print('(', k1, k2, ')', g[k1][k2]['weight'])
 
-{0:{1:{'weight':5}}}
-"""
 
-# In[62]:
+# In[20]:
 
 
 def d_g_2_nx_g(d_g):
-    """
-    Método que pasa de un diccionario en formato de diccionario a uno en formato de Networkx
-
-    :param d_g: Grafo en formato de diccionario
-    :return: Grafo en formato de Networkx
-    """
     l_e = []
     g = nx.DiGraph()
     
@@ -456,12 +545,7 @@ def d_g_2_nx_g(d_g):
     return g
     
 def nx_g_2_d_g(nx_g):
-    """
-    Método que pasa de un diccionario en formato de Networkx a uno en formato de diccionario
-
-    :param nx_g: Grafo en formato de Networkx
-    :return: Grafo en formato de diccionario
-    """
+    
     d_g = {}
     
     for i in nx_g.nodes():
@@ -472,6 +556,19 @@ def nx_g_2_d_g(nx_g):
                 d_g[i].update({keys:values2})
                 
     return d_g
+
+############################################################ checking
+d_g = {
+0: {1: 10, 2: 1}, 
+1: {2: 1}, 
+2: {3: 1},
+3: {1: 1}
+}
+
+d_g_nx = d_g_2_nx_g(d_g)
+
+print_d_g(d_g)
+(d_g_nx)[0][1]
 
 
 # In[63]:
@@ -508,13 +605,10 @@ print("\n\n")
 #d = time_dijktra_d(100,1,100,1,sparse_factor=.5)
 #print(d)
 
-#print(d_g)
+print(d_g)
 print('\n\n')
 g = d_g_2_nx_g(d_g)
-#print(g[0])
+print(g[0])
 print('\n\n')
-#print(nx_g_2_d_g(g))
-dg = nx.DiGraph()
-t = dg.single_source_dijkstra_path(g, 3)
-print(t)
+print(nx_g_2_d_g(g))
 
