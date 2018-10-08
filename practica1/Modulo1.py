@@ -29,9 +29,9 @@ $( document ).ready(code_toggle);
 # In[2]:
 
 
-get_ipython().run_line_magic('matplotlib', 'inline')
-get_ipython().run_line_magic('load_ext', 'autoreload')
-get_ipython().run_line_magic('autoreload', '2')
+get_ipython().magic('matplotlib inline')
+get_ipython().magic('load_ext autoreload')
+get_ipython().magic('autoreload 2')
 
 
 # In[3]:
@@ -260,11 +260,18 @@ print("\ntrue_sparse_factor: %.3f" % sparse_factor,
 # # 2 Guardando y leyendo grafos
 # ## 2.1 Guardando y leyendo grafos con pickle
 
-# In[10]:
+# In[8]:
 
 
 def save_object(obj, f_name="obj.pklz", save_path='.'):
-    """"""
+    """
+    Método que guardará un objeto (En este caso un grafo) en un fichero dado
+    
+    :param obj: Objeto a guardar
+    :param f_name: Nombre del fichero
+    :param save_path: Ruta en donde se guardará el fichero
+    :return: No devuelve nada
+    """
     file_path = save_path + f_name
 
     final_file = gzip.open(file_path, 'wb')
@@ -276,7 +283,13 @@ def save_object(obj, f_name="obj.pklz", save_path='.'):
 
 
 def read_object(f_name, save_path='.'):
-    """"""
+    """
+    Método que lee un objeto de un fichero
+    
+    :param f_name: Nombre del fichero
+    :param save_path: Ruta del fichero
+    :return: Objeto guardado
+    """
     file_path = save_path + f_name
 
     final_file = gzip.open(file_path, 'rb')
@@ -288,13 +301,45 @@ def read_object(f_name, save_path='.'):
     return data
 
 
-# ## 2.2 The Trivial Graph Fromat
+# ## Cuestiones sobre guardado de grafos
+# ### Cuestión 1
+# **Describir qué se entiende por serializar un objeto Python.**
+# 
+# A través de un protocolo binario, transformar el objeto Python y guardarlo en un archivo que se guarda en memoria.
+# 
+# ### Cuestión 2
+# **Json es otro formato de serialiación de objetos. Comentar brevemente posibles diferencias entre pickle y json.**
+# 
+# - _**Interoprabilidad:**_
+# Pickle es un módulo que sólo se puede usar en Python, es decir, los objetos serializados por pickle **no pueden** ser accedidos por programas escritos por otros lenguaje.
+# Sin embargo, Json es un estándar de serialización al que tienen acceso **todos** los lenguajes de programación, permitiendo que la información almacenada sea accesible y colaborativa.
+# 
+# 
+# - _**Velocidad:**_
+# Por cómo está implementado Pickle, es un módulo lento que para grandes cantidades de datos puede llegar a ser **muy costoso e ineficiente** (dato para ponerlo en escala: el módulo Pickle está disponible desde la versión 1.4 de Python, y en la versión 1.5 empezó a estar disponible el módulo cPickle, implementado en c y hasta 1000 veces más rápido.). 
+# Json en comparación es mucho más rápido.
+# 
+# 
+# - _**Seguridad:**_
+# Pickle puede ejecutar código aleatorio almacenado en memoria. Por lo tanto, usar **pickle** para transferir datos entre diferentes programas o sesiones puede llegar a ser una importante brecha de seguridad.
+# Por otro lado Json tiene mecanismos de seguridad integrados, según su RFC 8259, que impiden el acceso a memoria aleatoria, controlando las posibles brechas de seguridad.
+# 
+# 
+# - _**Lectura del fichero en bruto:**_
+# Json te permite abrir el archivo **en cualquier momento** y revisar su contenido, reforzando los aspectos de interoperabilidad y seguridad. Sin embargo, el contenido de los archivos de información creados con pickle son una cadena binaria que a primera vista podría suponer una amenaza, hasta que se demuestre lo contrario.
 
-# In[11]:
+# ## 2.2 The Trivial Graph Format
+
+# In[9]:
 
 
 def d_g_2_TGF(d_g, f_name):
     """
+    Método que se encarga de pasar de un grafo en formato de diccionario a uno en formato TGF y de guardarlo en un fichero
+    
+    :param d_g: Grafo
+    :param f_name: Nombre del fichero donde se guardará el grafo
+    :return: No devuelve nada
     """
     nNodos = len(d_g.keys())
 
@@ -315,7 +360,10 @@ def d_g_2_TGF(d_g, f_name):
 
 def TGF_2_d_g(f_name):
     """   
+    Método que se encarga de leer un grafo en formato TGF de un fichero y pasarlo a formato de diccionario
     
+    :param f_name: Nombre del fichero
+    :return: Grafo en formato de diccionario
     """
     
     d_g = {}
@@ -351,14 +399,24 @@ print_d_g(d_g)
 print_d_g(d_g_2)
 
 
+# ### Cuestión 3
+# **¿Qué ventajas e inconvenientes tendrían las funciones pickle sobre las construidas mediante el formato TFG? Responder algo pertinente y no con lugares comunes.**
+# 
+# Partiendo de la base de que TGF lo hemos implementado con las funciones de save y read object(que usan pickle), ambos son ineficientes para grafos muy grandes. Sin embargo, un inconveniente que tiene TGF es que es muy tedioso leer la información deseada de un fichero con este formato. Tenemos que usar múltiples listas, partiendo las strings del fichero constantemente hasta que encontramos la información desada y podemos formar el grafo. Pickle guarda y lee el objeto en una sóla función por acción.
+
 # # 3 Distancias Mínimas en Grafos
 # ## 3.1 Programming and Timing Dijstra
 
-# In[16]:
+# In[51]:
 
 
 def dijkstra_d(d_g, u):
     """
+    Método que aplica el algoritmo de Dijkstra a un grafo en formato de diccionario a partir de un nodo inicial dado
+    
+    :param d_g: Grafo en formato de diccionario
+    :param u: Nodo inicial
+    :return: un diccionario con las distancias mínimas al resto de nodos, y un diccionario con los nodos precios
     """
     d_dist = {}
     d_prev = {}
@@ -388,6 +446,11 @@ def dijkstra_d(d_g, u):
 
 def dijkstra_m(m_g,u):
     """
+    Método que aplica el algoritmo de Dijkstra a un grafo en formato de matriz a partir de un nodo inicial dado
+    
+    :param m_g: Grafo en formato de matriz
+    :param u: Nodo inicial
+    :return: un diccionario con las distancias mínimas al resto de nodos, y un diccionario con los nodos previos
     """
     d_dist = {}
     d_prev = {}
@@ -419,18 +482,41 @@ def dijkstra_m(m_g,u):
 
 def min_paths(d_prev):
     """
+    Método que devuelve los caminos mínimos desde el nodo inicial a cualquier otro nodo.
     
+    :param d_prev: Diccionario en el que cada clave contiene su nodo previo
+    :return: Un diccionario en el que cada clave contiene la lista de nodos desde el nodo inicial hasta el nodo clave
+    """
+
     d_path = {}
     
     for keys,values in d_prev.items():
+        if d_prev[keys] == None:
+            d_path.update({keys:[None]})
+        else:
+            d_path.update({keys:[keys]})
+      
+    for keys,values in d_prev.items():
         n = keys
         while d_prev[n] != None:
-            p.update({keys:p[keys].append(d_prev[n])})
+            d_path[keys].append(d_prev[n])
             n = d_prev[n]
-    """        
-    pass
+            
+        d_path.update({keys:list(reversed(d_path[keys]))})
+         
+    return d_path
 
 def time_dijktra_m(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
+    """
+    Método que mide los tiempos de aplicar Dijkstra a un número de grafos en formato de matriz con varios parámetros dados
+    
+    :param n_graphs: Número de grafos a generar
+    :param n_nodes_ini: Número de nodos inicial
+    :param n_nodes_fin: Número de nodos final
+    :param step: Incremento en el número de nodos después de cada turno
+    :param sparse_factor: Proporción de ramas
+    :return: Lista con los tiempos devueltos para cada grafo al que se le aplicó Dijkstra
+    """    
     grafos = []
     dijktras = []
     i = 0
@@ -450,7 +536,17 @@ def time_dijktra_m(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
     
     return dijktras
 
-def time_dijktra_d(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
+def time_dijkstra_d(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
+    """
+    Método que mide los tiempos de aplicar Dijkstra a un número de grafos en formato de diccionario con varios parámetros dados
+    
+    :param n_graphs: Número de grafos a generar
+    :param n_nodes_ini: Número de nodos inicial
+    :param n_nodes_fin: Número de nodos final
+    :param step: Incremento en el número de nodos después de cada turno
+    :param sparse_factor: Proporción de ramas
+    :return: Lista con los tiempos devueltos para cada grafo al que se le aplicó Dijkstra
+    """
     grafos = []
     dijktras = []
     i = 0
@@ -471,13 +567,22 @@ def time_dijktra_d(n_graphs,n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
     return dijktras
 
 ############################################################ checking
+
 d_g = {
 0: {1: 10, 2: 1}, 
 1: {2: 1}, 
 2: {3: 1},
 3: {1: 1}
 }
-
+"""
+d_g = {
+0: {2:3},
+1: {0:2},
+2: {},
+3: {1:1},
+4: {0,2},
+}
+"""
 u_ini = 3
 
 d_dist, d_prev = dijkstra_d(d_g, u_ini)
@@ -494,19 +599,19 @@ print(d, '\n', p)
 # ## 3.2 Plotting Dijkstra's Execution Times
 # Fit below a linear model An^2 logn+B to the times in the returned lists and plot the real and fitted times discussing the results.
 
-# In[17]:
+# In[61]:
 
 
 n_graphs=20
-n_nodes_ini=10 
-n_nodes_fin=100
-step=10
+n_nodes_ini=100 
+n_nodes_fin=1000
+step=50
 sparse_f= 0.25
 l_t_d = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
                         n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f)
 
 
-# In[18]:
+# In[62]:
 
 
 fit_plot(l_t_d, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
@@ -517,7 +622,7 @@ fit_plot(l_t_d, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
 # 
 # An example of loading a networkx directed graph is to use a list (i, j, w) of (i, j) edges with weights w can be seen in the following cell:
 
-# In[19]:
+# In[12]:
 
 
 g = nx.DiGraph()
@@ -530,10 +635,16 @@ for k1 in g.nodes():
         print('(', k1, k2, ')', g[k1][k2]['weight'])
 
 
-# In[20]:
+# In[52]:
 
 
 def d_g_2_nx_g(d_g):
+    """
+    Método que pasa de un diccionario en formato de diccionario a uno en formato de Networkx
+    
+    :param d_g: Grafo en formato de diccionario
+    :return: Grafo en formato de Networkx
+    """
     l_e = []
     g = nx.DiGraph()
     
@@ -545,7 +656,12 @@ def d_g_2_nx_g(d_g):
     return g
     
 def nx_g_2_d_g(nx_g):
+    """
+    Método que pasa de un diccionario en formato de Networkx a uno en formato de diccionario
     
+    :param nx_g: Grafo en formato de Networkx
+    :return: Grafo en formato de diccionario
+    """
     d_g = {}
     
     for i in nx_g.nodes():
@@ -556,6 +672,38 @@ def nx_g_2_d_g(nx_g):
                 d_g[i].update({keys:values2})
                 
     return d_g
+
+def time_dijkstra_nx(n_graphs, n_nodes_ini, n_nodes_fin, step, sparse_factor=.25):
+    """
+    Método que mide los tiempos de aplicar Dijkstra con la libreria NetworkX a un número de grafos en formato de
+        NetworkX en base a varios parámetros dados
+    
+    :param n_graphs: Número de grafos a generar
+    :param n_nodes_ini: Número de nodos inicial
+    :param n_nodes_fin: Número de nodos final
+    :param step: Incremento en el número de nodos después de cada turno
+    :param sparse_factor: Proporción de ramas
+    :return: Lista con los tiempos devueltos para cada grafo al que se le aplicó Dijkstra
+    """
+    grafos = []
+    dijktras = []
+    i = 0
+    n_nodes_act = n_nodes_ini
+    
+    while n_nodes_act <= n_nodes_fin:
+        grafos.append(d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes_act, sparse_factor, max_weight=10., decimals=2))))
+            
+        inicio = time.time()
+        nx.single_source_dijkstra(grafos[i],0)
+        fin = time.time()
+        
+        dijktras.append(fin-inicio)
+        
+        i += 1
+        n_nodes_act += step
+    
+    return dijktras
+
 
 ############################################################ checking
 d_g = {
@@ -571,44 +719,37 @@ print_d_g(d_g)
 (d_g_nx)[0][1]
 
 
-# In[63]:
+# In[59]:
+
+
+n_graphs=20
+n_nodes_ini=100 
+n_nodes_fin=1000
+step=50
+sparse_f= 0.25
+l_t_nx = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                          n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f)
+
+
+# In[60]:
+
+
+fit_plot(l_t_nx, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+
+
+# In[29]:
 
 
 m_g = rand_matr_pos_graph(n_nodes=4, sparse_factor=0.4, max_weight=10.,decimals = 2)
 
-#print(m_g)
 d_g = m_g_2_d_g(m_g)
 print("\n\n")
-#print(d_g)
-# m_g_2 = d_g_2_m_g(d_g)
 
-#print_m_g(m_g)
-#print(cuenta_ramas(m_g))
-#print(check_sparse_factor(5,5,0.5))
-#print(d_g_2_m_g(m_g_2_d_g(m_g)))
+dijkstra,path = dijkstra_d(d_g, 1)
+dx_dijkstra,dx_path = nx.single_source_dijkstra(d_g_2_nx_g(d_g),1)
 
-#print_d_g(d_g)
-#print('\n\n')
-# print("\nnum_elem_iguales:\t%d" % (m_g_2 == m_g).sum() )
-#save_object(m_g)
-#print(read_object('obj.pklz'))
-#d_g_2_TGF(d_g, "prueba.pklz")
-#TGF_2_d_g("prueba.pklz")
+print("\n\n")
 
-#dist_d ,d_prev = dijkstra_m(m_g,1)
-#print(dist_d)
-#print(d_prev)
-
-#time_dijktra_m(1000,100, 10000, 10, sparse_factor=.25)
-
-#d = time_dijktra_m(100,1,100,1,sparse_factor=.5)
-#d = time_dijktra_d(100,1,100,1,sparse_factor=.5)
-#print(d)
-
-print(d_g)
-print('\n\n')
-g = d_g_2_nx_g(d_g)
-print(g[0])
-print('\n\n')
-print(nx_g_2_d_g(g))
+print(dijkstra)
+print(dx_dijkstra)
 
