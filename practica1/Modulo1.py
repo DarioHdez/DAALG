@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 from IPython.display import HTML
@@ -26,7 +26,7 @@ $( document ).ready(code_toggle);
 
 # # Práctica 1
 
-# In[2]:
+# In[3]:
 
 
 get_ipython().magic('matplotlib inline')
@@ -34,7 +34,7 @@ get_ipython().magic('load_ext autoreload')
 get_ipython().magic('autoreload 2')
 
 
-# In[3]:
+# In[4]:
 
 
 import string, random
@@ -53,7 +53,7 @@ from sklearn.linear_model import LinearRegression
 import networkx as nx
 
 
-# In[4]:
+# In[55]:
 
 
 def fit_plot(l, func_2_fit, size_ini, size_fin, step):
@@ -98,7 +98,7 @@ def n2_log_n(n):
 # 
 # generaría su descripción como un dict.
 
-# In[5]:
+# In[6]:
 
 
 l = [
@@ -135,7 +135,7 @@ print_m_g(m_g)
 print_d_g(d_g)
 
 
-# In[6]:
+# In[7]:
 
 
 def rand_matr_pos_graph(n_nodes, sparse_factor, max_weight=50., decimals=0):
@@ -213,7 +213,7 @@ print_d_g(d_g)
 print("\num_elem_iguales:\t%d" % (m_g_2 == m_g).sum() )
 
 
-# In[7]:
+# In[8]:
 
 
 def cuenta_ramas(m_g):
@@ -260,7 +260,7 @@ print("\ntrue_sparse_factor: %.3f" % sparse_factor,
 # # 2 Guardando y leyendo grafos
 # ## 2.1 Guardando y leyendo grafos con pickle
 
-# In[8]:
+# In[9]:
 
 
 def save_object(obj, f_name="obj.pklz", save_path='.'):
@@ -327,10 +327,14 @@ def read_object(f_name, save_path='.'):
 # 
 # - _**Lectura del fichero en bruto:**_
 # Json te permite abrir el archivo **en cualquier momento** y revisar su contenido, reforzando los aspectos de interoperabilidad y seguridad. Sin embargo, el contenido de los archivos de información creados con pickle son una cadena binaria que a primera vista podría suponer una amenaza, hasta que se demuestre lo contrario.
+# 
+# 
+# - _**Información guardada:**_
+# Pickle guarda toda la información del objeto, lo cual puede dar cabida a datos del objeto que no sean necesarios, mientras que Json guarda únicamente la información que necesitamos.
 
 # ## 2.2 The Trivial Graph Format
 
-# In[9]:
+# In[10]:
 
 
 def d_g_2_TGF(d_g, f_name):
@@ -341,6 +345,9 @@ def d_g_2_TGF(d_g, f_name):
     :param f_name: Nombre del fichero donde se guardará el grafo
     :return: No devuelve nada
     """
+    
+    fp = open(f_name, 'w')
+    
     nNodos = len(d_g.keys())
 
     data = ''
@@ -354,8 +361,11 @@ def d_g_2_TGF(d_g, f_name):
         nkeys = len(value.keys())
         for key2, value2 in value.items():
             data = data + str(key) + ' ' + str(key2) + ' ' + str(value2) + '\n'
+        
 
-    save_object(data, f_name)
+    fp.write(data)
+    
+    fp.close()
     
 
 def TGF_2_d_g(f_name):
@@ -366,10 +376,12 @@ def TGF_2_d_g(f_name):
     :return: Grafo en formato de diccionario
     """
     
+    fp = open(f_name, 'r')
+    
     d_g = {}
 
     
-    data = read_object(f_name)
+    data = fp.read()
     
     data = data.split('\n')
     aux  = []
@@ -402,12 +414,12 @@ print_d_g(d_g_2)
 # ### Cuestión 3
 # **¿Qué ventajas e inconvenientes tendrían las funciones pickle sobre las construidas mediante el formato TFG? Responder algo pertinente y no con lugares comunes.**
 # 
-# Partiendo de la base de que TGF lo hemos implementado con las funciones de save y read object(que usan pickle), ambos son ineficientes para grafos muy grandes. Sin embargo, un inconveniente que tiene TGF es que es muy tedioso leer la información deseada de un fichero con este formato. Tenemos que usar múltiples listas, partiendo las strings del fichero constantemente hasta que encontramos la información desada y podemos formar el grafo. Pickle guarda y lee el objeto en una sóla función por acción.
+# Un inconveniente que tiene TGF es que es muy tedioso leer la información deseada de un fichero con este formato. Tenemos que usar múltiples listas, partiendo las strings del fichero constantemente hasta que encontramos la información desada y podemos formar el grafo. Pickle guarda y lee el objeto en una sóla función por acción. Sin embargo, como antes hemos mencionado, pickle almacena mucha información innecesaria del objeto.
 
 # # 3 Distancias Mínimas en Grafos
 # ## 3.1 Programming and Timing Dijstra
 
-# In[51]:
+# In[11]:
 
 
 def dijkstra_d(d_g, u):
@@ -596,22 +608,87 @@ d, p = nx.single_source_dijkstra(d_g_nx, u_ini, weight='weight')
 print(d, '\n', p)
 
 
+# ## Cuestiones sobre Dijkstra
+# ### Cuestión 1
+# 
+# **¿Cuál es el coste teórico del algoritmo de Dijkstra? Justificar brevemente dicho coste **
+# 
+# Para un grafo de V vértices y E ramas, el coste de Dijkstra es O(|E|*Log|V|). Este coste se puede ver alterado según la estructura de datos que utilicemos para desarrollar el algoritmo. Esta fórmula sale de las operaciones básicas del algoritmo: insertar y obtener en la estructura de datos es una operación de coste logarítmico, y dado que se va a hacer para cada uno de las ramas se añade la E. V no se reflejada dado que en comparación al número de ramas, el número de nodos no influye.
+# 
+# ### Cuestión 2
+# 
+# **Expresar el coste de Dijkstra en función del número de nodos y el sparse factor  $\varphi$ del grafo en cuestión. Para un número de nodos fijo adecuado, ¿cuál es el crecimiento del coste de Dijkstra en función de $\varphi$? **
+
+# In[62]:
+
+
+n_graphs=5
+n_nodes_ini=100
+n_nodes_fin=1000
+step=200
+
+sparse_f1= 0.1
+sparse_f3= 0.3
+sparse_f5= 0.5
+sparse_f7= 0.7
+sparse_f9= 0.9
+
+l_t_d1 = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f1)
+l_t_d3 = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f3)
+l_t_d5 = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f5)
+l_t_d7 = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f7)
+l_t_d9 = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f9)
+
+#l_t_final = l_t_d1+l_t_d3+l_t_d5+l_t_d7+l_t_d9
+#print(l_t_final)
+
+fit_plot(l_t_d1, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+fit_plot(l_t_d3, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+fit_plot(l_t_d5, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+fit_plot(l_t_d7, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+fit_plot(l_t_d9, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+
+
+# La gráfica que se puede observar representa el algoritmo de Dijkstra cinco veces cambiando el sparse factor, y podemos observar que entre más grande sea el sparse factor, menos ramas tendrá el grafo y por lo tanto, menos tiempo tardará Dijkstra en realizarse (la línea que está más arriba representa el grafo de menor sparse factor, y llega a ser hasta casi 10 veces más lento que el grafo que tiene mayor sparse factor).
+# 
+# Creemos que el crecimiento del coste de Dijkstra en función del sparse factor es logarítmico, como se puede ver en la gráfica.
+
+# ### Cuestión 3
+# 
+# **¿Cuál es el coste teórico del algoritmo de Dijkstra iterado para encontrar las distancias mínimas entre todos los vértices de un grafo?**
+# 
+# El coste de Dijkstra iterado es: O(|E|*Log|V|) * el número de vértices (V), lo cual es igual a O(|V|*|E|*Log|V|). Y si el grafo es denso, el coste es O(|V|³*Log|V|)
+# 
+# ### Cuestión 4
+# 
+# **¿Cómo se podrían recuperar los caminos mínimos si se utiliza Dijkstra iterado?**
+# 
+# Asumimos que un método 'dijkstra_d_iter' devuelve un diccionario 'd_prev_iter' con un nivel más de diccionario, es decir, cada clave de 'd_prev_iter' contiene un diccionario 'd_prev' resultado de aplicar Dijkstra con la clave como nodo inicial. 
+# 
+# Tendríamos que implementar un método 'min_path_iter(d_prev_iter)' que hace para cada una de las claves de 'd_prev_iter' el 'min_path' ya implementado, dejando como resultado un diccionario con un nivel más a los devueltos por 'min_path'.
+# 
+
 # ## 3.2 Plotting Dijkstra's Execution Times
 # Fit below a linear model An^2 logn+B to the times in the returned lists and plot the real and fitted times discussing the results.
 
-# In[61]:
+# In[41]:
 
 
 n_graphs=20
-n_nodes_ini=100 
-n_nodes_fin=1000
-step=50
+n_nodes_ini=10
+n_nodes_fin=100
+step=5
 sparse_f= 0.25
 l_t_d = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
                         n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f)
 
 
-# In[62]:
+# In[42]:
 
 
 fit_plot(l_t_d, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
@@ -622,7 +699,7 @@ fit_plot(l_t_d, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
 # 
 # An example of loading a networkx directed graph is to use a list (i, j, w) of (i, j) edges with weights w can be seen in the following cell:
 
-# In[12]:
+# In[14]:
 
 
 g = nx.DiGraph()
@@ -635,7 +712,7 @@ for k1 in g.nodes():
         print('(', k1, k2, ')', g[k1][k2]['weight'])
 
 
-# In[52]:
+# In[15]:
 
 
 def d_g_2_nx_g(d_g):
@@ -719,7 +796,7 @@ print_d_g(d_g)
 (d_g_nx)[0][1]
 
 
-# In[59]:
+# In[16]:
 
 
 n_graphs=20
@@ -731,25 +808,98 @@ l_t_nx = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini,
                           n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f)
 
 
-# In[60]:
+# In[17]:
 
 
 fit_plot(l_t_nx, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
 
 
-# In[29]:
+# ## Cuestiones sobre Networkx
+# ### Cuestión 1
+# 
+# **Mostrar gráficamente el crecimiento de los tiempos de ejecución del algoritmo de Dijkstra en función del número de nodos y del sparse factor usando la librería Networkx. Usa grafos de 100 nodos y un sparse factor de 0.1, 0.3, 0.5, 0.7, 0.9**
+
+# In[64]:
 
 
-m_g = rand_matr_pos_graph(n_nodes=4, sparse_factor=0.4, max_weight=10.,decimals = 2)
+n_graphs=5
+n_nodes_ini=100
+n_nodes_fin=1000
+step=200
 
-d_g = m_g_2_d_g(m_g)
-print("\n\n")
+sparse_f1= 0.1
+sparse_f3= 0.3
+sparse_f5= 0.5
+sparse_f7= 0.7
+sparse_f9= 0.9
 
-dijkstra,path = dijkstra_d(d_g, 1)
-dx_dijkstra,dx_path = nx.single_source_dijkstra(d_g_2_nx_g(d_g),1)
+l_t_d1 = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f1)
+l_t_d3 = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f3)
+l_t_d5 = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f5)
+l_t_d7 = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f7)
+l_t_d9 = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
+                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f9)
 
-print("\n\n")
+#l_t_final = l_t_d1+l_t_d3+l_t_d5+l_t_d7+l_t_d9
+#print(l_t_final)
 
-print(dijkstra)
-print(dx_dijkstra)
+fit_plot(l_t_d1, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+fit_plot(l_t_d3, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+fit_plot(l_t_d5, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+fit_plot(l_t_d7, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+fit_plot(l_t_d9, n2_log_n, size_ini=n_nodes_ini, size_fin=n_nodes_fin, step=step)
+
+
+# Como podemos observar en esta última gráfica, el algoritmo de Dijkstra con la librería Networkx es mucho más rápido que el nuestro, hasta unas 3 veces más rápido aproximadamente.
+# 
+# ### Cuestión 2
+# 
+# **Mide y muestra gráficamente los tiempos de ejecución del algoritmo de Dijkstra iterativo para encontrar las distancias mínimas entre todos los vértices del grafo usando la librería Networkx con grafos de un número fijo de 25 nodos y sparse factors de 0.1, 0.3, 0.5, 0.7, 0.9.**
+
+# In[74]:
+
+
+nx1 =  d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes=25,sparse_factor=0.1,max_weight=50.)))
+nx3 =  d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes=25,sparse_factor=0.3,max_weight=50.)))
+nx5 =  d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes=25,sparse_factor=0.5,max_weight=50.)))
+nx7 =  d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes=25,sparse_factor=0.7,max_weight=50.)))
+nx9 =  d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes=25,sparse_factor=0.9,max_weight=50.)))
+
+inicio1 = time.time()
+nx.all_pairs_shortest_path(nx1)
+fin1 = time.time()
+
+inicio3 = time.time()
+nx.all_pairs_shortest_path(nx3)
+fin3 = time.time()
+
+inicio5 = time.time()
+nx.all_pairs_shortest_path(nx5)
+fin5 = time.time()
+
+inicio7 = time.time()
+nx.all_pairs_shortest_path(nx7)
+fin7 = time.time()
+
+inicio9 = time.time()
+nx.all_pairs_shortest_path(nx9)
+fin9 = time.time()
+
+t1 = fin1-inicio1
+t3 = fin3-inicio3
+t5 = fin5-inicio5
+t7 = fin7-inicio7
+t9 = fin9-inicio9
+
+#l_t_d = [t1,t3,t5,t7,t9]
+
+fit_plot([t1], n2_log_n, size_ini=25, size_fin=25, step=1)
+fit_plot([t3], n2_log_n, size_ini=25, size_fin=25, step=1)
+fit_plot([t5], n2_log_n, size_ini=25, size_fin=25, step=1)
+fit_plot([t7], n2_log_n, size_ini=25, size_fin=25, step=1)
+fit_plot([t9], n2_log_n, size_ini=25, size_fin=25, step=1)
 
