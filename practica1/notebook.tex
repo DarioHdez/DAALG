@@ -1,0 +1,1426 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{MemoP105}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{HTML}
+        
+        \PY{n}{HTML}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+s1}{\PYZlt{}script\PYZgt{}code\PYZus{}show=true; }
+        
+        \PY{l+s+s1}{function code\PYZus{}toggle() }\PY{l+s+s1}{\PYZob{}}
+        \PY{l+s+s1}{    if (code\PYZus{}show)}\PY{l+s+s1}{\PYZob{}}
+        \PY{l+s+s1}{    \PYZdl{}(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{div.input}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{).hide();}
+        \PY{l+s+s1}{    \PYZcb{} else }\PY{l+s+s1}{\PYZob{}}
+        \PY{l+s+s1}{    \PYZdl{}(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{div.input}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{).show();}
+        \PY{l+s+s1}{    \PYZcb{}}
+        \PY{l+s+s1}{    code\PYZus{}show = !code\PYZus{}show}
+        \PY{l+s+s1}{\PYZcb{} }
+        
+        \PY{l+s+s1}{\PYZdl{}( document ).ready(code\PYZus{}toggle);}
+        \PY{l+s+s1}{\PYZlt{}/script\PYZgt{}}
+        \PY{l+s+s1}{\PYZlt{}form action=}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{javascript:code\PYZus{}toggle()}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{\PYZgt{}\PYZlt{}input type=}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{submit}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{ value=}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{Click here to toggle on/off the raw code.}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{\PYZgt{}\PYZlt{}/form\PYZgt{}}
+        \PY{l+s+s1}{\PYZsq{}\PYZsq{}\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}2}]:} <IPython.core.display.HTML object>
+\end{Verbatim}
+            
+    \section{Práctica 1}\label{pruxe1ctica-1}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} autoreload
+        \PY{o}{\PYZpc{}}\PY{k}{autoreload} 2
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k+kn}{import} \PY{n+nn}{string}\PY{o}{,} \PY{n+nn}{random}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{sys}
+        \PY{k+kn}{import} \PY{n+nn}{time}
+        \PY{k+kn}{import} \PY{n+nn}{gzip}
+        \PY{k+kn}{import} \PY{n+nn}{pickle}
+        \PY{k+kn}{import} \PY{n+nn}{itertools}
+        
+        \PY{k+kn}{import} \PY{n+nn}{queue} \PY{k}{as} \PY{n+nn}{qe}
+        
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{LinearRegression}
+        
+        \PY{k+kn}{import} \PY{n+nn}{networkx} \PY{k}{as} \PY{n+nn}{nx}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}55}]:} \PY{k}{def} \PY{n+nf}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l}\PY{p}{,} \PY{n}{func\PYZus{}2\PYZus{}fit}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{p}{)}\PY{p}{:}
+             \PY{n}{l\PYZus{}func\PYZus{}values} \PY{o}{=}\PY{p}{[}\PY{n}{i}\PY{o}{*}\PY{n}{func\PYZus{}2\PYZus{}fit}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{size\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{step}\PY{p}{)}\PY{p}{]}
+             
+             \PY{n}{lr\PYZus{}m} \PY{o}{=} \PY{n}{LinearRegression}\PY{p}{(}\PY{p}{)}
+             \PY{n}{X} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{l\PYZus{}func\PYZus{}values}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(} \PY{n+nb}{len}\PY{p}{(}\PY{n}{l\PYZus{}func\PYZus{}values}\PY{p}{)}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1} \PY{p}{)}
+             \PY{n}{lr\PYZus{}m}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{l}\PY{p}{)}
+             \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{lr\PYZus{}m}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+             
+             \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{l}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{n2\PYZus{}log\PYZus{}n}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{n}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{n}\PY{p}{)}
+\end{Verbatim}
+
+
+    En esta parte vamos a trabajar con grafos ponderados usando dos EdD:
+
+\begin{itemize}
+\tightlist
+\item
+  Una matriz numpy de adyacencia, donde el elemento i, j indica el peso
+  c\_\{ij` de la rama (i, j)
+\item
+  Un diccionario de diccionarios de diccionarios donde las claves del
+  primer diccionario G son índices de nodos, las claves de los
+  diccionarios G{[}i{]} son los vértices de su lista de adyacencia y un
+  diccionario G{[}i{]}{[}j{]} contiene el peso de la rama (i, j).
+\end{itemize}
+
+Por ejemplo, para el grafo:
+
+el código
+
+l = {[}{[}0, 10, 1, np.inf{]}, {[}np.inf, 0, 1, np.inf{]}, {[}np.inf,
+np.inf, 0, 1 {]}, {[}np.inf, 1, np.inf, 0{]}{]}
+
+m\_g = np.array(l)
+
+generaría su matriz de adyacencia según se describe arriba, mientras que
+
+d\_g = \{ 0: \{1: 10, 2:1\}, 1: \{2: 1\}, 2: \{3: 1\}, 3: \{1: 1\} \}
+
+generaría su descripción como un dict.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{l} \PY{o}{=} \PY{p}{[}
+        \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1} \PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}
+        \PY{p}{]}
+        
+        \PY{n}{m\PYZus{}g} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{print\PYZus{}m\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{graph\PYZus{}from\PYZus{}matrix:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{n\PYZus{}v} \PY{o}{=} \PY{n}{m\PYZus{}g}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{k}{for} \PY{n}{u} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}v}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}v}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{if} \PY{n}{v} \PY{o}{!=} \PY{n}{u} \PY{o+ow}{and} \PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{u}\PY{p}{,} \PY{n}{v}\PY{p}{]} \PY{o}{!=} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{:}
+                        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{(}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{u}\PY{p}{,} \PY{n}{v}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{u}\PY{p}{,} \PY{n}{v}\PY{p}{]}\PY{p}{)}
+        
+        \PY{n}{d\PYZus{}g} \PY{o}{=} \PY{p}{\PYZob{}}
+        \PY{l+m+mi}{0}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{,} 
+        \PY{l+m+mi}{1}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{2}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{,} 
+        \PY{l+m+mi}{2}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{3}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{,}
+        \PY{l+m+mi}{3}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}
+        \PY{p}{\PYZcb{}}
+        
+        \PY{k}{def} \PY{n+nf}{print\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{graph\PYZus{}from\PYZus{}dict:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{for} \PY{n}{u} \PY{o+ow}{in} \PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{d\PYZus{}g}\PY{p}{[}\PY{n}{u}\PY{p}{]}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{(}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{u}\PY{p}{,} \PY{n}{v}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{d\PYZus{}g}\PY{p}{[}\PY{n}{u}\PY{p}{]}\PY{p}{[}\PY{n}{v}\PY{p}{]}\PY{p}{)}
+        
+        \PY{n}{print\PYZus{}m\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g}\PY{p}{)}
+        \PY{n}{print\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+graph\_from\_matrix:
+
+( 0 1 ) 10.0
+( 0 2 ) 1.0
+( 1 2 ) 1.0
+( 2 3 ) 1.0
+( 3 1 ) 1.0
+
+graph\_from\_dict:
+
+( 0 1 ) 10
+( 0 2 ) 1
+( 1 2 ) 1
+( 2 3 ) 1
+( 3 1 ) 1
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{p}{,} \PY{n}{max\PYZus{}weight}\PY{o}{=}\PY{l+m+mf}{50.}\PY{p}{,} \PY{n}{decimals}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Método que genera grafos de manera aleatoria}
+        
+        \PY{l+s+sd}{    :param n\PYZus{}nodes: Número de nodos que tendrá el grafo}
+        \PY{l+s+sd}{    :param sparse\PYZus{}factor: Proporción de ramas (probabilidad de que una ramas inexistentes)}
+        \PY{l+s+sd}{    :param max\PYZus{}weight: Peso máximo que podría tener una rama}
+        \PY{l+s+sd}{    :param decimals: Número de decimales}
+        \PY{l+s+sd}{    :return: grafo generado}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{grafo\PYZus{}completo} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{around}\PY{p}{(}\PY{n}{max\PYZus{}weight} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{p}{,} \PY{n}{n\PYZus{}nodes}\PY{p}{)}\PY{p}{,}\PY{n}{decimals}\PY{p}{)}
+            \PY{n}{ramas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{binomial}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{p}{,} \PY{n}{n\PYZus{}nodes}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{float32}\PY{p}{)}  \PY{c+c1}{\PYZsh{} dicta si hay ramas o no}
+        
+            \PY{k}{for} \PY{n}{u} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{if} \PY{n}{ramas}\PY{p}{[}\PY{n}{u}\PY{p}{]}\PY{p}{[}\PY{n}{v}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                        \PY{n}{grafo\PYZus{}completo}\PY{p}{[}\PY{n}{u}\PY{p}{]}\PY{p}{[}\PY{n}{v}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inf}
+        
+            \PY{n}{np}\PY{o}{.}\PY{n}{fill\PYZus{}diagonal}\PY{p}{(}\PY{n}{grafo\PYZus{}completo}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+        
+            \PY{k}{return} \PY{n}{grafo\PYZus{}completo}
+        
+        \PY{k}{def} \PY{n+nf}{m\PYZus{}g\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Método que pasa un grafo en formato de matriz a uno en formato de diccionario}
+        
+        \PY{l+s+sd}{    :param m\PYZus{}g: Grafo en formato de matriz}
+        \PY{l+s+sd}{    :return: Grafo en formato de diccionario}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{d\PYZus{}g} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+        
+            \PY{n}{n\PYZus{}v} \PY{o}{=} \PY{n}{m\PYZus{}g}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}v}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}v}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{if} \PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{==} \PY{k+kc}{None}\PY{p}{:}
+                        \PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{i}\PY{p}{:}\PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+                    \PY{k}{if} \PY{n}{i} \PY{o}{!=} \PY{n}{j} \PY{o+ow}{and} \PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{!=} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{:}
+                        \PY{n}{d\PYZus{}g}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{j}\PY{p}{:}\PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+        
+            \PY{k}{return} \PY{n}{d\PYZus{}g}
+        
+        
+        \PY{k}{def} \PY{n+nf}{d\PYZus{}g\PYZus{}2\PYZus{}m\PYZus{}g}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Método que pasa un diccionario en formato de diccionario a uno en formato de matriz}
+        
+        \PY{l+s+sd}{    :param d\PYZus{}g: Grafo en formato de diccionario}
+        \PY{l+s+sd}{    :return: Grafo en formato de matriz}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{nkeys} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{m\PYZus{}g} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n}{nkeys}\PY{p}{,} \PY{n}{nkeys}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{float32}\PY{p}{)}
+        
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{nkeys}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{nkeys}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{if} \PY{n}{d\PYZus{}g}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{j}\PY{p}{)} \PY{o}{!=} \PY{k+kc}{None} \PY{o+ow}{and} \PY{n}{i} \PY{o}{!=} \PY{n}{j}\PY{p}{:}
+                        \PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{d\PYZus{}g}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{j}\PY{p}{)}
+                    \PY{k}{elif} \PY{n}{i} \PY{o}{!=} \PY{n}{j}\PY{p}{:}
+                        \PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inf}
+                    \PY{k}{else}\PY{p}{:}
+                        \PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{0}
+        
+            \PY{k}{return} \PY{n}{m\PYZus{}g}
+        
+        
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} cheking}
+        \PY{n}{m\PYZus{}g} \PY{o}{=} \PY{n}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,}\PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,}\PY{n}{max\PYZus{}weight}\PY{o}{=}\PY{l+m+mf}{50.}\PY{p}{)}
+        \PY{n}{d\PYZus{}g} \PY{o}{=} \PY{n}{m\PYZus{}g\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g}\PY{p}{)}
+        \PY{n}{m\PYZus{}g\PYZus{}2} \PY{o}{=} \PY{n}{d\PYZus{}g\PYZus{}2\PYZus{}m\PYZus{}g}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{)}
+        
+        \PY{n}{print\PYZus{}m\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g}\PY{p}{)}
+        \PY{n}{print\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{um\PYZus{}elem\PYZus{}iguales:}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{m\PYZus{}g\PYZus{}2} \PY{o}{==} \PY{n}{m\PYZus{}g}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+graph\_from\_matrix:
+
+( 0 2 ) 17.0
+( 0 3 ) 41.0
+( 0 4 ) 29.0
+( 1 4 ) 7.0
+( 2 0 ) 16.0
+( 2 1 ) 46.0
+( 2 3 ) 21.0
+( 3 2 ) 21.0
+( 3 4 ) 22.0
+
+graph\_from\_dict:
+
+( 0 2 ) 17.0
+( 0 3 ) 41.0
+( 0 4 ) 29.0
+( 1 4 ) 7.0
+( 2 0 ) 16.0
+( 2 1 ) 46.0
+( 2 3 ) 21.0
+( 3 2 ) 21.0
+( 3 4 ) 22.0
+
+um\_elem\_iguales:	25
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{cuenta\PYZus{}ramas}\PY{p}{(}\PY{n}{m\PYZus{}g}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Método que cuenta las ramas que hay en el grafo}
+        
+        \PY{l+s+sd}{    :param m\PYZus{}g: Grafo}
+        \PY{l+s+sd}{    :return: Número de ramas que tiene el grafo}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{k}{return} \PY{n+nb}{len}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{flatnonzero}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{m\PYZus{}g} \PY{o}{==} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{m\PYZus{}g}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+        
+        
+        \PY{k}{def} \PY{n+nf}{check\PYZus{}sparse\PYZus{}factor}\PY{p}{(}\PY{n}{n\PYZus{}grafos}\PY{p}{,}\PY{n}{n\PYZus{}nodes}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Método que calcula la proporción de ramas según una serie de grafos}
+        
+        \PY{l+s+sd}{    :param n\PYZus{}grafos: Número de grafos}
+        \PY{l+s+sd}{    :param n\PYZus{}nodes: Número de nodos de cada grafo}
+        \PY{l+s+sd}{    :param sparse\PYZus{}factor: Proporción de ramas}
+        \PY{l+s+sd}{    :return: La proporción de ramas que hay en los grafos}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{grafos} \PY{o}{=} \PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{o}{*}\PY{n}{n\PYZus{}grafos}
+            \PY{n}{ramas} \PY{o}{=} \PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{o}{*}\PY{n}{n\PYZus{}grafos}
+            \PY{n}{factores} \PY{o}{=} \PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{o}{*}\PY{n}{n\PYZus{}grafos}
+        
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}grafos}\PY{p}{)}\PY{p}{:}
+                \PY{n}{grafos}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{p}{,}\PY{n}{sparse\PYZus{}factor}\PY{p}{,}\PY{l+m+mf}{10.}\PY{p}{,}\PY{n}{decimals}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+                \PY{n}{ramas}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{cuenta\PYZus{}ramas}\PY{p}{(}\PY{n}{grafos}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                \PY{n}{factores}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{ramas}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{/} \PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{n\PYZus{}nodes}\PY{p}{)}
+        
+            \PY{k}{return} \PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{average}\PY{p}{(}\PY{n}{factores}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} checking}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{cuenta\PYZus{}ramas}\PY{p}{(}\PY{n}{m\PYZus{}g}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{n\PYZus{}grafos}\PY{o}{=}\PY{l+m+mi}{50}
+        \PY{n}{n\PYZus{}nodes}\PY{o}{=}\PY{l+m+mi}{20}
+        \PY{n}{sparse\PYZus{}factor} \PY{o}{=} \PY{l+m+mf}{0.75}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{true\PYZus{}sparse\PYZus{}factor: }\PY{l+s+si}{\PYZpc{}.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{sparse\PYZus{}factor}\PY{p}{,} 
+              \PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{exp\PYZus{}sparse\PYZus{}factor:  }\PY{l+s+si}{\PYZpc{}.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{check\PYZus{}sparse\PYZus{}factor}\PY{p}{(}\PY{n}{n\PYZus{}grafos}\PY{o}{=}\PY{n}{n\PYZus{}grafos}\PY{p}{,} \PY{n}{n\PYZus{}nodes}\PY{o}{=}\PY{n}{n\PYZus{}nodes}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}factor}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+9
+
+true\_sparse\_factor: 0.750 
+exp\_sparse\_factor:  0.752
+
+    \end{Verbatim}
+
+    \section{2 Guardando y leyendo grafos}\label{guardando-y-leyendo-grafos}
+
+\subsection{2.1 Guardando y leyendo grafos con
+pickle}\label{guardando-y-leyendo-grafos-con-pickle}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{save\PYZus{}object}\PY{p}{(}\PY{n}{obj}\PY{p}{,} \PY{n}{f\PYZus{}name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{obj.pklz}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{save\PYZus{}path}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Método que guardará un objeto (En este caso un grafo) en un fichero dado}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    :param obj: Objeto a guardar}
+        \PY{l+s+sd}{    :param f\PYZus{}name: Nombre del fichero}
+        \PY{l+s+sd}{    :param save\PYZus{}path: Ruta en donde se guardará el fichero}
+        \PY{l+s+sd}{    :return: No devuelve nada}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{file\PYZus{}path} \PY{o}{=} \PY{n}{save\PYZus{}path} \PY{o}{+} \PY{n}{f\PYZus{}name}
+        
+            \PY{n}{final\PYZus{}file} \PY{o}{=} \PY{n}{gzip}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{file\PYZus{}path}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{wb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{n}{pickle}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{obj}\PY{p}{,} \PY{n}{final\PYZus{}file}\PY{p}{)}
+        
+            \PY{n}{final\PYZus{}file}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+        
+        
+        
+        \PY{k}{def} \PY{n+nf}{read\PYZus{}object}\PY{p}{(}\PY{n}{f\PYZus{}name}\PY{p}{,} \PY{n}{save\PYZus{}path}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{l+s+sd}{    Método que lee un objeto de un fichero}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    :param f\PYZus{}name: Nombre del fichero}
+        \PY{l+s+sd}{    :param save\PYZus{}path: Ruta del fichero}
+        \PY{l+s+sd}{    :return: Objeto guardado}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{file\PYZus{}path} \PY{o}{=} \PY{n}{save\PYZus{}path} \PY{o}{+} \PY{n}{f\PYZus{}name}
+        
+            \PY{n}{final\PYZus{}file} \PY{o}{=} \PY{n}{gzip}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{file\PYZus{}path}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{n}{data} \PY{o}{=} \PY{n}{pickle}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{n}{final\PYZus{}file}\PY{p}{)}
+        
+            \PY{n}{final\PYZus{}file}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+        
+            \PY{k}{return} \PY{n}{data}
+\end{Verbatim}
+
+
+    \subsection{Cuestiones sobre guardado de
+grafos}\label{cuestiones-sobre-guardado-de-grafos}
+
+\subsubsection{Cuestión 1}\label{cuestiuxf3n-1}
+
+\textbf{Describir qué se entiende por serializar un objeto Python.}
+
+A través de un protocolo binario, transformar el objeto Python y
+guardarlo en un archivo que se guarda en memoria.
+
+\subsubsection{Cuestión 2}\label{cuestiuxf3n-2}
+
+\textbf{Json es otro formato de serialiación de objetos. Comentar
+brevemente posibles diferencias entre pickle y json.}
+
+\begin{itemize}
+\item
+  \emph{\textbf{Interoprabilidad:}} Pickle es un módulo que sólo se
+  puede usar en Python, es decir, los objetos serializados por pickle
+  \textbf{no pueden} ser accedidos por programas escritos por otros
+  lenguaje. Sin embargo, Json es un estándar de serialización al que
+  tienen acceso \textbf{todos} los lenguajes de programación,
+  permitiendo que la información almacenada sea accesible y
+  colaborativa.
+\item
+  \emph{\textbf{Velocidad:}} Por cómo está implementado Pickle, es un
+  módulo lento que para grandes cantidades de datos puede llegar a ser
+  \textbf{muy costoso e ineficiente} (dato para ponerlo en escala: el
+  módulo Pickle está disponible desde la versión 1.4 de Python, y en la
+  versión 1.5 empezó a estar disponible el módulo cPickle, implementado
+  en c y hasta 1000 veces más rápido.). Json en comparación es mucho más
+  rápido.
+\item
+  \emph{\textbf{Seguridad:}} Pickle puede ejecutar código aleatorio
+  almacenado en memoria. Por lo tanto, usar \textbf{pickle} para
+  transferir datos entre diferentes programas o sesiones puede llegar a
+  ser una importante brecha de seguridad. Por otro lado Json tiene
+  mecanismos de seguridad integrados, según su RFC 8259, que impiden el
+  acceso a memoria aleatoria, controlando las posibles brechas de
+  seguridad.
+\item
+  \emph{\textbf{Lectura del fichero en bruto:}} Json te permite abrir el
+  archivo \textbf{en cualquier momento} y revisar su contenido,
+  reforzando los aspectos de interoperabilidad y seguridad. Sin embargo,
+  el contenido de los archivos de información creados con pickle son una
+  cadena binaria que a primera vista podría suponer una amenaza, hasta
+  que se demuestre lo contrario.
+\item
+  \emph{\textbf{Información guardada:}} Pickle guarda toda la
+  información del objeto, lo cual puede dar cabida a datos del objeto
+  que no sean necesarios, mientras que Json guarda únicamente la
+  información que necesitamos.
+\end{itemize}
+
+    \subsection{2.2 The Trivial Graph
+Format}\label{the-trivial-graph-format}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{def} \PY{n+nf}{d\PYZus{}g\PYZus{}2\PYZus{}TGF}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{,} \PY{n}{f\PYZus{}name}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Método que se encarga de pasar de un grafo en formato de diccionario a uno en formato TGF y de guardarlo en un fichero}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    :param d\PYZus{}g: Grafo}
+         \PY{l+s+sd}{    :param f\PYZus{}name: Nombre del fichero donde se guardará el grafo}
+         \PY{l+s+sd}{    :return: No devuelve nada}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             
+             \PY{n}{fp} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{f\PYZus{}name}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+             \PY{n}{nNodos} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+             \PY{n}{data} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}
+         
+             \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{value} \PY{o+ow}{in} \PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{data} \PY{o}{=} \PY{n}{data} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{key}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+         
+             \PY{n}{data} \PY{o}{=} \PY{n}{data} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+         
+             \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{value} \PY{o+ow}{in} \PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{nkeys} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{value}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                 \PY{k}{for} \PY{n}{key2}\PY{p}{,} \PY{n}{value2} \PY{o+ow}{in} \PY{n}{value}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{data} \PY{o}{=} \PY{n}{data} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{key}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{key2}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{value2}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+                 
+         
+             \PY{n}{fp}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+             
+             \PY{n}{fp}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+             
+         
+         \PY{k}{def} \PY{n+nf}{TGF\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{f\PYZus{}name}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}   }
+         \PY{l+s+sd}{    Método que se encarga de leer un grafo en formato TGF de un fichero y pasarlo a formato de diccionario}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    :param f\PYZus{}name: Nombre del fichero}
+         \PY{l+s+sd}{    :return: Grafo en formato de diccionario}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             
+             \PY{n}{fp} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{f\PYZus{}name}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+             \PY{n}{d\PYZus{}g} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         
+             
+             \PY{n}{data} \PY{o}{=} \PY{n}{fp}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}
+             
+             \PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{aux}  \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{data}\PY{p}{:}
+                 \PY{n}{aux}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                 \PY{k}{if} \PY{n}{i} \PY{o}{!=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                     \PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{i}\PY{p}{:}\PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+                     
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{k}{break}
+                 
+             \PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{aux}\PY{p}{)}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{data}\PY{p}{:}
+                 \PY{n}{s} \PY{o}{=} \PY{n}{i}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{d\PYZus{}g}\PY{p}{[}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+             
+             \PY{k}{return} \PY{n}{d\PYZus{}g}
+             
+         \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} checking}
+         \PY{n}{f\PYZus{}name} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gr.tgf}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{d\PYZus{}g\PYZus{}2\PYZus{}TGF}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{,} \PY{n}{f\PYZus{}name}\PY{p}{)}
+                                
+         \PY{n}{d\PYZus{}g\PYZus{}2} \PY{o}{=} \PY{n}{TGF\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{f\PYZus{}name}\PY{p}{)}            
+         \PY{n}{print\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{)}
+         \PY{n}{print\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{d\PYZus{}g\PYZus{}2}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+graph\_from\_dict:
+
+( 0 2 ) 17.0
+( 0 3 ) 41.0
+( 0 4 ) 29.0
+( 1 4 ) 7.0
+( 2 0 ) 16.0
+( 2 1 ) 46.0
+( 2 3 ) 21.0
+( 3 2 ) 21.0
+( 3 4 ) 22.0
+
+graph\_from\_dict:
+
+( 0 2 ) 17.0
+( 0 3 ) 41.0
+( 0 4 ) 29.0
+( 1 4 ) 7.0
+( 2 0 ) 16.0
+( 2 1 ) 46.0
+( 2 3 ) 21.0
+( 3 2 ) 21.0
+( 3 4 ) 22.0
+
+    \end{Verbatim}
+
+    \subsubsection{Cuestión 3}\label{cuestiuxf3n-3}
+
+\textbf{¿Qué ventajas e inconvenientes tendrían las funciones pickle
+sobre las construidas mediante el formato TFG? Responder algo pertinente
+y no con lugares comunes.}
+
+Un inconveniente que tiene TGF es que es muy tedioso leer la información
+deseada de un fichero con este formato. Tenemos que usar múltiples
+listas, partiendo las strings del fichero constantemente hasta que
+encontramos la información desada y podemos formar el grafo. Pickle
+guarda y lee el objeto en una sóla función por acción. Sin embargo, como
+antes hemos mencionado, pickle almacena mucha información innecesaria
+del objeto.
+
+    \section{3 Distancias Mínimas en
+Grafos}\label{distancias-muxednimas-en-grafos}
+
+\subsection{3.1 Programming and Timing
+Dijstra}\label{programming-and-timing-dijstra}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{dijkstra\PYZus{}d}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{,} \PY{n}{u}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Método que aplica el algoritmo de Dijkstra a un grafo en formato de diccionario a partir de un nodo inicial dado}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    :param d\PYZus{}g: Grafo en formato de diccionario}
+         \PY{l+s+sd}{    :param u: Nodo inicial}
+         \PY{l+s+sd}{    :return: un diccionario con las distancias mínimas al resto de nodos, y un diccionario con los nodos precios}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{d\PYZus{}dist} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{n}{d\PYZus{}prev} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{n}{distancias} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{)}    
+             \PY{n}{vistos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}
+             \PY{n}{padre} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+             
+             \PY{n}{q} \PY{o}{=} \PY{n}{qe}\PY{o}{.}\PY{n}{PriorityQueue}\PY{p}{(}\PY{p}{)}
+             \PY{n}{distancias}\PY{p}{[}\PY{n}{u}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{0.}
+             \PY{n}{q}\PY{o}{.}\PY{n}{put}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,}\PY{n}{u}\PY{p}{)}\PY{p}{)}
+             
+             \PY{k}{while} \PY{o+ow}{not} \PY{n}{q}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{n} \PY{o}{=} \PY{n}{q}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{vistos}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]} \PY{o}{=} \PY{k+kc}{True}
+                 
+                 \PY{k}{for} \PY{n}{keys}\PY{p}{,}\PY{n}{values} \PY{o+ow}{in} \PY{n}{d\PYZus{}g}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                     \PY{k}{if} \PY{n}{distancias}\PY{p}{[}\PY{n}{keys}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{distancias}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]} \PY{o}{+} \PY{n}{values}\PY{p}{:}
+                         \PY{n}{distancias}\PY{p}{[}\PY{n}{keys}\PY{p}{]} \PY{o}{=} \PY{n}{distancias}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]} \PY{o}{+} \PY{n}{values}
+                         \PY{n}{padre}\PY{p}{[}\PY{n}{keys}\PY{p}{]} \PY{o}{=} \PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                         \PY{n}{q}\PY{o}{.}\PY{n}{put}\PY{p}{(}\PY{p}{(}\PY{n}{distancias}\PY{p}{[}\PY{n}{keys}\PY{p}{]}\PY{p}{,} \PY{n}{keys}\PY{p}{)}\PY{p}{)}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{distancias}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{d\PYZus{}dist}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{i}\PY{p}{:}\PY{n}{distancias}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+                 \PY{n}{d\PYZus{}prev}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{i}\PY{p}{:}\PY{n}{padre}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+             
+             \PY{k}{return} \PY{n}{d\PYZus{}dist}\PY{p}{,}\PY{n}{d\PYZus{}prev}
+         
+         \PY{k}{def} \PY{n+nf}{dijkstra\PYZus{}m}\PY{p}{(}\PY{n}{m\PYZus{}g}\PY{p}{,}\PY{n}{u}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Método que aplica el algoritmo de Dijkstra a un grafo en formato de matriz a partir de un nodo inicial dado}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    :param m\PYZus{}g: Grafo en formato de matriz}
+         \PY{l+s+sd}{    :param u: Nodo inicial}
+         \PY{l+s+sd}{    :return: un diccionario con las distancias mínimas al resto de nodos, y un diccionario con los nodos previos}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{d\PYZus{}dist} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{n}{d\PYZus{}prev} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{n}{n\PYZus{}v} \PY{o}{=} \PY{n}{m\PYZus{}g}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{distancias} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n}{n\PYZus{}v}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{inf}\PY{p}{)}    
+             \PY{n}{vistos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n}{n\PYZus{}v}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}
+             \PY{n}{padre} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n}{n\PYZus{}v}\PY{p}{,} \PY{k+kc}{None}\PY{p}{)}
+             
+             \PY{n}{q} \PY{o}{=} \PY{n}{qe}\PY{o}{.}\PY{n}{PriorityQueue}\PY{p}{(}\PY{p}{)}
+             \PY{n}{distancias}\PY{p}{[}\PY{n}{u}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{0.}
+             \PY{n}{q}\PY{o}{.}\PY{n}{put}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,}\PY{n}{u}\PY{p}{)}\PY{p}{)}
+             
+             \PY{k}{while} \PY{o+ow}{not} \PY{n}{q}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{n} \PY{o}{=} \PY{n}{q}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{vistos}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]} \PY{o}{=} \PY{k+kc}{True}
+         
+                 \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{:}
+                     \PY{k}{if} \PY{n}{distancias}\PY{p}{[}\PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{distancias}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]} \PY{o}{+} \PY{n}{i}\PY{p}{:}
+                         \PY{n}{distancias}\PY{p}{[}\PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{distancias}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]} \PY{o}{+} \PY{n}{i}
+                         \PY{n}{padre}\PY{p}{[}\PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                         \PY{n}{q}\PY{o}{.}\PY{n}{put}\PY{p}{(}\PY{p}{(}\PY{n}{distancias}\PY{p}{[}\PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{m\PYZus{}g}\PY{p}{[}\PY{n}{n}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         
+         
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{distancias}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{d\PYZus{}dist}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{i}\PY{p}{:}\PY{n}{distancias}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+                 \PY{n}{d\PYZus{}prev}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{i}\PY{p}{:}\PY{n}{padre}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+             
+             \PY{k}{return} \PY{n}{d\PYZus{}dist}\PY{p}{,}\PY{n}{d\PYZus{}prev}
+         
+         \PY{k}{def} \PY{n+nf}{min\PYZus{}paths}\PY{p}{(}\PY{n}{d\PYZus{}prev}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Método que devuelve los caminos mínimos desde el nodo inicial a cualquier otro nodo.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    :param d\PYZus{}prev: Diccionario en el que cada clave contiene su nodo previo}
+         \PY{l+s+sd}{    :return: Un diccionario en el que cada clave contiene la lista de nodos desde el nodo inicial hasta el nodo clave}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+         
+             \PY{n}{d\PYZus{}path} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             
+             \PY{k}{for} \PY{n}{keys}\PY{p}{,}\PY{n}{values} \PY{o+ow}{in} \PY{n}{d\PYZus{}prev}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if} \PY{n}{d\PYZus{}prev}\PY{p}{[}\PY{n}{keys}\PY{p}{]} \PY{o}{==} \PY{k+kc}{None}\PY{p}{:}
+                     \PY{n}{d\PYZus{}path}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{keys}\PY{p}{:}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{d\PYZus{}path}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{keys}\PY{p}{:}\PY{p}{[}\PY{n}{keys}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+               
+             \PY{k}{for} \PY{n}{keys}\PY{p}{,}\PY{n}{values} \PY{o+ow}{in} \PY{n}{d\PYZus{}prev}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{n} \PY{o}{=} \PY{n}{keys}
+                 \PY{k}{while} \PY{n}{d\PYZus{}prev}\PY{p}{[}\PY{n}{n}\PY{p}{]} \PY{o}{!=} \PY{k+kc}{None}\PY{p}{:}
+                     \PY{n}{d\PYZus{}path}\PY{p}{[}\PY{n}{keys}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{d\PYZus{}prev}\PY{p}{[}\PY{n}{n}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{n} \PY{o}{=} \PY{n}{d\PYZus{}prev}\PY{p}{[}\PY{n}{n}\PY{p}{]}
+                     
+                 \PY{n}{d\PYZus{}path}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{keys}\PY{p}{:}\PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{reversed}\PY{p}{(}\PY{n}{d\PYZus{}path}\PY{p}{[}\PY{n}{keys}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+                  
+             \PY{k}{return} \PY{n}{d\PYZus{}path}
+         
+         \PY{k}{def} \PY{n+nf}{time\PYZus{}dijktra\PYZus{}m}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{p}{,}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{o}{.}\PY{l+m+mi}{25}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Método que mide los tiempos de aplicar Dijkstra a un número de grafos en formato de matriz con varios parámetros dados}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    :param n\PYZus{}graphs: Número de grafos a generar}
+         \PY{l+s+sd}{    :param n\PYZus{}nodes\PYZus{}ini: Número de nodos inicial}
+         \PY{l+s+sd}{    :param n\PYZus{}nodes\PYZus{}fin: Número de nodos final}
+         \PY{l+s+sd}{    :param step: Incremento en el número de nodos después de cada turno}
+         \PY{l+s+sd}{    :param sparse\PYZus{}factor: Proporción de ramas}
+         \PY{l+s+sd}{    :return: Lista con los tiempos devueltos para cada grafo al que se le aplicó Dijkstra}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}    
+             \PY{n}{grafos} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{dijktras} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{n\PYZus{}nodes\PYZus{}act} \PY{o}{=} \PY{n}{n\PYZus{}nodes\PYZus{}ini}
+             
+             \PY{k}{while} \PY{n}{n\PYZus{}nodes\PYZus{}act} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{:}
+                 \PY{n}{grafos}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes\PYZus{}act}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{p}{,} \PY{n}{max\PYZus{}weight}\PY{o}{=}\PY{l+m+mf}{10.}\PY{p}{,} \PY{n}{decimals}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+                     
+                 \PY{n}{inicio} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{dijkstra\PYZus{}m}\PY{p}{(}\PY{n}{grafos}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+                 \PY{n}{fin} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+                 
+                 \PY{n}{dijktras}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{fin}\PY{o}{\PYZhy{}}\PY{n}{inicio}\PY{p}{)}
+                 
+                 \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                 \PY{n}{n\PYZus{}nodes\PYZus{}act} \PY{o}{+}\PY{o}{=} \PY{n}{step}
+             
+             \PY{k}{return} \PY{n}{dijktras}
+         
+         \PY{k}{def} \PY{n+nf}{time\PYZus{}dijkstra\PYZus{}d}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{p}{,}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{o}{.}\PY{l+m+mi}{25}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Método que mide los tiempos de aplicar Dijkstra a un número de grafos en formato de diccionario con varios parámetros dados}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    :param n\PYZus{}graphs: Número de grafos a generar}
+         \PY{l+s+sd}{    :param n\PYZus{}nodes\PYZus{}ini: Número de nodos inicial}
+         \PY{l+s+sd}{    :param n\PYZus{}nodes\PYZus{}fin: Número de nodos final}
+         \PY{l+s+sd}{    :param step: Incremento en el número de nodos después de cada turno}
+         \PY{l+s+sd}{    :param sparse\PYZus{}factor: Proporción de ramas}
+         \PY{l+s+sd}{    :return: Lista con los tiempos devueltos para cada grafo al que se le aplicó Dijkstra}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{grafos} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{dijktras} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{n\PYZus{}nodes\PYZus{}act} \PY{o}{=} \PY{n}{n\PYZus{}nodes\PYZus{}ini}
+             
+             \PY{k}{while} \PY{n}{n\PYZus{}nodes\PYZus{}act} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{:}
+                 \PY{n}{grafos}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{m\PYZus{}g\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes\PYZus{}act}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{p}{,} \PY{n}{max\PYZus{}weight}\PY{o}{=}\PY{l+m+mf}{10.}\PY{p}{,} \PY{n}{decimals}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                     
+                 \PY{n}{inicio} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{dijkstra\PYZus{}d}\PY{p}{(}\PY{n}{grafos}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+                 \PY{n}{fin} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+                 
+                 \PY{n}{dijktras}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{fin}\PY{o}{\PYZhy{}}\PY{n}{inicio}\PY{p}{)}
+                 
+                 \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                 \PY{n}{n\PYZus{}nodes\PYZus{}act} \PY{o}{+}\PY{o}{=} \PY{n}{step}
+             
+             \PY{k}{return} \PY{n}{dijktras}
+         
+         \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} checking}
+         
+         \PY{n}{d\PYZus{}g} \PY{o}{=} \PY{p}{\PYZob{}}
+         \PY{l+m+mi}{0}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{,} 
+         \PY{l+m+mi}{1}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{2}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{,} 
+         \PY{l+m+mi}{2}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{3}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{,}
+         \PY{l+m+mi}{3}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}
+         \PY{p}{\PYZcb{}}
+         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{d\PYZus{}g = \PYZob{}}
+         \PY{l+s+sd}{0: \PYZob{}2:3\PYZcb{},}
+         \PY{l+s+sd}{1: \PYZob{}0:2\PYZcb{},}
+         \PY{l+s+sd}{2: \PYZob{}\PYZcb{},}
+         \PY{l+s+sd}{3: \PYZob{}1:1\PYZcb{},}
+         \PY{l+s+sd}{4: \PYZob{}0,2\PYZcb{},}
+         \PY{l+s+sd}{\PYZcb{}}
+         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{n}{u\PYZus{}ini} \PY{o}{=} \PY{l+m+mi}{3}
+         
+         \PY{n}{d\PYZus{}dist}\PY{p}{,} \PY{n}{d\PYZus{}prev} \PY{o}{=} \PY{n}{dijkstra\PYZus{}d}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{,} \PY{n}{u\PYZus{}ini}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{d\PYZus{}dist}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{min\PYZus{}paths}\PY{p}{(}\PY{n}{d\PYZus{}prev}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{d\PYZus{}g\PYZus{}nx} \PY{o}{=} \PY{n}{nx}\PY{o}{.}\PY{n}{DiGraph}\PY{p}{(}\PY{p}{)}
+         \PY{n}{l\PYZus{}e} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}
+         \PY{n}{d\PYZus{}g\PYZus{}nx}\PY{o}{.}\PY{n}{add\PYZus{}weighted\PYZus{}edges\PYZus{}from}\PY{p}{(}\PY{n}{l\PYZus{}e}\PY{p}{)}
+         
+         \PY{n}{d}\PY{p}{,} \PY{n}{p} \PY{o}{=} \PY{n}{nx}\PY{o}{.}\PY{n}{single\PYZus{}source\PYZus{}dijkstra}\PY{p}{(}\PY{n}{d\PYZus{}g\PYZus{}nx}\PY{p}{,} \PY{n}{u\PYZus{}ini}\PY{p}{,} \PY{n}{weight}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}    
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{d}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{p}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{0: inf, 1: 1.0, 2: 2.0, 3: 0.0\} 
+ \{0: [None], 1: [3, 1], 2: [3, 1, 2], 3: [None]\}
+\{3: 0, 1: 1, 2: 2\} 
+ \{3: [3], 1: [3, 1], 2: [3, 1, 2]\}
+
+    \end{Verbatim}
+
+    \subsection{Cuestiones sobre Dijkstra}\label{cuestiones-sobre-dijkstra}
+
+\subsubsection{Cuestión 1}\label{cuestiuxf3n-1}
+
+\textbf{¿Cuál es el coste teórico del algoritmo de Dijkstra? Justificar
+brevemente dicho coste }
+
+Para un grafo de V vértices y E ramas, el coste de Dijkstra es
+O(\textbar{}E\textbar{}*Log\textbar{}V\textbar{}). Este coste se puede
+ver alterado según la estructura de datos que utilicemos para
+desarrollar el algoritmo. Esta fórmula sale de las operaciones básicas
+del algoritmo: insertar y obtener en la estructura de datos es una
+operación de coste logarítmico, y dado que se va a hacer para cada uno
+de las ramas se añade la E. V no se reflejada dado que en comparación al
+número de ramas, el número de nodos no influye.
+
+\subsubsection{Cuestión 2}\label{cuestiuxf3n-2}
+
+\textbf{Expresar el coste de Dijkstra en función del número de nodos y
+el sparse factor \(\varphi\) del grafo en cuestión. Para un número de
+nodos fijo adecuado, ¿cuál es el crecimiento del coste de Dijkstra en
+función de \(\varphi\)? }
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}62}]:} \PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{l+m+mi}{5}
+         \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{l+m+mi}{100}
+         \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{l+m+mi}{1000}
+         \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{200}
+         
+         \PY{n}{sparse\PYZus{}f1}\PY{o}{=} \PY{l+m+mf}{0.1}
+         \PY{n}{sparse\PYZus{}f3}\PY{o}{=} \PY{l+m+mf}{0.3}
+         \PY{n}{sparse\PYZus{}f5}\PY{o}{=} \PY{l+m+mf}{0.5}
+         \PY{n}{sparse\PYZus{}f7}\PY{o}{=} \PY{l+m+mf}{0.7}
+         \PY{n}{sparse\PYZus{}f9}\PY{o}{=} \PY{l+m+mf}{0.9}
+         
+         \PY{n}{l\PYZus{}t\PYZus{}d1} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}d}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f1}\PY{p}{)}
+         \PY{n}{l\PYZus{}t\PYZus{}d3} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}d}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f3}\PY{p}{)}
+         \PY{n}{l\PYZus{}t\PYZus{}d5} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}d}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f5}\PY{p}{)}
+         \PY{n}{l\PYZus{}t\PYZus{}d7} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}d}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f7}\PY{p}{)}
+         \PY{n}{l\PYZus{}t\PYZus{}d9} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}d}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f9}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}l\PYZus{}t\PYZus{}final = l\PYZus{}t\PYZus{}d1+l\PYZus{}t\PYZus{}d3+l\PYZus{}t\PYZus{}d5+l\PYZus{}t\PYZus{}d7+l\PYZus{}t\PYZus{}d9}
+         \PY{c+c1}{\PYZsh{}print(l\PYZus{}t\PYZus{}final)}
+         
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d1}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d3}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d5}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d7}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d9}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    La gráfica que se puede observar representa el algoritmo de Dijkstra
+cinco veces cambiando el sparse factor, y podemos observar que entre más
+grande sea el sparse factor, menos ramas tendrá el grafo y por lo tanto,
+menos tiempo tardará Dijkstra en realizarse (la línea que está más
+arriba representa el grafo de menor sparse factor, y llega a ser hasta
+casi 10 veces más lento que el grafo que tiene mayor sparse factor).
+
+Creemos que el crecimiento del coste de Dijkstra en función del sparse
+factor es logarítmico, como se puede ver en la gráfica.
+
+    \subsubsection{Cuestión 3}\label{cuestiuxf3n-3}
+
+\textbf{¿Cuál es el coste teórico del algoritmo de Dijkstra iterado para
+encontrar las distancias mínimas entre todos los vértices de un grafo?}
+
+El coste de Dijkstra iterado es:
+O(\textbar{}E\textbar{}\emph{Log\textbar{}V\textbar{}) } el número de
+vértices (V), lo cual es igual a
+O(\textbar{}V\textbar{}\emph{\textbar{}E\textbar{}}Log\textbar{}V\textbar{}).
+Y si el grafo es denso, el coste es
+O(\textbar{}V\textbar{}³*Log\textbar{}V\textbar{})
+
+\subsubsection{Cuestión 4}\label{cuestiuxf3n-4}
+
+\textbf{¿Cómo se podrían recuperar los caminos mínimos si se utiliza
+Dijkstra iterado?}
+
+Asumimos que un método 'dijkstra\_d\_iter' devuelve un diccionario
+'d\_prev\_iter' con un nivel más de diccionario, es decir, cada clave de
+'d\_prev\_iter' contiene un diccionario 'd\_prev' resultado de aplicar
+Dijkstra con la clave como nodo inicial.
+
+Tendríamos que implementar un método 'min\_path\_iter(d\_prev\_iter)'
+que hace para cada una de las claves de 'd\_prev\_iter' el 'min\_path'
+ya implementado, dejando como resultado un diccionario con un nivel más
+a los devueltos por 'min\_path'.
+
+    \subsection{3.2 Plotting Dijkstra's Execution
+Times}\label{plotting-dijkstras-execution-times}
+
+Fit below a linear model An\^{}2 logn+B to the times in the returned
+lists and plot the real and fitted times discussing the results.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{l+m+mi}{20}
+         \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{l+m+mi}{10}
+         \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{l+m+mi}{100}
+         \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{5}
+         \PY{n}{sparse\PYZus{}f}\PY{o}{=} \PY{l+m+mf}{0.25}
+         \PY{n}{l\PYZus{}t\PYZus{}d} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}d}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[  2.30258509e+03]
+ [  9.13966943e+03]
+ [  2.39658582e+04]
+ [  5.02949348e+04]
+ [  9.18323293e+04]
+ [  1.52435548e+05]
+ [  2.36088285e+05]
+ [  3.46882119e+05]
+ [  4.89002876e+05]
+ [  6.66720059e+05]
+ [  8.84378425e+05]
+ [  1.14639110e+06]
+ [  1.45723387e+06]
+ [  1.82144030e+06]
+ [  2.24359764e+06]
+ [  2.72834320e+06]
+ [  3.28036125e+06]
+ [  3.90438020e+06]
+ [  4.60517019e+06]]
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{4 The networkx Library}\label{the-networkx-library}
+
+We are going to use the networkx library to check our Dijkstra results
+and to get alternative times.
+
+An example of loading a networkx directed graph is to use a list (i, j,
+w) of (i, j) edges with weights w can be seen in the following cell:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{g} \PY{o}{=} \PY{n}{nx}\PY{o}{.}\PY{n}{DiGraph}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{l\PYZus{}e} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}
+         \PY{n}{g}\PY{o}{.}\PY{n}{add\PYZus{}weighted\PYZus{}edges\PYZus{}from}\PY{p}{(}\PY{n}{l\PYZus{}e}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{k1} \PY{o+ow}{in} \PY{n}{g}\PY{o}{.}\PY{n}{nodes}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{k}{for} \PY{n}{k2} \PY{o+ow}{in} \PY{n}{g}\PY{p}{[}\PY{n}{k1}\PY{p}{]}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{(}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{k1}\PY{p}{,} \PY{n}{k2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{g}\PY{p}{[}\PY{n}{k1}\PY{p}{]}\PY{p}{[}\PY{n}{k2}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+( 0 1 ) 10
+( 0 2 ) 1
+( 1 2 ) 1
+( 2 3 ) 1
+( 3 1 ) 1
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{def} \PY{n+nf}{d\PYZus{}g\PYZus{}2\PYZus{}nx\PYZus{}g}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Método que pasa de un diccionario en formato de diccionario a uno en formato de Networkx}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    :param d\PYZus{}g: Grafo en formato de diccionario}
+         \PY{l+s+sd}{    :return: Grafo en formato de Networkx}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{l\PYZus{}e} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{g} \PY{o}{=} \PY{n}{nx}\PY{o}{.}\PY{n}{DiGraph}\PY{p}{(}\PY{p}{)}
+             
+             \PY{k}{for} \PY{n}{keys}\PY{p}{,}\PY{n}{values} \PY{o+ow}{in} \PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{keys2}\PY{p}{,}\PY{n}{values2} \PY{o+ow}{in} \PY{n}{values}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{l\PYZus{}e}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{keys}\PY{p}{,}\PY{n}{keys2}\PY{p}{,}\PY{n}{values2}\PY{p}{)}\PY{p}{)}
+         
+             \PY{n}{g}\PY{o}{.}\PY{n}{add\PYZus{}weighted\PYZus{}edges\PYZus{}from}\PY{p}{(}\PY{n}{l\PYZus{}e}\PY{p}{)}
+             \PY{k}{return} \PY{n}{g}
+             
+         \PY{k}{def} \PY{n+nf}{nx\PYZus{}g\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{nx\PYZus{}g}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Método que pasa de un diccionario en formato de Networkx a uno en formato de diccionario}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    :param nx\PYZus{}g: Grafo en formato de Networkx}
+         \PY{l+s+sd}{    :return: Grafo en formato de diccionario}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{d\PYZus{}g} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{nx\PYZus{}g}\PY{o}{.}\PY{n}{nodes}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{keys}\PY{p}{,}\PY{n}{values} \PY{o+ow}{in} \PY{n}{nx\PYZus{}g}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                     \PY{k}{if} \PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{==} \PY{k+kc}{None}\PY{p}{:} 
+                         \PY{n}{d\PYZus{}g}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{i}\PY{p}{:}\PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+                     \PY{k}{for} \PY{n}{keys2}\PY{p}{,}\PY{n}{values2} \PY{o+ow}{in} \PY{n}{values}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                         \PY{n}{d\PYZus{}g}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{n}{keys}\PY{p}{:}\PY{n}{values2}\PY{p}{\PYZcb{}}\PY{p}{)}
+                         
+             \PY{k}{return} \PY{n}{d\PYZus{}g}
+         
+         \PY{k}{def} \PY{n+nf}{time\PYZus{}dijkstra\PYZus{}nx}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{o}{.}\PY{l+m+mi}{25}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    Método que mide los tiempos de aplicar Dijkstra con la libreria NetworkX a un número de grafos en formato de}
+         \PY{l+s+sd}{        NetworkX en base a varios parámetros dados}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    :param n\PYZus{}graphs: Número de grafos a generar}
+         \PY{l+s+sd}{    :param n\PYZus{}nodes\PYZus{}ini: Número de nodos inicial}
+         \PY{l+s+sd}{    :param n\PYZus{}nodes\PYZus{}fin: Número de nodos final}
+         \PY{l+s+sd}{    :param step: Incremento en el número de nodos después de cada turno}
+         \PY{l+s+sd}{    :param sparse\PYZus{}factor: Proporción de ramas}
+         \PY{l+s+sd}{    :return: Lista con los tiempos devueltos para cada grafo al que se le aplicó Dijkstra}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{grafos} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{dijktras} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{n\PYZus{}nodes\PYZus{}act} \PY{o}{=} \PY{n}{n\PYZus{}nodes\PYZus{}ini}
+             
+             \PY{k}{while} \PY{n}{n\PYZus{}nodes\PYZus{}act} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{:}
+                 \PY{n}{grafos}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{d\PYZus{}g\PYZus{}2\PYZus{}nx\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes\PYZus{}act}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{p}{,} \PY{n}{max\PYZus{}weight}\PY{o}{=}\PY{l+m+mf}{10.}\PY{p}{,} \PY{n}{decimals}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                     
+                 \PY{n}{inicio} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{nx}\PY{o}{.}\PY{n}{single\PYZus{}source\PYZus{}dijkstra}\PY{p}{(}\PY{n}{grafos}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+                 \PY{n}{fin} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+                 
+                 \PY{n}{dijktras}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{fin}\PY{o}{\PYZhy{}}\PY{n}{inicio}\PY{p}{)}
+                 
+                 \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                 \PY{n}{n\PYZus{}nodes\PYZus{}act} \PY{o}{+}\PY{o}{=} \PY{n}{step}
+             
+             \PY{k}{return} \PY{n}{dijktras}
+         
+         
+         \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} checking}
+         \PY{n}{d\PYZus{}g} \PY{o}{=} \PY{p}{\PYZob{}}
+         \PY{l+m+mi}{0}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{,} 
+         \PY{l+m+mi}{1}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{2}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{,} 
+         \PY{l+m+mi}{2}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{3}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{,}
+         \PY{l+m+mi}{3}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}
+         \PY{p}{\PYZcb{}}
+         
+         \PY{n}{d\PYZus{}g\PYZus{}nx} \PY{o}{=} \PY{n}{d\PYZus{}g\PYZus{}2\PYZus{}nx\PYZus{}g}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{)}
+         
+         \PY{n}{print\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{d\PYZus{}g}\PY{p}{)}
+         \PY{p}{(}\PY{n}{d\PYZus{}g\PYZus{}nx}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+graph\_from\_dict:
+
+( 0 1 ) 10
+( 0 2 ) 1
+( 1 2 ) 1
+( 2 3 ) 1
+( 3 1 ) 1
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} \{'weight': 10\}
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{l+m+mi}{20}
+         \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{l+m+mi}{100} 
+         \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{l+m+mi}{1000}
+         \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{50}
+         \PY{n}{sparse\PYZus{}f}\PY{o}{=} \PY{l+m+mf}{0.25}
+         \PY{n}{l\PYZus{}t\PYZus{}nx} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}nx}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                   \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}nx}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Cuestiones sobre Networkx}\label{cuestiones-sobre-networkx}
+
+\subsubsection{Cuestión 1}\label{cuestiuxf3n-1}
+
+\textbf{Mostrar gráficamente el crecimiento de los tiempos de ejecución
+del algoritmo de Dijkstra en función del número de nodos y del sparse
+factor usando la librería Networkx. Usa grafos de 100 nodos y un sparse
+factor de 0.1, 0.3, 0.5, 0.7, 0.9}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}64}]:} \PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{l+m+mi}{5}
+         \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{l+m+mi}{100}
+         \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{l+m+mi}{1000}
+         \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{200}
+         
+         \PY{n}{sparse\PYZus{}f1}\PY{o}{=} \PY{l+m+mf}{0.1}
+         \PY{n}{sparse\PYZus{}f3}\PY{o}{=} \PY{l+m+mf}{0.3}
+         \PY{n}{sparse\PYZus{}f5}\PY{o}{=} \PY{l+m+mf}{0.5}
+         \PY{n}{sparse\PYZus{}f7}\PY{o}{=} \PY{l+m+mf}{0.7}
+         \PY{n}{sparse\PYZus{}f9}\PY{o}{=} \PY{l+m+mf}{0.9}
+         
+         \PY{n}{l\PYZus{}t\PYZus{}d1} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}nx}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f1}\PY{p}{)}
+         \PY{n}{l\PYZus{}t\PYZus{}d3} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}nx}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f3}\PY{p}{)}
+         \PY{n}{l\PYZus{}t\PYZus{}d5} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}nx}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f5}\PY{p}{)}
+         \PY{n}{l\PYZus{}t\PYZus{}d7} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}nx}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f7}\PY{p}{)}
+         \PY{n}{l\PYZus{}t\PYZus{}d9} \PY{o}{=} \PY{n}{time\PYZus{}dijkstra\PYZus{}nx}\PY{p}{(}\PY{n}{n\PYZus{}graphs}\PY{o}{=}\PY{n}{n\PYZus{}graphs}\PY{p}{,} \PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} 
+                                 \PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{,} \PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{n}{sparse\PYZus{}f9}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}l\PYZus{}t\PYZus{}final = l\PYZus{}t\PYZus{}d1+l\PYZus{}t\PYZus{}d3+l\PYZus{}t\PYZus{}d5+l\PYZus{}t\PYZus{}d7+l\PYZus{}t\PYZus{}d9}
+         \PY{c+c1}{\PYZsh{}print(l\PYZus{}t\PYZus{}final)}
+         
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d1}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d3}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d5}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d7}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{n}{l\PYZus{}t\PYZus{}d9}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}ini}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{n}{n\PYZus{}nodes\PYZus{}fin}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{n}{step}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_30_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Como podemos observar en esta última gráfica, el algoritmo de Dijkstra
+con la librería Networkx es mucho más rápido que el nuestro, hasta unas
+3 veces más rápido aproximadamente.
+
+\subsubsection{Cuestión 2}\label{cuestiuxf3n-2}
+
+\textbf{Mide y muestra gráficamente los tiempos de ejecución del
+algoritmo de Dijkstra iterativo para encontrar las distancias mínimas
+entre todos los vértices del grafo usando la librería Networkx con
+grafos de un número fijo de 25 nodos y sparse factors de 0.1, 0.3, 0.5,
+0.7, 0.9.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}74}]:} \PY{n}{nx1} \PY{o}{=}  \PY{n}{d\PYZus{}g\PYZus{}2\PYZus{}nx\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,}\PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{n}{max\PYZus{}weight}\PY{o}{=}\PY{l+m+mf}{50.}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{n}{nx3} \PY{o}{=}  \PY{n}{d\PYZus{}g\PYZus{}2\PYZus{}nx\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,}\PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{n}{max\PYZus{}weight}\PY{o}{=}\PY{l+m+mf}{50.}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{n}{nx5} \PY{o}{=}  \PY{n}{d\PYZus{}g\PYZus{}2\PYZus{}nx\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,}\PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,}\PY{n}{max\PYZus{}weight}\PY{o}{=}\PY{l+m+mf}{50.}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{n}{nx7} \PY{o}{=}  \PY{n}{d\PYZus{}g\PYZus{}2\PYZus{}nx\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,}\PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,}\PY{n}{max\PYZus{}weight}\PY{o}{=}\PY{l+m+mf}{50.}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{n}{nx9} \PY{o}{=}  \PY{n}{d\PYZus{}g\PYZus{}2\PYZus{}nx\PYZus{}g}\PY{p}{(}\PY{n}{m\PYZus{}g\PYZus{}2\PYZus{}d\PYZus{}g}\PY{p}{(}\PY{n}{rand\PYZus{}matr\PYZus{}pos\PYZus{}graph}\PY{p}{(}\PY{n}{n\PYZus{}nodes}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,}\PY{n}{sparse\PYZus{}factor}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{,}\PY{n}{max\PYZus{}weight}\PY{o}{=}\PY{l+m+mf}{50.}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{inicio1} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+         \PY{n}{nx}\PY{o}{.}\PY{n}{all\PYZus{}pairs\PYZus{}shortest\PYZus{}path}\PY{p}{(}\PY{n}{nx1}\PY{p}{)}
+         \PY{n}{fin1} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{inicio3} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+         \PY{n}{nx}\PY{o}{.}\PY{n}{all\PYZus{}pairs\PYZus{}shortest\PYZus{}path}\PY{p}{(}\PY{n}{nx3}\PY{p}{)}
+         \PY{n}{fin3} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{inicio5} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+         \PY{n}{nx}\PY{o}{.}\PY{n}{all\PYZus{}pairs\PYZus{}shortest\PYZus{}path}\PY{p}{(}\PY{n}{nx5}\PY{p}{)}
+         \PY{n}{fin5} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{inicio7} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+         \PY{n}{nx}\PY{o}{.}\PY{n}{all\PYZus{}pairs\PYZus{}shortest\PYZus{}path}\PY{p}{(}\PY{n}{nx7}\PY{p}{)}
+         \PY{n}{fin7} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{inicio9} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+         \PY{n}{nx}\PY{o}{.}\PY{n}{all\PYZus{}pairs\PYZus{}shortest\PYZus{}path}\PY{p}{(}\PY{n}{nx9}\PY{p}{)}
+         \PY{n}{fin9} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{t1} \PY{o}{=} \PY{n}{fin1}\PY{o}{\PYZhy{}}\PY{n}{inicio1}
+         \PY{n}{t3} \PY{o}{=} \PY{n}{fin3}\PY{o}{\PYZhy{}}\PY{n}{inicio3}
+         \PY{n}{t5} \PY{o}{=} \PY{n}{fin5}\PY{o}{\PYZhy{}}\PY{n}{inicio5}
+         \PY{n}{t7} \PY{o}{=} \PY{n}{fin7}\PY{o}{\PYZhy{}}\PY{n}{inicio7}
+         \PY{n}{t9} \PY{o}{=} \PY{n}{fin9}\PY{o}{\PYZhy{}}\PY{n}{inicio9}
+         
+         \PY{c+c1}{\PYZsh{}l\PYZus{}t\PYZus{}d = [t1,t3,t5,t7,t9]}
+         
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{p}{[}\PY{n}{t1}\PY{p}{]}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{p}{[}\PY{n}{t3}\PY{p}{]}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{p}{[}\PY{n}{t5}\PY{p}{]}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{p}{[}\PY{n}{t7}\PY{p}{]}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{fit\PYZus{}plot}\PY{p}{(}\PY{p}{[}\PY{n}{t9}\PY{p}{]}\PY{p}{,} \PY{n}{n2\PYZus{}log\PYZus{}n}\PY{p}{,} \PY{n}{size\PYZus{}ini}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{size\PYZus{}fin}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
