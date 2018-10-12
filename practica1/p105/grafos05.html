@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module grafos05</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>grafos05</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/dario/Uam/2019/DAALG/practica1/grafos05.py">/home/dario/Uam/2019/DAALG/practica1/grafos05.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;coding:&nbsp;utf-8</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="gzip.html">gzip</a><br>
+<a href="itertools.html">itertools</a><br>
+<a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="networkx.html">networkx</a><br>
+<a href="pickle.html">pickle</a><br>
+<a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+</td><td width="25%" valign=top><a href="queue.html">queue</a><br>
+<a href="random.html">random</a><br>
+<a href="string.html">string</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+<a href="time.html">time</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-TGF_2_d_g"><strong>TGF_2_d_g</strong></a>(f_name)</dt><dd><tt>Método&nbsp;que&nbsp;se&nbsp;encarga&nbsp;de&nbsp;leer&nbsp;un&nbsp;grafo&nbsp;en&nbsp;formato&nbsp;TGF&nbsp;de&nbsp;un&nbsp;fichero&nbsp;y&nbsp;pasarlo&nbsp;a&nbsp;formato&nbsp;de&nbsp;diccionario<br>
+&nbsp;<br>
+:param&nbsp;f_name:&nbsp;Nombre&nbsp;del&nbsp;fichero<br>
+:return:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario</tt></dd></dl>
+ <dl><dt><a name="-check_sparse_factor"><strong>check_sparse_factor</strong></a>(n_grafos, n_nodes, sparse_factor)</dt><dd><tt>Método&nbsp;que&nbsp;calcula&nbsp;la&nbsp;proporción&nbsp;de&nbsp;ramas&nbsp;según&nbsp;una&nbsp;serie&nbsp;de&nbsp;grafos<br>
+&nbsp;<br>
+:param&nbsp;n_grafos:&nbsp;Número&nbsp;de&nbsp;grafos<br>
+:param&nbsp;n_nodes:&nbsp;Número&nbsp;de&nbsp;nodos&nbsp;de&nbsp;cada&nbsp;grafo<br>
+:param&nbsp;sparse_factor:&nbsp;Proporción&nbsp;de&nbsp;ramas<br>
+:return:&nbsp;La&nbsp;proporción&nbsp;de&nbsp;ramas&nbsp;que&nbsp;hay&nbsp;en&nbsp;los&nbsp;grafos</tt></dd></dl>
+ <dl><dt><a name="-cuenta_ramas"><strong>cuenta_ramas</strong></a>(m_g)</dt><dd><tt>Método&nbsp;que&nbsp;cuenta&nbsp;las&nbsp;ramas&nbsp;que&nbsp;hay&nbsp;en&nbsp;el&nbsp;grafo<br>
+&nbsp;<br>
+:param&nbsp;m_g:&nbsp;Grafo<br>
+:return:&nbsp;Número&nbsp;de&nbsp;ramas&nbsp;que&nbsp;tiene&nbsp;el&nbsp;grafo</tt></dd></dl>
+ <dl><dt><a name="-d_g_2_TGF"><strong>d_g_2_TGF</strong></a>(d_g, f_name)</dt><dd><tt>Método&nbsp;que&nbsp;se&nbsp;encarga&nbsp;de&nbsp;pasar&nbsp;de&nbsp;un&nbsp;grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario&nbsp;a&nbsp;uno&nbsp;en&nbsp;formato&nbsp;TGF&nbsp;y&nbsp;de&nbsp;guardarlo&nbsp;en&nbsp;un&nbsp;fichero<br>
+&nbsp;<br>
+:param&nbsp;d_g:&nbsp;Grafo<br>
+:param&nbsp;f_name:&nbsp;Nombre&nbsp;del&nbsp;fichero&nbsp;donde&nbsp;se&nbsp;guardará&nbsp;el&nbsp;grafo<br>
+:return:&nbsp;No&nbsp;devuelve&nbsp;nada</tt></dd></dl>
+ <dl><dt><a name="-d_g_2_m_g"><strong>d_g_2_m_g</strong></a>(d_g)</dt><dd><tt>Método&nbsp;que&nbsp;pasa&nbsp;un&nbsp;diccionario&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario&nbsp;a&nbsp;uno&nbsp;en&nbsp;formato&nbsp;de&nbsp;matriz<br>
+&nbsp;<br>
+:param&nbsp;d_g:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario<br>
+:return:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;matriz</tt></dd></dl>
+ <dl><dt><a name="-d_g_2_nx_g"><strong>d_g_2_nx_g</strong></a>(d_g)</dt><dd><tt>Método&nbsp;que&nbsp;pasa&nbsp;de&nbsp;un&nbsp;diccionario&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario&nbsp;a&nbsp;uno&nbsp;en&nbsp;formato&nbsp;de&nbsp;Networkx<br>
+&nbsp;<br>
+:param&nbsp;d_g:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario<br>
+:return:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;Networkx</tt></dd></dl>
+ <dl><dt><a name="-dijkstra_d"><strong>dijkstra_d</strong></a>(d_g, u)</dt><dd><tt>Método&nbsp;que&nbsp;aplica&nbsp;el&nbsp;algoritmo&nbsp;de&nbsp;Dijkstra&nbsp;a&nbsp;un&nbsp;grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario&nbsp;a&nbsp;partir&nbsp;de&nbsp;un&nbsp;nodo&nbsp;inicial&nbsp;dado<br>
+&nbsp;<br>
+:param&nbsp;d_g:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario<br>
+:param&nbsp;u:&nbsp;Nodo&nbsp;inicial<br>
+:return:&nbsp;un&nbsp;diccionario&nbsp;con&nbsp;las&nbsp;distancias&nbsp;mínimas&nbsp;al&nbsp;resto&nbsp;de&nbsp;nodos,&nbsp;y&nbsp;un&nbsp;diccionario&nbsp;con&nbsp;los&nbsp;nodos&nbsp;precios</tt></dd></dl>
+ <dl><dt><a name="-dijkstra_m"><strong>dijkstra_m</strong></a>(m_g, u)</dt><dd><tt>Método&nbsp;que&nbsp;aplica&nbsp;el&nbsp;algoritmo&nbsp;de&nbsp;Dijkstra&nbsp;a&nbsp;un&nbsp;grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;matriz&nbsp;a&nbsp;partir&nbsp;de&nbsp;un&nbsp;nodo&nbsp;inicial&nbsp;dado<br>
+&nbsp;<br>
+:param&nbsp;m_g:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;matriz<br>
+:param&nbsp;u:&nbsp;Nodo&nbsp;inicial<br>
+:return:&nbsp;un&nbsp;diccionario&nbsp;con&nbsp;las&nbsp;distancias&nbsp;mínimas&nbsp;al&nbsp;resto&nbsp;de&nbsp;nodos,&nbsp;y&nbsp;un&nbsp;diccionario&nbsp;con&nbsp;los&nbsp;nodos&nbsp;previos</tt></dd></dl>
+ <dl><dt><a name="-fit_plot"><strong>fit_plot</strong></a>(l, func_2_fit, size_ini, size_fin, step)</dt></dl>
+ <dl><dt><a name="-m_g_2_d_g"><strong>m_g_2_d_g</strong></a>(m_g)</dt><dd><tt>Método&nbsp;que&nbsp;pasa&nbsp;un&nbsp;grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;matriz&nbsp;a&nbsp;uno&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario<br>
+&nbsp;<br>
+:param&nbsp;m_g:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;matriz<br>
+:return:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario</tt></dd></dl>
+ <dl><dt><a name="-min_paths"><strong>min_paths</strong></a>(d_prev)</dt><dd><tt>Método&nbsp;que&nbsp;devuelve&nbsp;los&nbsp;caminos&nbsp;mínimos&nbsp;desde&nbsp;el&nbsp;nodo&nbsp;inicial&nbsp;a&nbsp;cualquier&nbsp;otro&nbsp;nodo.<br>
+&nbsp;<br>
+:param&nbsp;d_prev:&nbsp;Diccionario&nbsp;en&nbsp;el&nbsp;que&nbsp;cada&nbsp;clave&nbsp;contiene&nbsp;su&nbsp;nodo&nbsp;previo<br>
+:return:&nbsp;Un&nbsp;diccionario&nbsp;en&nbsp;el&nbsp;que&nbsp;cada&nbsp;clave&nbsp;contiene&nbsp;la&nbsp;lista&nbsp;de&nbsp;nodos&nbsp;desde&nbsp;el&nbsp;nodo&nbsp;inicial&nbsp;hasta&nbsp;el&nbsp;nodo&nbsp;clave</tt></dd></dl>
+ <dl><dt><a name="-n2_log_n"><strong>n2_log_n</strong></a>(n)</dt></dl>
+ <dl><dt><a name="-nx_g_2_d_g"><strong>nx_g_2_d_g</strong></a>(nx_g)</dt><dd><tt>Método&nbsp;que&nbsp;pasa&nbsp;de&nbsp;un&nbsp;diccionario&nbsp;en&nbsp;formato&nbsp;de&nbsp;Networkx&nbsp;a&nbsp;uno&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario<br>
+&nbsp;<br>
+:param&nbsp;nx_g:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;Networkx<br>
+:return:&nbsp;Grafo&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario</tt></dd></dl>
+ <dl><dt><a name="-print_d_g"><strong>print_d_g</strong></a>(d_g)</dt></dl>
+ <dl><dt><a name="-print_m_g"><strong>print_m_g</strong></a>(m_g)</dt></dl>
+ <dl><dt><a name="-rand_matr_pos_graph"><strong>rand_matr_pos_graph</strong></a>(n_nodes, sparse_factor, max_weight=50.0, decimals=0)</dt><dd><tt>Método&nbsp;que&nbsp;genera&nbsp;grafos&nbsp;de&nbsp;manera&nbsp;aleatoria<br>
+&nbsp;<br>
+:param&nbsp;n_nodes:&nbsp;Número&nbsp;de&nbsp;nodos&nbsp;que&nbsp;tendrá&nbsp;el&nbsp;grafo<br>
+:param&nbsp;sparse_factor:&nbsp;Proporción&nbsp;de&nbsp;ramas&nbsp;(probabilidad&nbsp;de&nbsp;que&nbsp;una&nbsp;ramas&nbsp;inexistentes)<br>
+:param&nbsp;max_weight:&nbsp;Peso&nbsp;máximo&nbsp;que&nbsp;podría&nbsp;tener&nbsp;una&nbsp;rama<br>
+:param&nbsp;decimals:&nbsp;Número&nbsp;de&nbsp;decimales<br>
+:return:&nbsp;grafo&nbsp;generado</tt></dd></dl>
+ <dl><dt><a name="-read_object"><strong>read_object</strong></a>(f_name, save_path='.')</dt><dd><tt>Método&nbsp;que&nbsp;lee&nbsp;un&nbsp;objeto&nbsp;de&nbsp;un&nbsp;fichero<br>
+&nbsp;<br>
+:param&nbsp;f_name:&nbsp;Nombre&nbsp;del&nbsp;fichero<br>
+:param&nbsp;save_path:&nbsp;Ruta&nbsp;del&nbsp;fichero<br>
+:return:&nbsp;Objeto&nbsp;guardado</tt></dd></dl>
+ <dl><dt><a name="-save_object"><strong>save_object</strong></a>(obj, f_name='obj.pklz', save_path='.')</dt><dd><tt>Método&nbsp;que&nbsp;guardará&nbsp;un&nbsp;objeto&nbsp;(En&nbsp;este&nbsp;caso&nbsp;un&nbsp;grafo)&nbsp;en&nbsp;un&nbsp;fichero&nbsp;dado<br>
+&nbsp;<br>
+:param&nbsp;obj:&nbsp;Objeto&nbsp;a&nbsp;guardar<br>
+:param&nbsp;f_name:&nbsp;Nombre&nbsp;del&nbsp;fichero<br>
+:param&nbsp;save_path:&nbsp;Ruta&nbsp;en&nbsp;donde&nbsp;se&nbsp;guardará&nbsp;el&nbsp;fichero<br>
+:return:&nbsp;No&nbsp;devuelve&nbsp;nada</tt></dd></dl>
+ <dl><dt><a name="-time_dijkstra_d"><strong>time_dijkstra_d</strong></a>(n_graphs, n_nodes_ini, n_nodes_fin, step, sparse_factor=0.25)</dt><dd><tt>Método&nbsp;que&nbsp;mide&nbsp;los&nbsp;tiempos&nbsp;de&nbsp;aplicar&nbsp;Dijkstra&nbsp;a&nbsp;un&nbsp;número&nbsp;de&nbsp;grafos&nbsp;en&nbsp;formato&nbsp;de&nbsp;diccionario&nbsp;con&nbsp;varios&nbsp;parámetros&nbsp;dados<br>
+&nbsp;<br>
+:param&nbsp;n_graphs:&nbsp;Número&nbsp;de&nbsp;grafos&nbsp;a&nbsp;generar<br>
+:param&nbsp;n_nodes_ini:&nbsp;Número&nbsp;de&nbsp;nodos&nbsp;inicial<br>
+:param&nbsp;n_nodes_fin:&nbsp;Número&nbsp;de&nbsp;nodos&nbsp;final<br>
+:param&nbsp;step:&nbsp;Incremento&nbsp;en&nbsp;el&nbsp;número&nbsp;de&nbsp;nodos&nbsp;después&nbsp;de&nbsp;cada&nbsp;turno<br>
+:param&nbsp;sparse_factor:&nbsp;Proporción&nbsp;de&nbsp;ramas<br>
+:return:&nbsp;Lista&nbsp;con&nbsp;los&nbsp;tiempos&nbsp;devueltos&nbsp;para&nbsp;cada&nbsp;grafo&nbsp;al&nbsp;que&nbsp;se&nbsp;le&nbsp;aplicó&nbsp;Dijkstra</tt></dd></dl>
+ <dl><dt><a name="-time_dijkstra_nx"><strong>time_dijkstra_nx</strong></a>(n_graphs, n_nodes_ini, n_nodes_fin, step, sparse_factor=0.25)</dt><dd><tt>Método&nbsp;que&nbsp;mide&nbsp;los&nbsp;tiempos&nbsp;de&nbsp;aplicar&nbsp;Dijkstra&nbsp;con&nbsp;la&nbsp;libreria&nbsp;NetworkX&nbsp;a&nbsp;un&nbsp;número&nbsp;de&nbsp;grafos&nbsp;en&nbsp;formato&nbsp;de<br>
+&nbsp;&nbsp;&nbsp;&nbsp;NetworkX&nbsp;en&nbsp;base&nbsp;a&nbsp;varios&nbsp;parámetros&nbsp;dados<br>
+&nbsp;<br>
+:param&nbsp;n_graphs:&nbsp;Número&nbsp;de&nbsp;grafos&nbsp;a&nbsp;generar<br>
+:param&nbsp;n_nodes_ini:&nbsp;Número&nbsp;de&nbsp;nodos&nbsp;inicial<br>
+:param&nbsp;n_nodes_fin:&nbsp;Número&nbsp;de&nbsp;nodos&nbsp;final<br>
+:param&nbsp;step:&nbsp;Incremento&nbsp;en&nbsp;el&nbsp;número&nbsp;de&nbsp;nodos&nbsp;después&nbsp;de&nbsp;cada&nbsp;turno<br>
+:param&nbsp;sparse_factor:&nbsp;Proporción&nbsp;de&nbsp;ramas<br>
+:return:&nbsp;Lista&nbsp;con&nbsp;los&nbsp;tiempos&nbsp;devueltos&nbsp;para&nbsp;cada&nbsp;grafo&nbsp;al&nbsp;que&nbsp;se&nbsp;le&nbsp;aplicó&nbsp;Dijkstra</tt></dd></dl>
+ <dl><dt><a name="-time_dijktra_m"><strong>time_dijktra_m</strong></a>(n_graphs, n_nodes_ini, n_nodes_fin, step, sparse_factor=0.25)</dt><dd><tt>Método&nbsp;que&nbsp;mide&nbsp;los&nbsp;tiempos&nbsp;de&nbsp;aplicar&nbsp;Dijkstra&nbsp;a&nbsp;un&nbsp;número&nbsp;de&nbsp;grafos&nbsp;en&nbsp;formato&nbsp;de&nbsp;matriz&nbsp;con&nbsp;varios&nbsp;parámetros&nbsp;dados<br>
+&nbsp;<br>
+:param&nbsp;n_graphs:&nbsp;Número&nbsp;de&nbsp;grafos&nbsp;a&nbsp;generar<br>
+:param&nbsp;n_nodes_ini:&nbsp;Número&nbsp;de&nbsp;nodos&nbsp;inicial<br>
+:param&nbsp;n_nodes_fin:&nbsp;Número&nbsp;de&nbsp;nodos&nbsp;final<br>
+:param&nbsp;step:&nbsp;Incremento&nbsp;en&nbsp;el&nbsp;número&nbsp;de&nbsp;nodos&nbsp;después&nbsp;de&nbsp;cada&nbsp;turno<br>
+:param&nbsp;sparse_factor:&nbsp;Proporción&nbsp;de&nbsp;ramas<br>
+:return:&nbsp;Lista&nbsp;con&nbsp;los&nbsp;tiempos&nbsp;devueltos&nbsp;para&nbsp;cada&nbsp;grafo&nbsp;al&nbsp;que&nbsp;se&nbsp;le&nbsp;aplicó&nbsp;Dijkstra</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>d</strong> = {1: 1, 2: 2, 3: 0}<br>
+<strong>d_dist</strong> = {0: inf, 1: 1.0, 2: 2.0, 3: 0.0}<br>
+<strong>d_g</strong> = {0: {1: 10, 2: 1}, 1: {2: 1}, 2: {3: 1}, 3: {1: 1}}<br>
+<strong>d_g_2</strong> = {'0': {'1': '19.0', '4': '48.0'}, '1': {'0': '49.0', '3': '27.0', '4': '46.0'}, '2': {'0': '39.0', '1': '0.0'}, '3': {'0': '39.0', '4': '12.0'}, '4': {'1': '44.0', '2': '35.0', '3': '39.0'}}<br>
+<strong>d_g_nx</strong> = &lt;networkx.classes.digraph.DiGraph object&gt;<br>
+<strong>d_prev</strong> = {0: None, 1: 3, 2: 1, 3: None}<br>
+<strong>f_name</strong> = 'gr.tgf'<br>
+<strong>g</strong> = &lt;networkx.classes.digraph.DiGraph object&gt;<br>
+<strong>grafos</strong> = [&lt;networkx.classes.digraph.DiGraph object&gt;, &lt;networkx.classes.digraph.DiGraph object&gt;, &lt;networkx.classes.digraph.DiGraph object&gt;, &lt;networkx.classes.digraph.DiGraph object&gt;, &lt;networkx.classes.digraph.DiGraph object&gt;]<br>
+<strong>i</strong> = 4<br>
+<strong>k1</strong> = 3<br>
+<strong>k2</strong> = 1<br>
+<strong>l</strong> = [[0, 10, 1, inf], [inf, 0, 1, inf], [inf, inf, 0, 1], [inf, 1, inf, 0]]<br>
+<strong>l_e</strong> = [(0, 1, 10), (0, 2, 1), (1, 2, 1), (2, 3, 1), (3, 1, 1)]<br>
+<strong>m_g</strong> = array([[ 0., 19., inf, inf, 48.],
+       [49.,  ...nf,  0., 12.],
+       [inf, 44., 35., 39.,  0.]])<br>
+<strong>m_g_2</strong> = array([[ 0., 19., inf, inf, 48.],
+       [49.,  ...       [inf, 44., 35., 39.,  0.]], dtype=float32)<br>
+<strong>n_grafos</strong> = 50<br>
+<strong>n_nodes</strong> = 20<br>
+<strong>nx1</strong> = &lt;networkx.classes.digraph.DiGraph object&gt;<br>
+<strong>nx3</strong> = &lt;networkx.classes.digraph.DiGraph object&gt;<br>
+<strong>nx5</strong> = &lt;networkx.classes.digraph.DiGraph object&gt;<br>
+<strong>nx7</strong> = &lt;networkx.classes.digraph.DiGraph object&gt;<br>
+<strong>nx9</strong> = &lt;networkx.classes.digraph.DiGraph object&gt;<br>
+<strong>p</strong> = {1: [3, 1], 2: [3, 1, 2], 3: [3]}<br>
+<strong>sparse_factor</strong> = 0.75<br>
+<strong>tiempos</strong> = [3.337860107421875e-06, 7.152557373046875e-07, 7.152557373046875e-07, 4.76837158203125e-07, 4.76837158203125e-07]<br>
+<strong>tiempos_ini</strong> = 1539343126.2878933<br>
+<strong>u_ini</strong> = 3</td></tr></table>
+</body></html>

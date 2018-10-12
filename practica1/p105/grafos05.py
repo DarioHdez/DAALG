@@ -30,35 +30,6 @@ def n2_log_n(n):
     return n**2. * np.log(n)
 
 
-# En esta parte vamos a trabajar con grafos ponderados usando dos EdD:
-# 
-# - Una matriz numpy de adyacencia, donde el elemento i, j indica el peso c_{ij`
-#   de la rama (i, j)
-# - Un diccionario de diccionarios de diccionarios donde las claves del primer diccionario G son índices de nodos, las claves de los diccionarios G[i] son los vértices de su lista de adyacencia y un diccionario G[i][j] contiene el peso de la rama (i, j).
-# 
-# Por ejemplo, para el grafo:
-# 
-# el código
-# 
-# l = [[0, 10, 1, np.inf],
-# [np.inf, 0, 1, np.inf],
-# [np.inf, np.inf, 0, 1 ],
-# [np.inf, 1, np.inf, 0]]
-# 
-# m_g = np.array(l)
-# 
-# generaría su matriz de adyacencia según se describe arriba, mientras que
-# 
-# d_g = {
-# 0: {1: 10, 2:1}, 
-# 1: {2: 1}, 
-# 2: {3: 1},
-# 3: {1: 1}
-# }
-# 
-# generaría su descripción como un dict.
-
-
 l = [
 [0, 10, 1, np.inf],
 [np.inf, 0, 1, np.inf],
@@ -248,38 +219,6 @@ def read_object(f_name, save_path='.'):
 
     return data
 
-
-# ## Cuestiones sobre guardado de grafos
-# ### Cuestión 1
-# **Describir qué se entiende por serializar un objeto Python.**
-# 
-# A través de un protocolo binario, transformar el objeto Python y guardarlo en un archivo que se guarda en memoria.
-# 
-# ### Cuestión 2
-# **Json es otro formato de serialiación de objetos. Comentar brevemente posibles diferencias entre pickle y json.**
-# 
-# - _**Interoprabilidad:**_
-# Pickle es un módulo que sólo se puede usar en Python, es decir, los objetos serializados por pickle **no pueden** ser accedidos por programas escritos por otros lenguaje.
-# Sin embargo, Json es un estándar de serialización al que tienen acceso **todos** los lenguajes de programación, permitiendo que la información almacenada sea accesible y colaborativa.
-# 
-# 
-# - _**Velocidad:**_
-# Por cómo está implementado Pickle, es un módulo lento que para grandes cantidades de datos puede llegar a ser **muy costoso e ineficiente** (dato para ponerlo en escala: el módulo Pickle está disponible desde la versión 1.4 de Python, y en la versión 1.5 empezó a estar disponible el módulo cPickle, implementado en c y hasta 1000 veces más rápido.). 
-# Json en comparación es mucho más rápido.
-# 
-# 
-# - _**Seguridad:**_
-# Pickle puede ejecutar código aleatorio almacenado en memoria. Por lo tanto, usar **pickle** para transferir datos entre diferentes programas o sesiones puede llegar a ser una importante brecha de seguridad.
-# Por otro lado Json tiene mecanismos de seguridad integrados, según su RFC 8259, que impiden el acceso a memoria aleatoria, controlando las posibles brechas de seguridad.
-# 
-# 
-# - _**Lectura del fichero en bruto:**_
-# Json te permite abrir el archivo **en cualquier momento** y revisar su contenido, reforzando los aspectos de interoperabilidad y seguridad. Sin embargo, el contenido de los archivos de información creados con pickle son una cadena binaria que a primera vista podría suponer una amenaza, hasta que se demuestre lo contrario.
-# 
-# 
-# - _**Información guardada:**_
-# Pickle guarda toda la información del objeto, lo cual puede dar cabida a datos del objeto que no sean necesarios, mientras que Json guarda únicamente la información que necesitamos.
-
 # ## 2.2 The Trivial Graph Format
 
 def d_g_2_TGF(d_g, f_name):
@@ -344,6 +283,8 @@ def TGF_2_d_g(f_name):
     for i in data:
         s = i.split(' ')
         d_g[s[0]].update({s[1]:s[2]})
+
+    fp.close()
     
     return d_g
     
@@ -355,11 +296,6 @@ d_g_2 = TGF_2_d_g(f_name)
 print_d_g(d_g)
 print_d_g(d_g_2)
 
-
-# ### Cuestión 3
-# **¿Qué ventajas e inconvenientes tendrían las funciones pickle sobre las construidas mediante el formato TFG? Responder algo pertinente y no con lugares comunes.**
-# 
-# Un inconveniente que tiene TGF es que es muy tedioso leer la información deseada de un fichero con este formato. Tenemos que usar múltiples listas, partiendo las strings del fichero constantemente hasta que encontramos la información desada y podemos formar el grafo. Pickle guarda y lee el objeto en una sóla función por acción. Sin embargo, como antes hemos mencionado, pickle almacena mucha información innecesaria del objeto.
 
 # # 3 Distancias Mínimas en Grafos
 # ## 3.1 Programming and Timing Dijstra
@@ -551,77 +487,7 @@ d, p = nx.single_source_dijkstra(d_g_nx, u_ini, weight='weight')
 print(d, '\n', p)
 
 
-# ## Cuestiones sobre Dijkstra
-# ### Cuestión 1
-# 
-# **¿Cuál es el coste teórico del algoritmo de Dijkstra? Justificar brevemente dicho coste **
-# 
-# Para un grafo de V vértices y E ramas, el coste de Dijkstra es O(|E|*Log|V|). Este coste se puede ver alterado según la estructura de datos que utilicemos para desarrollar el algoritmo. Esta fórmula sale de las operaciones básicas del algoritmo: insertar y obtener en la estructura de datos es una operación de coste logarítmico, y dado que se va a hacer para cada uno de las ramas se añade la E. V no se reflejada dado que en comparación al número de ramas, el número de nodos no influye.
-# 
-# ### Cuestión 2
-# 
-# **Expresar el coste de Dijkstra en función del número de nodos y el sparse factor  $\varphi$ del grafo en cuestión. Para un número de nodos fijo adecuado, ¿cuál es el crecimiento del coste de Dijkstra en función de $\varphi$? **
-
-"""
-n_graphs=5
-n_nodes_ini=100
-n_nodes_fin=1000
-step=200
-
-sparse_f1= 0.1
-sparse_f3= 0.3
-sparse_f5= 0.5
-sparse_f7= 0.7
-sparse_f9= 0.9
-
-l_t_d1 = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f1)
-l_t_d3 = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f3)
-l_t_d5 = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f5)
-l_t_d7 = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f7)
-l_t_d9 = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f9)
-"""
-
-# La gráfica que se puede observar representa el algoritmo de Dijkstra cinco veces cambiando el sparse factor, y podemos observar que entre más grande sea el sparse factor, menos ramas tendrá el grafo y por lo tanto, menos tiempo tardará Dijkstra en realizarse (la línea que está más arriba representa el grafo de menor sparse factor, y llega a ser hasta casi 10 veces más lento que el grafo que tiene mayor sparse factor).
-# 
-# Creemos que el crecimiento del coste de Dijkstra en función del sparse factor es logarítmico, como se puede ver en la gráfica.
-
-# ### Cuestión 3
-# 
-# **¿Cuál es el coste teórico del algoritmo de Dijkstra iterado para encontrar las distancias mínimas entre todos los vértices de un grafo?**
-# 
-# El coste de Dijkstra iterado es: O(|E|*Log|V|) * el número de vértices (V), lo cual es igual a O(|V|*|E|*Log|V|). Y si el grafo es denso, el coste es O(|V|³*Log|V|)
-# 
-# ### Cuestión 4
-# 
-# **¿Cómo se podrían recuperar los caminos mínimos si se utiliza Dijkstra iterado?**
-# 
-# Asumimos que un método 'dijkstra_d_iter' devuelve un diccionario 'd_prev_iter' con un nivel más de diccionario, es decir, cada clave de 'd_prev_iter' contiene un diccionario 'd_prev' resultado de aplicar Dijkstra con la clave como nodo inicial. 
-# 
-# Tendríamos que implementar un método 'min_path_iter(d_prev_iter)' que hace para cada una de las claves de 'd_prev_iter' el 'min_path' ya implementado, dejando como resultado un diccionario con un nivel más a los devueltos por 'min_path'.
-# 
-
-# ## 3.2 Plotting Dijkstra's Execution Times
-# Fit below a linear model An^2 logn+B to the times in the returned lists and plot the real and fitted times discussing the results.
-"""
-n_graphs=20
-n_nodes_ini=10
-n_nodes_fin=100
-step=5
-sparse_f= 0.25
-l_t_d = time_dijkstra_d(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f)
-"""
-
 # # 4 The networkx Library
-# We are going to use the networkx library to check our Dijkstra results and to get alternative times.
-# 
-# An example of loading a networkx directed graph is to use a list (i, j, w) of (i, j) edges with weights w can be seen in the following cell:
-
 
 g = nx.DiGraph()
 
@@ -713,79 +579,17 @@ d_g_nx = d_g_2_nx_g(d_g)
 print_d_g(d_g)
 (d_g_nx)[0][1]
 
-"""
-n_graphs=20
-n_nodes_ini=100 
-n_nodes_fin=1000
-step=50
-sparse_f= 0.25
-l_t_nx = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                          n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f)
-
-"""
-# ## Cuestiones sobre Networkx
-# ### Cuestión 1
-# 
-# **Mostrar gráficamente el crecimiento de los tiempos de ejecución del algoritmo de Dijkstra en función del número de nodos y del sparse factor usando la librería Networkx. Usa grafos de 100 nodos y un sparse factor de 0.1, 0.3, 0.5, 0.7, 0.9**
-
-"""
-n_graphs=5
-n_nodes_ini=100
-n_nodes_fin=1000
-step=200
-
-sparse_f1= 0.1
-sparse_f3= 0.3
-sparse_f5= 0.5
-sparse_f7= 0.7
-sparse_f9= 0.9
-
-l_t_d1 = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f1)
-l_t_d3 = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f3)
-l_t_d5 = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f5)
-l_t_d7 = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f7)
-l_t_d9 = time_dijkstra_nx(n_graphs=n_graphs, n_nodes_ini=n_nodes_ini, 
-                        n_nodes_fin=n_nodes_fin, step=step, sparse_factor=sparse_f9)
-"""
-# Como podemos observar en esta última gráfica, el algoritmo de Dijkstra con la librería Networkx es mucho más rápido que el nuestro, hasta unas 3 veces más rápido aproximadamente.
-# 
-# ### Cuestión 2
-# 
-# **Mide y muestra gráficamente los tiempos de ejecución del algoritmo de Dijkstra iterativo para encontrar las distancias mínimas entre todos los vértices del grafo usando la librería Networkx con grafos de un número fijo de 25 nodos y sparse factors de 0.1, 0.3, 0.5, 0.7, 0.9.**
-
 nx1 =  d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes=25,sparse_factor=0.1,max_weight=50.)))
 nx3 =  d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes=25,sparse_factor=0.3,max_weight=50.)))
 nx5 =  d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes=25,sparse_factor=0.5,max_weight=50.)))
 nx7 =  d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes=25,sparse_factor=0.7,max_weight=50.)))
 nx9 =  d_g_2_nx_g(m_g_2_d_g(rand_matr_pos_graph(n_nodes=25,sparse_factor=0.9,max_weight=50.)))
 
-inicio1 = time.time()
-nx.all_pairs_shortest_path(nx1)
-fin1 = time.time()
+grafos = [nx1,nx3,nx5,nx7,nx9]
+tiempos_ini = 0
+tiempos = [n for n in range(5)]
 
-inicio3 = time.time()
-nx.all_pairs_shortest_path(nx3)
-fin3 = time.time()
-
-inicio5 = time.time()
-nx.all_pairs_shortest_path(nx5)
-fin5 = time.time()
-
-inicio7 = time.time()
-nx.all_pairs_shortest_path(nx7)
-fin7 = time.time()
-
-inicio9 = time.time()
-nx.all_pairs_shortest_path(nx9)
-fin9 = time.time()
-
-t1 = fin1-inicio1
-t3 = fin3-inicio3
-t5 = fin5-inicio5
-t7 = fin7-inicio7
-t9 = fin9-inicio9
-
+for i in range(5):
+    tiempos_ini = time.time()
+    nx.all_pairs_dijkstra_path(grafos[i])
+    tiempos[i] = time.time() - tiempos_ini
