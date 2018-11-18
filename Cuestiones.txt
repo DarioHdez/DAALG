@@ -1,0 +1,44 @@
+Cuestiones sobre circuitos y caminos eulerianos
+
+1. Para detectar caminos y circuitos eulerianos en grafos no dirigidos habría que cambiar:
+ - La estructura de guardado: Las ramas estarían duplicadas, una vez formada la matriz, sólo nos interesa la información de la diagonal para arriba.
+
+ - Las detección de posibilidad de camino o circuito:
+     - En la práctica usamos las listas de adyacencia e incidencia para comprobar si un grafo dirigido tiene o no camino o circuito euleriano,
+       pero para grafos no dirigidos hay que usar una lista con los grados de cada nodo, y comporbar las condiciones de camino (Todos los nodos deben tener
+       grado para excepto 2) y circuito (Todos los nodos deben tener grado par)
+
+ - Elección de nodo inicial y final:
+     - Para un grafo no dirigido, el nodo inicial y final son los nodos cuyo grado es impar.
+
+
+Una vez hechos estos cambios, el algoritmo de recorrer el grafo hasta que no queden ramas posibles e ir juntando los caminos debería funcionar correctamente.
+
+
+
+2. Detección de grafos disjuntos:
+ - Para detectar un grafo disjunto, hemos pensado en el siguiente algoritmo:
+
+ - Partimos de una lista vacía, en la que iremos guardando el nodo al que nos movamos.
+
+ - Para un nodo cualquiera, realizamos búsqueda por profundidad guardando en la lista cada nodo.
+
+ - Al final de la exploración tendremos una lista con esta estructura [u,v ... z]
+
+ - Si en la estructura de datos que representa tu grafo encuentras un nodo w que no esté en la lista, entonces tienes subgrafos disjuntos
+
+
+ Cuestiones sobre reconstrucción de secuencias:
+
+ 1. Funcion para estimar cosas:
+
+
+ 2. Coste de reconstrucción de una secuencia.
+
+  - C(spectrum) = O(N), Hay que recorrer la lista  e ir partiendola, pero se hace en un solo bucle.
+      - el shuffle cuenta?
+
+  - C(spectrum_2) = O(N^2), Recorrer la lista con el spectro, y despues volverla a recorrer para quitar los duplicados (un set la desordena)
+
+  - C(spectrum_2_graph) = O(N^2) + O(N^2) por llamar a spectrum_2 y por los dos bucles que se realizan en la funcion, uno para recorrer el primer diccionario, y otro para rellenarlo
+                            con la informacion necesaria. Hay un 3er bucle, pero es muy variable, pues cuenta las ramas de de un nodo a otro y las añade correctamente al dict
