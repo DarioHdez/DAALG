@@ -16,13 +16,13 @@ def split(t, ini, fin):
     
     while True:
         
-        while leftPointer <= fin and t[leftPointer] <= pivot:
+        while leftPointer < fin and t[leftPointer] < pivot:
             leftPointer += 1
         
-        while rightPointer >= ini and t[rightPointer] >= pivot:
+        while rightPointer > ini and t[rightPointer] > pivot:
             rightPointer -= 1
         
-        if leftPointer > rightPointer:
+        if leftPointer >= rightPointer:
             break;
         else:
             t[leftPointer], t[rightPointer] = t[rightPointer], t[leftPointer]
@@ -83,20 +83,22 @@ def split_pivot(t, ini, fin, pivot=None):
 
 
 def qselect(t, ini, fin, ind, pivot=None):
-    
+
+    '''if ind < ini:
+        ind = ind + ini'''
+
     if ini == fin:
         return t[ini]
-    
     split_p = split_pivot(t, ini, fin, pivot)
     
-    l = split_p - ini +1
-    
+    l = split_p
+    #print('Ele: ',l)
     if l == ind:
         return t[split_p]
     elif ind < l:
         return qselect(t, ini, split_p-1, ind, pivot)
     else:
-        return qselect(t, split_p+1, fin, ind -l, pivot)
+        return qselect(t, split_p+1, fin, ind, pivot)
     
 
 def qselect_sr(t, ini, fin, ind, pivot=None):

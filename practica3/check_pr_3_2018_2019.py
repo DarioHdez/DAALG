@@ -154,6 +154,8 @@ def check_pr_3():
         # random list: random shift + permutation
         shf = np.random.randint(-len_list//2, len_list//2)
         t = shf + np.random.permutation(len_list)
+
+        #print(sorted(t))
         
         # random search limits
         ini = np.random.randint(len_list//2)
@@ -174,6 +176,7 @@ def check_pr_3():
             print("iter", i)
             print("error en qselect:", pos, ini, fin, val_pos,val_ok )
             print(t, '\n')
+            print(sorted(t))
             break
         
         # checking qselect_5
