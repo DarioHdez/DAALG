@@ -14,7 +14,7 @@ import qselect  as qs
 eps = 1.e-5
 
 def check_pr_3():
-
+    '''
     #################### fft_poly
 
     print("\nchecking fft e inv_fft ..........")
@@ -115,6 +115,7 @@ def check_pr_3():
         prod_f = fp.mult_numeros_fft(num1, num2)
         prod_p = num1 * num2
         
+        
         if prod_s != prod_f:
             print("iter", i)
             print("error en prod s o f:\n", prod_s, "\n", prod_f)
@@ -134,10 +135,10 @@ def check_pr_3():
     print(prod_p)
     
     print("ok") 
-    
     #################### qselect
     
     _ = input("pulsar Intro para continuar ....................\n")
+    '''
     
     
     print("\nchecking qselect y qselect_5 ..........")
@@ -171,7 +172,7 @@ def check_pr_3():
             
         if val_pos != val_ok:
             print("iter", i)
-            print("error en qselect:", pos, ini, fin, val_pos)
+            print("error en qselect:", pos, ini, fin, val_pos,val_ok )
             print(t, '\n')
             break
         
@@ -190,7 +191,7 @@ def check_pr_3():
             break
     
     #print last table, position sought and value found
-    print(t[ini : fin+1])
+    print(t[ini: fin+1])
     print(pos, t[ini+pos], val_pos)
     
     print("ok") 

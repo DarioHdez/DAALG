@@ -114,7 +114,7 @@ def num_2_poli(num,base=10):
     while True:
         remain = num % base
         poli.append(remain)
-        num = math.floor(num / base)
+        num = num // base
         if num == 0:
             break
 
@@ -144,7 +144,7 @@ def _padding_polinomios(l_pol_1, l_pol_2):
     return complete_array_pol1, complete_array_pol2
 
 def mult_polinomios(l_pol_1, l_pol_2):
-    prod = [0]*(len(l_pol_1)+len(l_pol_2)-1)
+    prod = [0]*((len(l_pol_1)+len(l_pol_2))-1)
 
     for i in range(len(l_pol_1)):
         for j in range(len(l_pol_2)):
@@ -167,12 +167,13 @@ def mult_polinomios_fft(l_pol_1, l_pol_2, fft_func=fft):
     fft_pol_2 = fft_func(l_pol_2_pad)
 
     if len(fft_pol_1) != len(fft_pol_2):
+        print("Los tamaños son diferentes")
         pass
     else:
         for (i,j) in zip(fft_pol_1,fft_pol_2):
             ret.append(i*j)
 
-    prod_pol = [n.real for n in invert_fft(ret)]
+    prod_pol = [n.real for n in invert_fft(ret, fft_func)]
 
     return np.array(prod_pol)
 
@@ -249,7 +250,8 @@ def time_mult_numeros_fft(n_pairs, num_digits_ini, num_digits_fin, step, fft_fun
 
     return np.array(times)
 
-
+'''
 print(time_mult_numeros(3, 3, 6, 1))
 print('\n')
 print(time_mult_numeros_fft(3, 3, 6, 1))
+'''

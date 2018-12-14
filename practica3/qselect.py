@@ -16,13 +16,13 @@ def split(t, ini, fin):
     
     while True:
         
-        while leftPointer < fin and t[leftPointer] < pivot:
+        while leftPointer <= fin and t[leftPointer] <= pivot:
             leftPointer += 1
         
-        while rightPointer > ini and t[rightPointer] > pivot:
+        while rightPointer >= ini and t[rightPointer] >= pivot:
             rightPointer -= 1
         
-        if leftPointer >= rightPointer:
+        if leftPointer > rightPointer:
             break;
         else:
             t[leftPointer], t[rightPointer] = t[rightPointer], t[leftPointer]
@@ -39,7 +39,7 @@ def split_pivot(t, ini, fin, pivot=None):
     
     assert ini >= 0 and fin < len(t), "Los indices 'ini' y/o 'fin' se han introducido incorrectamente"
     assert pivot in t, "pivot no está en la lista"
-    
+    '''
     pivotIndex = list(t).index(pivot)
 
     np.array(t)
@@ -53,6 +53,32 @@ def split_pivot(t, ini, fin, pivot=None):
     t[fin], t[index] = t[index], t[fin]  # Movemos el pivote a su respectivo lugar
     
     return index
+    '''
+    z = ini
+
+    while(z <= fin):
+        if t[z] == pivot:
+            i = 0
+            break
+        else:
+            i = 1
+        z = z + 1
+
+    if i == 1:
+        return pivot
+
+    pivot = z
+    t[ini], t[pivot] = t[pivot], t[ini]
+
+    i = ini
+    for j in range(ini+1, fin+1):
+        if t[j] < t[ini]:
+            i += 1
+            t[i], t[j] = t[j], t[i]
+
+    t[i], t[ini] = t[ini], t[i]
+
+    return i
 
 
 
@@ -63,7 +89,7 @@ def qselect(t, ini, fin, ind, pivot=None):
     
     split_p = split_pivot(t, ini, fin, pivot)
     
-    l = split_p - ini + 1
+    l = split_p - ini +1
     
     if l == ind:
         return t[split_p]
@@ -82,7 +108,7 @@ def qselect_sr(t, ini, fin, ind, pivot=None):
     
         split_p = split_pivot(t, ini, fin, pivot)
 
-        l = split_p - ini + 1
+        l = split_p - ini+1
 
         if l == ind:
             return t[split_p]
