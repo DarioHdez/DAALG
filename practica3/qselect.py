@@ -127,6 +127,7 @@ def pivot_5(t, ini, fin):
     
     mid_lists = [t[i:i+5] for i in range(0, len(t), 5)]
     medians = [math.ceil(median(x)) for x in mid_lists]
+    print(medians)
     
     return math.ceil(median(medians))
     
@@ -184,14 +185,12 @@ def qselect_5(t, ini, fin, pos):
 
 def qsort_5(t, ini, fin):
 
-    print(len(t))
-    
     if ini < fin:
         
         pivotIndex = pivot_5(t, ini, fin)
         pivotIndex = split_pivot(t, ini, fin, pivotIndex)
         
-        qsort_5(t, ini, fin-1)
-        qsort_5(t, ini+1, fin)
+        qsort_5(t, ini, pivotIndex-1)
+        qsort_5(t, pivotIndex+1, fin)
 
 
