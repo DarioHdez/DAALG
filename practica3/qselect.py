@@ -65,7 +65,7 @@ def split_pivot(t, ini, fin, pivot=None):
         z = z + 1
 
     if i == 1:
-        return pivot
+        z = ini
 
     pivot = z
     t[ini], t[pivot] = t[pivot], t[ini]
@@ -91,14 +91,14 @@ def qselect(t, ini, fin, ind, pivot=None):
         return t[ini]
     split_p = split_pivot(t, ini, fin, pivot)
     
-    l = split_p
+    l = split_p - ini + 1
     #print('Ele: ',l)
     if l == ind:
         return t[split_p]
     elif ind < l:
         return qselect(t, ini, split_p-1, ind, pivot)
     else:
-        return qselect(t, split_p+1, fin, ind, pivot)
+        return qselect(t, split_p+1, fin, ind - l, pivot)
     
 
 def qselect_sr(t, ini, fin, ind, pivot=None):
@@ -124,10 +124,12 @@ def qselect_sr(t, ini, fin, ind, pivot=None):
                 
 def pivot_5(t, ini, fin):
     t = t[ini:fin+1]
+
+    if len(t) == 0:
+        return None
     
     mid_lists = [t[i:i+5] for i in range(0, len(t), 5)]
     medians = [math.ceil(median(x)) for x in mid_lists]
-    print(medians)
     
     return math.ceil(median(medians))
     

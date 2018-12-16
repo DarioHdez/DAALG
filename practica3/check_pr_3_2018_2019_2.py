@@ -17,7 +17,7 @@ def check_pr_3():
 
     #################### fft_poly
 
-    '''print("\nchecking fft e inv_fft ..........")
+    print("\nchecking fft e inv_fft ..........")
     
     # #### 1. Checking fft, invff and np.fft
     # 
@@ -108,8 +108,8 @@ def check_pr_3():
         num_d = np.random.randint(50, 101)
         base  = np.random.randint(4, 11)
         
-        num1 = fp.rand_numero(num_d, base=base)
-        num2 = fp.rand_numero(num_d, base=base)
+        num1 = fp.rand_numero(2)
+        num2 = fp.rand_numero(2)
         
         prod_s = fp.mult_numeros(num1, num2)
         prod_f = fp.mult_numeros_fft(num1, num2)
@@ -122,7 +122,7 @@ def check_pr_3():
         
         if prod_s != prod_p:
             print("iter", i)
-            print("error en prod s:\n", prod_s, "\n", prod_f)
+            print("error en prod s:\n", prod_s, "\n", prod_p)
             break    
     
     print("base", base, "num_digits", num_d)
@@ -136,10 +136,10 @@ def check_pr_3():
     print("ok") 
     
     #################### qselect
-    
+    ''' 
     _ = input("pulsar Intro para continuar ....................\n")
     
-    '''
+    
     print("\nchecking qselect y qselect_5 ..........")
     
     # #### 1. Checking qselect, qselect5:
@@ -170,7 +170,7 @@ def check_pr_3():
             
         if val_pos != val_ok:
             print("iter", i)
-            print("error en qselect:", pos, ini, fin, val_pos)
+            print("error en qselect:", pos, ini, fin, val_pos, val_ok)
             print(t, '\n')
             break
         
@@ -184,7 +184,7 @@ def check_pr_3():
         
         # break if value found by qselect5 not correct
         if val_pos != val_ok:
-            print("error en qselect5:", pos, val_pos)
+            print("error en qselect5:", pos, val_pos, val_ok)
             print(t, '\n')
             break
     
@@ -217,13 +217,13 @@ def check_pr_3():
         ini = np.random.randint(len_list//2)
         fin = np.random.randint(len_list//2, len_list)
         
-        qs.qsort_5(t, ini, fin, verbose=False)
+        qs.qsort_5(t, ini, fin
         
         # check if ordered: break if not ordered
         if not np.all(t[ini : fin] <= t[ini+1 : fin+1]):
             print("error on \n", t0[ini : fin+1], '\n', t[ini : fin+1])   
             
-    print("ok")
+    print("ok")'''
 
 if __name__ == '__main__':
     #check_pr_2(sys.argv[1:])

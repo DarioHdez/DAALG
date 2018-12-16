@@ -144,7 +144,7 @@ def _padding_polinomios(l_pol_1, l_pol_2):
     return complete_array_pol1, complete_array_pol2
 
 def mult_polinomios(l_pol_1, l_pol_2):
-    prod = [0]*((len(l_pol_1)+len(l_pol_2))-1)
+    '''prod = [0]*((len(l_pol_1)+len(l_pol_2))-1)
 
     for i in range(len(l_pol_1)):
         for j in range(len(l_pol_2)):
@@ -153,25 +153,20 @@ def mult_polinomios(l_pol_1, l_pol_2):
     next_pow2 = _closest_pow2(len(prod))
     num_add_zeros_pol1 = next_pow2 - len(prod)
     zeros_array_pol1 = np.array([0]*num_add_zeros_pol1)
-    prod = np.concatenate((prod,zeros_array_pol1),axis=0)
+    prod = np.concatenate((prod,zeros_array_pol1),axis=0)'''
 
-    return np.array(prod)
+    return np.convolve(l_pol_1, l_pol_2)
 
 def mult_polinomios_fft(l_pol_1, l_pol_2, fft_func=fft):
     ret = []
-
     l_pol_1_pad, l_pol_2_pad = _padding_polinomios(l_pol_1, l_pol_2)
 
     # Realizamos la fft para pol_1 y pol_2
     fft_pol_1 = fft_func(l_pol_1_pad)
     fft_pol_2 = fft_func(l_pol_2_pad)
 
-    if len(fft_pol_1) != len(fft_pol_2):
-        print("Los tamaños son diferentes")
-        pass
-    else:
-        for (i,j) in zip(fft_pol_1,fft_pol_2):
-            ret.append(i*j)
+    for (i,j) in zip(fft_pol_1,fft_pol_2):
+        ret.append(i*j)
 
     prod_pol = [n.real for n in invert_fft(ret, fft_func)]
 
