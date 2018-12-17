@@ -168,7 +168,7 @@ def mult_polinomios_fft(l_pol_1, l_pol_2, fft_func=fft):
     for (i,j) in zip(fft_pol_1,fft_pol_2):
         ret.append(i*j)
 
-    prod_pol = [n.real for n in invert_fft(ret, fft_func)]
+    prod_pol = [round(n.real) for n in invert_fft(ret, fft_func)]
 
     return np.array(prod_pol)
 

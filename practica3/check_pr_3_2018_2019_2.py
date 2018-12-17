@@ -16,7 +16,7 @@ eps = 1.e-5
 def check_pr_3():
 
     #################### fft_poly
-
+    
     print("\nchecking fft e inv_fft ..........")
     
     # #### 1. Checking fft, invff and np.fft
@@ -108,8 +108,8 @@ def check_pr_3():
         num_d = np.random.randint(50, 101)
         base  = np.random.randint(4, 11)
         
-        num1 = fp.rand_numero(2)
-        num2 = fp.rand_numero(2)
+        num1 = fp.rand_numero(num_d,base)
+        num2 = fp.rand_numero(num_d,base)
         
         prod_s = fp.mult_numeros(num1, num2)
         prod_f = fp.mult_numeros_fft(num1, num2)
@@ -133,10 +133,10 @@ def check_pr_3():
     print(prod_f)
     print(prod_p)
     
-    print("ok") 
+    print("ok")
     
     #################### qselect
-    ''' 
+    '''
     _ = input("pulsar Intro para continuar ....................\n")
     
     
@@ -160,7 +160,8 @@ def check_pr_3():
         
         # random pos to search
         pos = np.random.randint(fin-ini+1)
-        
+
+
         # checking qselect
         val_pos = qs.qselect(t, ini, fin, pos)
         
@@ -217,7 +218,7 @@ def check_pr_3():
         ini = np.random.randint(len_list//2)
         fin = np.random.randint(len_list//2, len_list)
         
-        qs.qsort_5(t, ini, fin
+        qs.qsort_5(t, ini, fin)
         
         # check if ordered: break if not ordered
         if not np.all(t[ini : fin] <= t[ini+1 : fin+1]):

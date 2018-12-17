@@ -93,7 +93,7 @@ def qselect(t, ini, fin, ind, pivot=None):
     
     l = split_p - ini + 1
     #print('Ele: ',l)
-    if l == ind:
+    if l == (ind+1):
         return t[split_p]
     elif ind < l:
         return qselect(t, ini, split_p-1, ind, pivot)
@@ -112,7 +112,7 @@ def qselect_sr(t, ini, fin, ind, pivot=None):
 
         l = split_p - ini+1
 
-        if l == ind:
+        if l == (ind+1):
             return t[split_p]
         elif ind < l:
             fin = split_p-1
@@ -147,7 +147,7 @@ def qselect_5(t, ini, fin, pos):
 
         l = pivotIndex - ini + 1
 
-        if l == pos:
+        if l == (pos+1):
             return t[pivotIndex]
         elif pos < l:
             fin = pivotIndex-1

@@ -12,9 +12,7 @@ def _closest_pow2(n):
     return 2**(math.ceil(math.log(n, 2)))
 
 def _fft_rec(t,K):
-    #ret = []
-    t = np.asarray(t)
-    n = t.shape[0]
+    ret = []
 
     if K == 0:
         return t
@@ -22,12 +20,13 @@ def _fft_rec(t,K):
         evens, odds = t[::2],t[1::2]
         rec_evens = _fft_rec(evens,K-1)
         rec_odds = _fft_rec(odds,K-1)
-        #a_len = int(2**(K-1))
+        a_len = int(2**(K-1))
 
-        factor = np.exp(-2j * np.pi * np.arange(n) / n)
+        for i in range(len(t)):
+            n =  rec_evens[i % a_len] + np.exp((2j*math.pi * i/2**K)) * rec_odds[i % a_len]
+            ret.append(n)
 
-        return np.concatenate([rec_evens + factor[:n // 2] * rec_odds,
-                               rec_evens + factor[n // 2:] * rec_odds])
+        return ret
 
 def fft(t):
     t_len = len(t)
@@ -39,7 +38,7 @@ def fft(t):
     complete_array = np.concatenate((t,zeros_array),axis=0)
 
 
-    return _fft_rec(complete_array,k)
+    return np.array(_fft_rec(complete_array,k))
 
 
 def invert_fft(t, fft_func=fft):
@@ -56,8 +55,9 @@ def invert_fft(t, fft_func=fft):
     dft = fft_func(t_conj)
 
     dft_conj = [np.conj(n) for n in dft]
+    print("INVERTED FFT: ",dft_conj)
 
-    return np.array([n/len(t) for n in dft_conj])
+    return np.array([round(n/len(t)) for n in dft_conj])
 
 
 # In[3]:
@@ -92,7 +92,10 @@ def poli_2_num(l_pol,base=10):
     ret = 0
     l_pol = list(np.array(l_pol).astype('uint8'))
     for i in range(len(l_pol)):
+        print("+++++++++++++++++++++",ret)
+        print(l_pol[i])
         ret += l_pol[i]*pow(base, i)
+        print("---------------------",ret)
     return ret
 
 
@@ -145,7 +148,7 @@ def _padding_polinomios(l_pol_1, l_pol_2):
     return complete_array_pol1, complete_array_pol2
 
 def mult_polinomios(l_pol_1, l_pol_2):
-    prod = [0]*((len(l_pol_1)+len(l_pol_2))-1)
+    '''prod = [0]*((len(l_pol_1)+len(l_pol_2))-1)
 
     for i in range(len(l_pol_1)):
         for j in range(len(l_pol_2)):
@@ -154,25 +157,23 @@ def mult_polinomios(l_pol_1, l_pol_2):
     next_pow2 = _closest_pow2(len(prod))
     num_add_zeros_pol1 = next_pow2 - len(prod)
     zeros_array_pol1 = np.array([0]*num_add_zeros_pol1)
-    prod = np.concatenate((prod,zeros_array_pol1),axis=0)
+    prod = np.concatenate((prod,zeros_array_pol1),axis=0)'''
 
-    return np.array(prod)
+    return np.convolve(l_pol_1, l_pol_2)
 
 def mult_polinomios_fft(l_pol_1, l_pol_2, fft_func=fft):
     ret = []
-
     l_pol_1_pad, l_pol_2_pad = _padding_polinomios(l_pol_1, l_pol_2)
 
     # Realizamos la fft para pol_1 y pol_2
     fft_pol_1 = fft_func(l_pol_1_pad)
+    print("FFT_POL_1: ",fft_pol_1)
     fft_pol_2 = fft_func(l_pol_2_pad)
+    print("FFT_POL_2: ",fft_pol_2)
 
-    if len(fft_pol_1) != len(fft_pol_2):
-        print("Los tamaños son diferentes")
-        pass
-    else:
-        for (i,j) in zip(fft_pol_1,fft_pol_2):
-            ret.append(i*j)
+    for (i,j) in zip(fft_pol_1,fft_pol_2):
+        ret.append(i*j)
+    print("RET: ",ret)
 
     prod_pol = [n.real for n in invert_fft(ret, fft_func)]
 
@@ -184,6 +185,7 @@ def mult_numeros(num1, num2):
     pol2 = num_2_poli(num2)
 
     pol_mul = mult_polinomios(pol1, pol2)
+    print(pol_mul)
 
     return poli_2_num(pol_mul)
 
@@ -194,6 +196,7 @@ def mult_numeros_fft(num1, num2, fft_func=fft):
 
 
     pol_mul = mult_polinomios_fft(pol1, pol2, fft_func)
+    print(pol_mul)
 
     return poli_2_num(pol_mul)
 
@@ -202,9 +205,9 @@ l_a = [1,2,5]
 l_b = [1,2,3]
 print(mult_polinomios(l_a, l_b))
 print(mult_polinomios_fft(l_a,l_b))
-print(mult_numeros(304, 509))
-print(mult_numeros_fft(304, 509))
 '''
+print(mult_numeros(29932, 81324))
+print(mult_numeros_fft(29932, 81324))
 
 
 # In[8]:
@@ -256,17 +259,3 @@ print(time_mult_numeros(3, 3, 6, 1))
 print('\n')
 print(time_mult_numeros_fft(3, 3, 6, 1))
 '''
-
-a = [1, 2, 3]
-b = [0,1,0.5]
-
-print(mult_polinomios(a,b))
-
-'''
-num1 = rand_numero(30)
-num2 = rand_numero(30)
-        
-prod_s = mult_numeros(num1, num2)
-prod_f = mult_numeros_fft(num1, num2)
-
-print(prod_s,"\n",prod_f,"\n",num1*num2)'''
