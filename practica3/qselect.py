@@ -39,53 +39,28 @@ def split_pivot(t, ini, fin, pivot=None):
     
     assert ini >= 0 and fin < len(t), "Los indices 'ini' y/o 'fin' se han introducido incorrectamente"
     assert pivot in t, "pivot no está en la lista"
-    '''
-    pivotIndex = list(t).index(pivot)
 
-    np.array(t)
+    pivotIndex = ini
 
-    t[pivotIndex], t[fin] = t[fin], t[pivotIndex]  # Movemos el pivote al final
-    index = ini
-    for i in range(ini, fin):
-        if t[i] < pivot:
-            t[index], t[i] = t[i], t[index]
-            index += 1
-    t[fin], t[index] = t[index], t[fin]  # Movemos el pivote a su respectivo lugar
-    
-    return index
-    '''
-    z = ini
-
-    while(z <= fin):
-        if t[z] == pivot:
-            i = 0
+    while(pivotIndex <= fin):
+        if t[pivotIndex] == pivot:
+            notFoundFlag = 0
             break
         else:
-            i = 1
-        z = z + 1
+            notFoundFlag = 1
+        pivotIndex = pivotIndex + 1
 
-    if i == 1:
-        z = ini
+    if notFoundFlag == 1:
+        pivotIndex = ini
 
-    pivot = z
+    pivot = pivotIndex
     t[ini], t[pivot] = t[pivot], t[ini]
 
-    i = ini
-    for j in range(ini+1, fin+1):
-        if t[j] < t[ini]:
-            i += 1
-            t[i], t[j] = t[j], t[i]
-
-    t[i], t[ini] = t[ini], t[i]
-
-    return i
+    return split(t, ini, fin)
 
 
 
 def qselect(t, ini, fin, ind, pivot=None):
-
-    '''if ind < ini:
-        ind = ind + ini'''
 
     if ini == fin:
         return t[ini]
@@ -123,6 +98,7 @@ def qselect_sr(t, ini, fin, ind, pivot=None):
 
                 
 def pivot_5(t, ini, fin):
+
     t = t[ini:fin+1]
 
     if len(t) == 0:
@@ -154,35 +130,7 @@ def qselect_5(t, ini, fin, pos):
         else:
             ini = pivotIndex+1
             pos -= l
-    '''while True:
-        if ini == fin:
-            return ini
-            
-        pivotIndex = pivot_5(t, ini, fin)
-        pivotIndex = split_pivot(t, ini, fin, pivotIndex)
-        if pos == pivotIndex:
-            return pos
-        elif pos < pivotIndex:
-            fin = pivotIndex - 1
-        else:
-            ini = pivotIndex + 1'''
-        #return qselect_sr(t, ini, fin, pos)
 
-
-#import random
-#random.seed(2)
-#a = [n for n in range(10)]
-#shuffle(a)
-#print(split(a, 0, 5))
-#print(a)
-#print(split_pivot(a, 0, 5))
-#print(a)
-#print(qselect_sr(a, 0, 9, 3))
-#print(pivot_5(a, 0, 9))
-#print(qselect_5(a,0,9,3))
-
-
-# In[10]:
 
 
 def qsort_5(t, ini, fin):

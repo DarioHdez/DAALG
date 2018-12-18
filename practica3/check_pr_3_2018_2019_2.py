@@ -80,7 +80,7 @@ def check_pr_3():
         prod_s = fp.mult_polinomios(p1, p2)
         prod_f = fp.mult_polinomios_fft(p1, p2)
         
-        if np.linalg.norm(prod_s - prod_f[ : len(prod_s)]) > 0.:
+        if np.linalg.norm(np.array(prod_s) - np.array(prod_f[ : len(prod_s)])) > 0.:
             print("iter", i)
             print("error en prod:\n", prod_s, "\n", prod_f)
             break    
@@ -108,8 +108,8 @@ def check_pr_3():
         num_d = np.random.randint(50, 101)
         base  = np.random.randint(4, 11)
         
-        num1 = fp.rand_numero(num_d,base)
-        num2 = fp.rand_numero(num_d,base)
+        num1 = fp.rand_numero(num_d, base)
+        num2 = fp.rand_numero(num_d, base)
         
         prod_s = fp.mult_numeros(num1, num2)
         prod_f = fp.mult_numeros_fft(num1, num2)
@@ -118,7 +118,7 @@ def check_pr_3():
         if prod_s != prod_f:
             print("iter", i)
             print("error en prod s o f:\n", prod_s, "\n", prod_f)
-            break    
+            break 
         
         if prod_s != prod_p:
             print("iter", i)
@@ -136,7 +136,7 @@ def check_pr_3():
     print("ok")
     
     #################### qselect
-    '''
+    
     _ = input("pulsar Intro para continuar ....................\n")
     
     
@@ -224,7 +224,7 @@ def check_pr_3():
         if not np.all(t[ini : fin] <= t[ini+1 : fin+1]):
             print("error on \n", t0[ini : fin+1], '\n', t[ini : fin+1])   
             
-    print("ok")'''
+    print("ok")
 
 if __name__ == '__main__':
     #check_pr_2(sys.argv[1:])

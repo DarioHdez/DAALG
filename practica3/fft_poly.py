@@ -5,13 +5,15 @@ from random import shuffle
 from statistics import median
 
 
-# In[2]:
 
 
 def _closest_pow2(n):
+
     return 2**(math.ceil(math.log(n, 2)))
+    
 
 def _fft_rec(t,K):
+
     ret = []
 
     if K == 0:
@@ -28,7 +30,9 @@ def _fft_rec(t,K):
 
         return ret
 
+
 def fft(t):
+
     t_len = len(t)
 
     next_pow = _closest_pow2(t_len)
@@ -42,6 +46,7 @@ def fft(t):
 
 
 def invert_fft(t, fft_func=fft):
+
     t_len = len(t)
 
     next_pow = _closest_pow2(t_len)
@@ -59,48 +64,18 @@ def invert_fft(t, fft_func=fft):
     return np.array([n/len(t) for n in dft_conj])
 
 
-# In[3]:
-
-
-'''a = np.array([1,2,3,4])
-
-s = fft(a)
-#t = invert_fft(a)
-
-print(s)
-
-
-# In[4]:
-
-
-b = list(np.random.randint(low=0, high=5, size=15))
-b.append(10)
-b'''
-
-
-# In[5]:
-
-
 def rand_polinomio(long=2**10,base=10):
+
     ret = list(np.random.randint(low=0, high=base, size=long-1).astype('uint8'))
-    #print(ret)
     ret.append(np.random.randint(low=1, high=base))
     return ret
 
 def poli_2_num(l_pol,base=10):
+
     ret = 0
-    l_pol = list(np.array(l_pol).astype('uint8'))
     for i in range(len(l_pol)):
-        ret += l_pol[i]*pow(base, i)
+        ret += int(l_pol[i]*pow(base, i))
     return ret
-
-
-#l = rand_polinomio()
-#print(l)
-#print(poli_2_num(l, 2))
-
-
-# In[6]:
 
 
 def rand_numero(num_digits,base=10):
@@ -108,24 +83,17 @@ def rand_numero(num_digits,base=10):
 
     return poli_2_num(poli, base)
 
-def num_2_poli(num,base=10):
 
+def num_2_poli(num,base=10):
     poli = []
     while True:
         remain = num % base
-        poli.append(remain)
+        poli.append(int(remain))
         num = num // base
         if num == 0:
             break
 
     return poli
-
-
-#print(rand_numero(5))
-#print(num_2_poli(1801, 5))
-
-
-# In[7]:
 
 
 def _padding_polinomios(l_pol_1, l_pol_2):
@@ -137,25 +105,24 @@ def _padding_polinomios(l_pol_1, l_pol_2):
     zeros_array_pol1 = np.array([0]*num_add_zeros_pol1)
     complete_array_pol1 = np.concatenate((l_pol_1,zeros_array_pol1),axis=0)
 
+    #complete_array_pol1 = [int(n) for n in complete_array_pol1_np]
+
     num_add_zeros_pol2 = next_pow2 - len(l_pol_2)
     zeros_array_pol2 = np.array([0]*num_add_zeros_pol2)
     complete_array_pol2 = np.concatenate((l_pol_2,zeros_array_pol2),axis=0)
 
+    #complete_array_pol2 = [int(n) for n in complete_array_pol2_np]
+
     return complete_array_pol1, complete_array_pol2
 
 def mult_polinomios(l_pol_1, l_pol_2):
-    '''prod = [0]*((len(l_pol_1)+len(l_pol_2))-1)
+    prod = [0]*((len(l_pol_1)+len(l_pol_2))-1)
 
     for i in range(len(l_pol_1)):
         for j in range(len(l_pol_2)):
             prod[i+j] = prod[i+j] + l_pol_1[i] * l_pol_2[j]
 
-    next_pow2 = _closest_pow2(len(prod))
-    num_add_zeros_pol1 = next_pow2 - len(prod)
-    zeros_array_pol1 = np.array([0]*num_add_zeros_pol1)
-    prod = np.concatenate((prod,zeros_array_pol1),axis=0)'''
-
-    return np.convolve(l_pol_1, l_pol_2)
+    return prod
 
 def mult_polinomios_fft(l_pol_1, l_pol_2, fft_func=fft):
     ret = []
@@ -165,15 +132,18 @@ def mult_polinomios_fft(l_pol_1, l_pol_2, fft_func=fft):
     fft_pol_1 = fft_func(l_pol_1_pad)
     fft_pol_2 = fft_func(l_pol_2_pad)
 
-    for (i,j) in zip(fft_pol_1,fft_pol_2):
-        ret.append(i*j)
+    ret = [i*j for i,j in zip(fft_pol_1, fft_pol_2)]
 
-    prod_pol = [round(n.real) for n in invert_fft(ret, fft_func)]
+    prod_pol_np = np.rint(np.real(invert_fft(ret, fft_func)))
 
-    return np.array(prod_pol)
+    prod_pol = [int(n) for n in prod_pol_np]
+    
+
+    return prod_pol
 
 
 def mult_numeros(num1, num2):
+
     pol1 = num_2_poli(num1)
     pol2 = num_2_poli(num2)
 
@@ -183,6 +153,7 @@ def mult_numeros(num1, num2):
 
 
 def mult_numeros_fft(num1, num2, fft_func=fft):
+
     pol1 = num_2_poli(num1)
     pol2 = num_2_poli(num2)
 
@@ -190,18 +161,6 @@ def mult_numeros_fft(num1, num2, fft_func=fft):
     pol_mul = mult_polinomios_fft(pol1, pol2, fft_func)
 
     return poli_2_num(pol_mul)
-
-'''
-l_a = [1,2,5]
-l_b = [1,2,3]
-print(mult_polinomios(l_a, l_b))
-print(mult_polinomios_fft(l_a,l_b))
-print(mult_numeros(304, 509))
-print(mult_numeros_fft(304, 509))
-'''
-
-
-# In[8]:
 
 
 def time_mult_numeros(n_pairs, num_digits_ini, num_digits_fin, step):
@@ -244,9 +203,3 @@ def time_mult_numeros_fft(n_pairs, num_digits_ini, num_digits_fin, step, fft_fun
         num_pair += 1
 
     return np.array(times)
-
-'''
-print(time_mult_numeros(3, 3, 6, 1))
-print('\n')
-print(time_mult_numeros_fft(3, 3, 6, 1))
-'''

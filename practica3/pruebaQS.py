@@ -55,7 +55,6 @@ def invert_fft(t, fft_func=fft):
     dft = fft_func(t_conj)
 
     dft_conj = [np.conj(n) for n in dft]
-    print("INVERTED FFT: ",dft_conj)
 
     return np.array([round(n/len(t)) for n in dft_conj])
 
@@ -89,14 +88,12 @@ def rand_polinomio(long=2**10,base=10):
     return ret
 
 def poli_2_num(l_pol,base=10):
-    ret = 0
-    l_pol = list(np.array(l_pol).astype('uint8'))
-    for i in range(len(l_pol)):
-        print("+++++++++++++++++++++",ret)
-        print(l_pol[i])
-        ret += l_pol[i]*pow(base, i)
-        print("---------------------",ret)
-    return ret
+    p = l_pol[-1]
+    i = len(l_pol) - 2
+    while i >= 0:
+        p = p * base + l_pol[i]
+        i -= 1
+    return p
 
 
 #l = rand_polinomio()
@@ -139,11 +136,15 @@ def _padding_polinomios(l_pol_1, l_pol_2):
 
     num_add_zeros_pol1 = next_pow2 - len(l_pol_1)
     zeros_array_pol1 = np.array([0]*num_add_zeros_pol1)
-    complete_array_pol1 = np.concatenate((l_pol_1,zeros_array_pol1),axis=0)
+    complete_array_pol1_np = np.concatenate((l_pol_1,zeros_array_pol1),axis=0)
+
+    complete_array_pol1 = [int(n) for n in complete_array_pol1_np]
 
     num_add_zeros_pol2 = next_pow2 - len(l_pol_2)
     zeros_array_pol2 = np.array([0]*num_add_zeros_pol2)
-    complete_array_pol2 = np.concatenate((l_pol_2,zeros_array_pol2),axis=0)
+    complete_array_pol2_np = np.concatenate((l_pol_2,zeros_array_pol2),axis=0)
+
+    complete_array_pol2 = [int(n) for n in complete_array_pol2_np]
 
     return complete_array_pol1, complete_array_pol2
 
@@ -167,13 +168,10 @@ def mult_polinomios_fft(l_pol_1, l_pol_2, fft_func=fft):
 
     # Realizamos la fft para pol_1 y pol_2
     fft_pol_1 = fft_func(l_pol_1_pad)
-    print("FFT_POL_1: ",fft_pol_1)
     fft_pol_2 = fft_func(l_pol_2_pad)
-    print("FFT_POL_2: ",fft_pol_2)
 
     for (i,j) in zip(fft_pol_1,fft_pol_2):
         ret.append(i*j)
-    print("RET: ",ret)
 
     prod_pol = [n.real for n in invert_fft(ret, fft_func)]
 
@@ -206,8 +204,9 @@ l_b = [1,2,3]
 print(mult_polinomios(l_a, l_b))
 print(mult_polinomios_fft(l_a,l_b))
 '''
-print(mult_numeros(29932, 81324))
-print(mult_numeros_fft(29932, 81324))
+print(mult_numeros(766476528, 210716989))
+print(766476528*210716989)
+#print(mult_numeros_fft(766476528, 210716989))
 
 
 # In[8]:
