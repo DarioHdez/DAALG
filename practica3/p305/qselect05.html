@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module qselect05</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>qselect05</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/borch/Documents/DAALG_Practicas/DAALG/practica3/qselect05.py">/home/borch/Documents/DAALG_Practicas/DAALG/practica3/qselect05.py</a></font></td></tr></table>
+    <p><tt>Fichero&nbsp;qselect.py:&nbsp;Fichero&nbsp;que&nbsp;contiene&nbsp;los&nbsp;métodos&nbsp;de&nbsp;la&nbsp;parte&nbsp;de&nbsp;QuickSelect&nbsp;y&nbsp;QuickSort<br>
+&nbsp;<br>
+@author:&nbsp;Borja&nbsp;González&nbsp;Farías&nbsp;y&nbsp;Darío&nbsp;Adrián&nbsp;Hernández</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="timeit.html">timeit</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-pivot_5"><strong>pivot_5</strong></a>(t, ini, fin)</dt><dd><tt>Método&nbsp;que&nbsp;devuelve&nbsp;la&nbsp;mediana&nbsp;de&nbsp;las&nbsp;medianas&nbsp;(mediana&nbsp;de&nbsp;cada&nbsp;subtabla&nbsp;de<br>
+5&nbsp;elementos&nbsp;de&nbsp;t)&nbsp;como&nbsp;el&nbsp;pivote<br>
+&nbsp;<br>
+:param&nbsp;t:&nbsp;Lista&nbsp;en&nbsp;la&nbsp;que&nbsp;se&nbsp;buscará&nbsp;el&nbsp;pivote<br>
+:param&nbsp;ini:&nbsp;Índice&nbsp;inicial&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;en&nbsp;la&nbsp;búsqueda<br>
+:param&nbsp;fin:&nbsp;Último&nbsp;índice&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;en&nbsp;la&nbsp;búsqueda<br>
+:return:&nbsp;Mediana&nbsp;de&nbsp;medianas&nbsp;(pivote)</tt></dd></dl>
+ <dl><dt><a name="-qselect"><strong>qselect</strong></a>(t, ini, fin, ind, pivot=None)</dt><dd><tt>Método&nbsp;que&nbsp;realiza&nbsp;el&nbsp;algoritmo&nbsp;recursivo&nbsp;de&nbsp;QuickSelect&nbsp;y&nbsp;devuelve&nbsp;<br>
+el&nbsp;ind-ésimo&nbsp;menor&nbsp;elemento&nbsp;de&nbsp;una&nbsp;lista&nbsp;desordenada&nbsp;(contando&nbsp;desde&nbsp;el&nbsp;0)<br>
+&nbsp;<br>
+:param&nbsp;t:&nbsp;Lista&nbsp;en&nbsp;la&nbsp;que&nbsp;se&nbsp;va&nbsp;a&nbsp;buscar<br>
+:param&nbsp;ini:&nbsp;Índice&nbsp;inicial&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;en&nbsp;la&nbsp;búsqueda<br>
+:param&nbsp;fin:&nbsp;Último&nbsp;índice&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;en&nbsp;la&nbsp;búsqueda<br>
+:param&nbsp;ind:&nbsp;Índice&nbsp;del&nbsp;ind-ésimo&nbsp;menor&nbsp;elemento&nbsp;a&nbsp;encontrar<br>
+:param&nbsp;pivot:&nbsp;(Opcional)&nbsp;Pivote&nbsp;a&nbsp;partir&nbsp;del&nbsp;cual&nbsp;se&nbsp;va&nbsp;a&nbsp;dividir&nbsp;la&nbsp;lista<br>
+:return:&nbsp;Elemento&nbsp;correspondiente&nbsp;al&nbsp;ind-ésimo&nbsp;menor&nbsp;elemento</tt></dd></dl>
+ <dl><dt><a name="-qselect_5"><strong>qselect_5</strong></a>(t, ini, fin, pos)</dt><dd><tt>Método&nbsp;que&nbsp;realiza&nbsp;el&nbsp;algoritmo&nbsp;de&nbsp;QuickSelect&nbsp;sin&nbsp;recursión&nbsp;de&nbsp;cola<br>
+y&nbsp;utilizando&nbsp;pivot_5&nbsp;para&nbsp;encontrar&nbsp;un&nbsp;pivote&nbsp;idóneo&nbsp;a&nbsp;usar<br>
+&nbsp;<br>
+:param&nbsp;t:&nbsp;Lista&nbsp;en&nbsp;la&nbsp;que&nbsp;se&nbsp;va&nbsp;a&nbsp;buscar<br>
+:param&nbsp;ini:&nbsp;Índice&nbsp;inicial&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;en&nbsp;la&nbsp;búsqueda<br>
+:param&nbsp;fin:&nbsp;Último&nbsp;índice&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;en&nbsp;la&nbsp;búsqueda<br>
+:param&nbsp;pos:&nbsp;Índice&nbsp;del&nbsp;pos-ésimo&nbsp;menor&nbsp;elemento&nbsp;a&nbsp;encontrar<br>
+:return:&nbsp;Elemento&nbsp;correspondiente&nbsp;al&nbsp;pos-ésimo&nbsp;menor&nbsp;elemento</tt></dd></dl>
+ <dl><dt><a name="-qselect_sr"><strong>qselect_sr</strong></a>(t, ini, fin, ind, pivot=None)</dt><dd><tt>Método&nbsp;que&nbsp;realiza&nbsp;el&nbsp;algoritmo&nbsp;de&nbsp;QuickSelect,&nbsp;sin&nbsp;recursión&nbsp;de&nbsp;cola,&nbsp;y&nbsp;devuelve&nbsp;<br>
+el&nbsp;ind-ésimo&nbsp;menor&nbsp;elemento&nbsp;de&nbsp;una&nbsp;lista&nbsp;desordenada&nbsp;(contando&nbsp;desde&nbsp;el&nbsp;0)<br>
+&nbsp;<br>
+:param&nbsp;t:&nbsp;Lista&nbsp;en&nbsp;la&nbsp;que&nbsp;se&nbsp;va&nbsp;a&nbsp;buscar<br>
+:param&nbsp;ini:&nbsp;Índice&nbsp;inicial&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;en&nbsp;la&nbsp;búsqueda<br>
+:param&nbsp;fin:&nbsp;Último&nbsp;índice&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;en&nbsp;la&nbsp;búsqueda<br>
+:param&nbsp;ind:&nbsp;Índice&nbsp;del&nbsp;ind-ésimo&nbsp;menor&nbsp;elemento&nbsp;a&nbsp;encontrar<br>
+:param&nbsp;pivot:&nbsp;(Opcional)&nbsp;Pivote&nbsp;a&nbsp;partir&nbsp;del&nbsp;cual&nbsp;se&nbsp;va&nbsp;a&nbsp;dividir&nbsp;la&nbsp;lista<br>
+:return:&nbsp;Elemento&nbsp;correspondiente&nbsp;al&nbsp;ind-ésimo&nbsp;menor&nbsp;elemento</tt></dd></dl>
+ <dl><dt><a name="-qsort_5"><strong>qsort_5</strong></a>(t, ini, fin)</dt><dd><tt>Método&nbsp;que&nbsp;realiza&nbsp;el&nbsp;algoritmo&nbsp;de&nbsp;QuickSort&nbsp;(para&nbsp;ordenar&nbsp;una&nbsp;lista)<br>
+utilizando&nbsp;pivot_5&nbsp;para&nbsp;encontrar&nbsp;un&nbsp;pivote&nbsp;idóneo&nbsp;a&nbsp;usar<br>
+&nbsp;<br>
+:param&nbsp;t:&nbsp;Lista&nbsp;a&nbsp;ordenar<br>
+:param&nbsp;ini:&nbsp;Índice&nbsp;inicial&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;en&nbsp;la&nbsp;ordenación<br>
+:param&nbsp;fin:&nbsp;Último&nbsp;índice&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;en&nbsp;la&nbsp;ordenación<br>
+:return:&nbsp;Nada,&nbsp;sólo&nbsp;ordena&nbsp;la&nbsp;lista&nbsp;t&nbsp;pasada&nbsp;por&nbsp;argumento</tt></dd></dl>
+ <dl><dt><a name="-split"><strong>split</strong></a>(t, ini, fin)</dt><dd><tt>Método&nbsp;que&nbsp;parte&nbsp;la&nbsp;lista&nbsp;con&nbsp;los&nbsp;elementos&nbsp;menores&nbsp;al&nbsp;pivote&nbsp;a&nbsp;la&nbsp;izquierda<br>
+y&nbsp;con&nbsp;los&nbsp;mayores&nbsp;a&nbsp;la&nbsp;derecha&nbsp;del&nbsp;mismo<br>
+&nbsp;<br>
+:param&nbsp;t:&nbsp;Lista&nbsp;a&nbsp;partir<br>
+:param&nbsp;ini:&nbsp;Índice&nbsp;inicial&nbsp;a&nbsp;partir&nbsp;del&nbsp;cual&nbsp;se&nbsp;va&nbsp;a&nbsp;dividir<br>
+:param&nbsp;fin:&nbsp;Último&nbsp;índice&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;para&nbsp;la&nbsp;partición<br>
+:return:&nbsp;Índice&nbsp;de&nbsp;la&nbsp;posición&nbsp;final&nbsp;del&nbsp;pivote</tt></dd></dl>
+ <dl><dt><a name="-split_pivot"><strong>split_pivot</strong></a>(t, ini, fin, pivot=None)</dt><dd><tt>Método&nbsp;que&nbsp;parte&nbsp;la&nbsp;lista&nbsp;con&nbsp;los&nbsp;elementos&nbsp;menores&nbsp;al&nbsp;pivote&nbsp;a&nbsp;la&nbsp;izquierda<br>
+y&nbsp;con&nbsp;los&nbsp;mayores&nbsp;a&nbsp;la&nbsp;derecha&nbsp;del&nbsp;mismo,&nbsp;pasando&nbsp;como&nbsp;argumento&nbsp;(opcional)<br>
+un&nbsp;pivote<br>
+&nbsp;<br>
+:param&nbsp;t:&nbsp;Lista&nbsp;a&nbsp;partir<br>
+:param&nbsp;ini:&nbsp;Índice&nbsp;inicial&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;para&nbsp;la&nbsp;partición<br>
+:param&nbsp;fin:&nbsp;Último&nbsp;índice&nbsp;a&nbsp;tener&nbsp;en&nbsp;cuenta&nbsp;para&nbsp;la&nbsp;partición<br>
+:param&nbsp;pivot:&nbsp;(Opcional)&nbsp;Pivote&nbsp;a&nbsp;partir&nbsp;del&nbsp;cual&nbsp;se&nbsp;va&nbsp;a&nbsp;dividir&nbsp;la&nbsp;lista<br>
+:return:&nbsp;Índice&nbsp;de&nbsp;la&nbsp;posición&nbsp;final&nbsp;del&nbsp;pivote</tt></dd></dl>
+</td></tr></table>
+</body></html>

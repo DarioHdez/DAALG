@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module fft_poly05</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>fft_poly05</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/borch/Documents/DAALG_Practicas/DAALG/practica3/fft_poly05.py">/home/borch/Documents/DAALG_Practicas/DAALG/practica3/fft_poly05.py</a></font></td></tr></table>
+    <p><tt>Fichero&nbsp;fft_poly.py:&nbsp;Fichero&nbsp;que&nbsp;contiene&nbsp;los&nbsp;métodos&nbsp;de&nbsp;la&nbsp;parte&nbsp;de&nbsp;FFT&nbsp;y&nbsp;multiplicación&nbsp;de&nbsp;polinomios&nbsp;y&nbsp;números<br>
+&nbsp;<br>
+@author:&nbsp;Borja&nbsp;González&nbsp;Farías&nbsp;y&nbsp;Darío&nbsp;Adrián&nbsp;Hernández</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="timeit.html">timeit</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fft"><strong>fft</strong></a>(t)</dt><dd><tt>Método&nbsp;que&nbsp;realiza&nbsp;el&nbsp;algoritmo&nbsp;de&nbsp;la&nbsp;FFT&nbsp;(con&nbsp;padding&nbsp;de&nbsp;0s&nbsp;incluído)<br>
+&nbsp;<br>
+:param&nbsp;t:&nbsp;Lista&nbsp;completa&nbsp;de&nbsp;números&nbsp;enteros<br>
+:return:&nbsp;Array&nbsp;con&nbsp;FFT&nbsp;aplicada</tt></dd></dl>
+ <dl><dt><a name="-invert_fft"><strong>invert_fft</strong></a>(t, fft_func=&lt;function fft at 0x7ff17dc672f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;raplica&nbsp;la&nbsp;inversa&nbsp;a&nbsp;la&nbsp;lista&nbsp;a&nbsp;la&nbsp;que&nbsp;se&nbsp;le&nbsp;aplica&nbsp;FFT<br>
+&nbsp;<br>
+:param&nbsp;t:&nbsp;Lista&nbsp;completa&nbsp;(con&nbsp;el&nbsp;padding&nbsp;de&nbsp;0s&nbsp;ya&nbsp;realizado)&nbsp;de&nbsp;números&nbsp;enteros<br>
+:param&nbsp;fft_func:&nbsp;Método&nbsp;que&nbsp;relizará&nbsp;el&nbsp;algoritmo&nbsp;de&nbsp;FFT<br>
+:return:&nbsp;Lista&nbsp;con&nbsp;FFT-invertida&nbsp;aplicada</tt></dd></dl>
+ <dl><dt><a name="-mult_numeros"><strong>mult_numeros</strong></a>(num1, num2)</dt><dd><tt>Método&nbsp;que&nbsp;multiplica&nbsp;dos&nbsp;números&nbsp;a&nbsp;través&nbsp;de&nbsp;la&nbsp;multiplicación&nbsp;de&nbsp;polinomios<br>
+&nbsp;<br>
+:param&nbsp;num1:&nbsp;Primer&nbsp;número<br>
+:param&nbsp;num2:&nbsp;Segundo&nbsp;número<br>
+:return:&nbsp;Número&nbsp;resultante&nbsp;de&nbsp;convertir&nbsp;el&nbsp;polinomio&nbsp;producto&nbsp;a&nbsp;número</tt></dd></dl>
+ <dl><dt><a name="-mult_numeros_fft"><strong>mult_numeros_fft</strong></a>(num1, num2, fft_func=&lt;function fft at 0x7ff17dc672f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;multiplica&nbsp;dos&nbsp;números&nbsp;a&nbsp;través&nbsp;de&nbsp;la&nbsp;multiplicación&nbsp;de&nbsp;polinomios&nbsp;con&nbsp;FFT<br>
+&nbsp;<br>
+:param&nbsp;num1:&nbsp;Primer&nbsp;número<br>
+:param&nbsp;num2:&nbsp;Segundo&nbsp;número<br>
+:param&nbsp;fft_func:&nbsp;Método&nbsp;FFT&nbsp;a&nbsp;utilizar<br>
+:return:&nbsp;Número&nbsp;resultante&nbsp;de&nbsp;convertir&nbsp;el&nbsp;polinomio&nbsp;producto&nbsp;a&nbsp;número</tt></dd></dl>
+ <dl><dt><a name="-mult_polinomios"><strong>mult_polinomios</strong></a>(l_pol_1, l_pol_2)</dt><dd><tt>Método&nbsp;que&nbsp;multiplica&nbsp;dos&nbsp;polinomios&nbsp;de&nbsp;forma&nbsp;estándar<br>
+&nbsp;<br>
+:param&nbsp;l_pol_1:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;primer&nbsp;polinomio<br>
+:param&nbsp;l_pol_2:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;segundo&nbsp;polinomio<br>
+:return:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;polinomio&nbsp;producto</tt></dd></dl>
+ <dl><dt><a name="-mult_polinomios_fft"><strong>mult_polinomios_fft</strong></a>(l_pol_1, l_pol_2, fft_func=&lt;function fft at 0x7ff17dc672f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;multiplica&nbsp;dos&nbsp;polinomios&nbsp;utilizando&nbsp;FFT<br>
+&nbsp;<br>
+:param&nbsp;l_pol_1:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;primer&nbsp;polinomio<br>
+:param&nbsp;l_pol_2:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;segundo&nbsp;polinomio<br>
+:param&nbsp;fft_func:&nbsp;Método&nbsp;FFT&nbsp;a&nbsp;utilizar<br>
+:return:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;polinomio&nbsp;producto</tt></dd></dl>
+ <dl><dt><a name="-num_2_poli"><strong>num_2_poli</strong></a>(num, base=10)</dt><dd><tt>Método&nbsp;que&nbsp;genera&nbsp;un&nbsp;polinomio&nbsp;a&nbsp;partir&nbsp;de&nbsp;un&nbsp;número<br>
+&nbsp;<br>
+:param&nbsp;num:&nbsp;Número&nbsp;a&nbsp;convertir<br>
+:param&nbsp;base:&nbsp;La&nbsp;base&nbsp;en&nbsp;la&nbsp;que&nbsp;el&nbsp;número&nbsp;se&nbsp;desglosa&nbsp;en&nbsp;coeficientes<br>
+:return:&nbsp;Lista&nbsp;de&nbsp;coeficientes&nbsp;del&nbsp;polinomio&nbsp;resultante</tt></dd></dl>
+ <dl><dt><a name="-poli_2_num"><strong>poli_2_num</strong></a>(l_pol, base=10)</dt><dd><tt>Método&nbsp;que&nbsp;convierte&nbsp;un&nbsp;polinomio&nbsp;a&nbsp;un&nbsp;número<br>
+&nbsp;<br>
+:param&nbsp;l_pol:&nbsp;Lista&nbsp;con&nbsp;los&nbsp;coeficientes&nbsp;del&nbsp;polinomio<br>
+:param&nbsp;base:&nbsp;Valor&nbsp;por&nbsp;el&nbsp;que&nbsp;se&nbsp;sustituirán&nbsp;las&nbsp;incógnitas&nbsp;del&nbsp;polinomio<br>
+:return:&nbsp;Número&nbsp;entero&nbsp;resultante&nbsp;de&nbsp;la&nbsp;sustitución&nbsp;de&nbsp;la&nbsp;base&nbsp;en&nbsp;el&nbsp;polinomio</tt></dd></dl>
+ <dl><dt><a name="-rand_numero"><strong>rand_numero</strong></a>(num_digits, base=10)</dt><dd><tt>Método&nbsp;que&nbsp;genera&nbsp;un&nbsp;número&nbsp;aleatorio&nbsp;al&nbsp;generar&nbsp;un&nbsp;polinomio&nbsp;al&nbsp;azar<br>
+y&nbsp;pasando&nbsp;éste&nbsp;último&nbsp;a&nbsp;un&nbsp;número<br>
+&nbsp;<br>
+:param&nbsp;num_digits:&nbsp;Número&nbsp;de&nbsp;dígitos&nbsp;que&nbsp;tendrá&nbsp;el&nbsp;número<br>
+:param&nbsp;base:&nbsp;La&nbsp;base&nbsp;en&nbsp;la&nbsp;que&nbsp;el&nbsp;número&nbsp;será&nbsp;representado<br>
+:return:&nbsp;Número&nbsp;entero&nbsp;aleatorio</tt></dd></dl>
+ <dl><dt><a name="-rand_polinomio"><strong>rand_polinomio</strong></a>(long=1024, base=10)</dt><dd><tt>Método&nbsp;que&nbsp;genera&nbsp;un&nbsp;polinomio&nbsp;de&nbsp;longitud&nbsp;y&nbsp;coeficientes&nbsp;aleatorios<br>
+&nbsp;<br>
+:param&nbsp;long:&nbsp;Longitud&nbsp;del&nbsp;polinomio<br>
+:param&nbsp;base:&nbsp;El&nbsp;número&nbsp;máximo&nbsp;que&nbsp;podrá&nbsp;tener&nbsp;un&nbsp;coeficiente<br>
+:return:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;polinomio&nbsp;(coeficientes)</tt></dd></dl>
+ <dl><dt><a name="-time_mult_numeros"><strong>time_mult_numeros</strong></a>(n_pairs, num_digits_ini, num_digits_fin, step)</dt><dd><tt>Método&nbsp;que&nbsp;mide&nbsp;el&nbsp;tiempo&nbsp;de&nbsp;multiplicación&nbsp;estándar&nbsp;de&nbsp;varios&nbsp;números<br>
+&nbsp;<br>
+:param&nbsp;n_pairs:&nbsp;Número&nbsp;de&nbsp;parejas&nbsp;de&nbsp;números&nbsp;a&nbsp;multiplicar&nbsp;entre&nbsp;sí<br>
+:param&nbsp;num_digits_ini:&nbsp;Número&nbsp;de&nbsp;dígitos&nbsp;inicial&nbsp;de&nbsp;cada&nbsp;número<br>
+:param&nbsp;num_digits_fin:&nbsp;Número&nbsp;de&nbsp;dígitos&nbsp;final&nbsp;de&nbsp;cada&nbsp;número<br>
+:param&nbsp;step:&nbsp;El&nbsp;número&nbsp;en&nbsp;que&nbsp;se&nbsp;incrementará&nbsp;el&nbsp;número&nbsp;de&nbsp;dígitos&nbsp;en&nbsp;cada&nbsp;vuelta<br>
+:return:&nbsp;Lista&nbsp;de&nbsp;los&nbsp;tiempos&nbsp;de&nbsp;cada&nbsp;multiplicacíon</tt></dd></dl>
+ <dl><dt><a name="-time_mult_numeros_fft"><strong>time_mult_numeros_fft</strong></a>(n_pairs, num_digits_ini, num_digits_fin, step, fft_func=&lt;function fft at 0x7ff17dc672f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;mide&nbsp;el&nbsp;tiempo&nbsp;de&nbsp;multiplicación&nbsp;FFT&nbsp;de&nbsp;varios&nbsp;números<br>
+&nbsp;<br>
+:param&nbsp;n_pairs:&nbsp;Número&nbsp;de&nbsp;parejas&nbsp;de&nbsp;números&nbsp;a&nbsp;multiplicar&nbsp;entre&nbsp;sí<br>
+:param&nbsp;num_digits_ini:&nbsp;Número&nbsp;de&nbsp;dígitos&nbsp;inicial&nbsp;de&nbsp;cada&nbsp;número<br>
+:param&nbsp;num_digits_fin:&nbsp;Número&nbsp;de&nbsp;dígitos&nbsp;final&nbsp;de&nbsp;cada&nbsp;número<br>
+:param&nbsp;step:&nbsp;El&nbsp;número&nbsp;en&nbsp;que&nbsp;se&nbsp;incrementará&nbsp;el&nbsp;número&nbsp;de&nbsp;dígitos&nbsp;en&nbsp;cada&nbsp;vuelta<br>
+:param&nbsp;fft_func:&nbsp;Método&nbsp;FFT&nbsp;a&nbsp;utilizar<br>
+:return:&nbsp;Lista&nbsp;de&nbsp;los&nbsp;tiempos&nbsp;de&nbsp;cada&nbsp;multiplicacíon</tt></dd></dl>
+</td></tr></table>
+</body></html>
