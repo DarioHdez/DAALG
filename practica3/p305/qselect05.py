@@ -3,7 +3,7 @@
 """
 Fichero qselect.py: Fichero que contiene los métodos de la parte de QuickSelect y QuickSort
 
-@author: Borja González Farías y Darío Adrián Hernández
+@author: Borja González Farías y Darío Adrián Hernández Barroso
 """
 
 import numpy as np

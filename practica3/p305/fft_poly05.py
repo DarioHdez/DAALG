@@ -3,7 +3,7 @@
 '''
 Fichero fft_poly.py: Fichero que contiene los métodos de la parte de FFT y multiplicación de polinomios y números
 
-@author: Borja González Farías y Darío Adrián Hernández
+@author: Borja González Farías y Darío Adrián Hernández Barroso
 '''
 
 
