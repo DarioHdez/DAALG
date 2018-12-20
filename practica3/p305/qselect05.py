@@ -148,7 +148,7 @@ def qselect_sr(t, ini, fin, ind, pivot=None):
                 
 def pivot_5(t, ini, fin):
     """
-    Método que devuelve la mediana de las medianas (mediana de cada subtabla de
+    Método que, utilizando qselect_5, devuelve la mediana de las medianas (mediana de cada subtabla de
     5 elementos de t) como el pivote
 
     :param t: Lista en la que se buscará el pivote

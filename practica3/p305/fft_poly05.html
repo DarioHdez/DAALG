@@ -8,10 +8,10 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>fft_poly05</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/borch/Documents/DAALG_Practicas/DAALG/practica3/fft_poly05.py">/home/borch/Documents/DAALG_Practicas/DAALG/practica3/fft_poly05.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/borch/Documents/DAALG_Practicas/DAALG/practica3/p305/fft_poly05.py">/home/borch/Documents/DAALG_Practicas/DAALG/practica3/p305/fft_poly05.py</a></font></td></tr></table>
     <p><tt>Fichero&nbsp;fft_poly.py:&nbsp;Fichero&nbsp;que&nbsp;contiene&nbsp;los&nbsp;métodos&nbsp;de&nbsp;la&nbsp;parte&nbsp;de&nbsp;FFT&nbsp;y&nbsp;multiplicación&nbsp;de&nbsp;polinomios&nbsp;y&nbsp;números<br>
 &nbsp;<br>
-@author:&nbsp;Borja&nbsp;González&nbsp;Farías&nbsp;y&nbsp;Darío&nbsp;Adrián&nbsp;Hernández</tt></p>
+@author:&nbsp;Borja&nbsp;González&nbsp;Farías&nbsp;y&nbsp;Darío&nbsp;Adrián&nbsp;Hernández&nbsp;Barroso</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -33,7 +33,7 @@
 &nbsp;<br>
 :param&nbsp;t:&nbsp;Lista&nbsp;completa&nbsp;de&nbsp;números&nbsp;enteros<br>
 :return:&nbsp;Array&nbsp;con&nbsp;FFT&nbsp;aplicada</tt></dd></dl>
- <dl><dt><a name="-invert_fft"><strong>invert_fft</strong></a>(t, fft_func=&lt;function fft at 0x7ff17dc672f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;raplica&nbsp;la&nbsp;inversa&nbsp;a&nbsp;la&nbsp;lista&nbsp;a&nbsp;la&nbsp;que&nbsp;se&nbsp;le&nbsp;aplica&nbsp;FFT<br>
+ <dl><dt><a name="-invert_fft"><strong>invert_fft</strong></a>(t, fft_func=&lt;function fft at 0x7ff3aa1092f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;raplica&nbsp;la&nbsp;inversa&nbsp;a&nbsp;la&nbsp;lista&nbsp;a&nbsp;la&nbsp;que&nbsp;se&nbsp;le&nbsp;aplica&nbsp;FFT<br>
 &nbsp;<br>
 :param&nbsp;t:&nbsp;Lista&nbsp;completa&nbsp;(con&nbsp;el&nbsp;padding&nbsp;de&nbsp;0s&nbsp;ya&nbsp;realizado)&nbsp;de&nbsp;números&nbsp;enteros<br>
 :param&nbsp;fft_func:&nbsp;Método&nbsp;que&nbsp;relizará&nbsp;el&nbsp;algoritmo&nbsp;de&nbsp;FFT<br>
@@ -43,7 +43,7 @@
 :param&nbsp;num1:&nbsp;Primer&nbsp;número<br>
 :param&nbsp;num2:&nbsp;Segundo&nbsp;número<br>
 :return:&nbsp;Número&nbsp;resultante&nbsp;de&nbsp;convertir&nbsp;el&nbsp;polinomio&nbsp;producto&nbsp;a&nbsp;número</tt></dd></dl>
- <dl><dt><a name="-mult_numeros_fft"><strong>mult_numeros_fft</strong></a>(num1, num2, fft_func=&lt;function fft at 0x7ff17dc672f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;multiplica&nbsp;dos&nbsp;números&nbsp;a&nbsp;través&nbsp;de&nbsp;la&nbsp;multiplicación&nbsp;de&nbsp;polinomios&nbsp;con&nbsp;FFT<br>
+ <dl><dt><a name="-mult_numeros_fft"><strong>mult_numeros_fft</strong></a>(num1, num2, fft_func=&lt;function fft at 0x7ff3aa1092f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;multiplica&nbsp;dos&nbsp;números&nbsp;a&nbsp;través&nbsp;de&nbsp;la&nbsp;multiplicación&nbsp;de&nbsp;polinomios&nbsp;con&nbsp;FFT<br>
 &nbsp;<br>
 :param&nbsp;num1:&nbsp;Primer&nbsp;número<br>
 :param&nbsp;num2:&nbsp;Segundo&nbsp;número<br>
@@ -54,7 +54,7 @@
 :param&nbsp;l_pol_1:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;primer&nbsp;polinomio<br>
 :param&nbsp;l_pol_2:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;segundo&nbsp;polinomio<br>
 :return:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;polinomio&nbsp;producto</tt></dd></dl>
- <dl><dt><a name="-mult_polinomios_fft"><strong>mult_polinomios_fft</strong></a>(l_pol_1, l_pol_2, fft_func=&lt;function fft at 0x7ff17dc672f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;multiplica&nbsp;dos&nbsp;polinomios&nbsp;utilizando&nbsp;FFT<br>
+ <dl><dt><a name="-mult_polinomios_fft"><strong>mult_polinomios_fft</strong></a>(l_pol_1, l_pol_2, fft_func=&lt;function fft at 0x7ff3aa1092f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;multiplica&nbsp;dos&nbsp;polinomios&nbsp;utilizando&nbsp;FFT<br>
 &nbsp;<br>
 :param&nbsp;l_pol_1:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;primer&nbsp;polinomio<br>
 :param&nbsp;l_pol_2:&nbsp;Lista&nbsp;representativa&nbsp;del&nbsp;segundo&nbsp;polinomio<br>
@@ -88,7 +88,7 @@ y&nbsp;pasando&nbsp;éste&nbsp;último&nbsp;a&nbsp;un&nbsp;número<br>
 :param&nbsp;num_digits_fin:&nbsp;Número&nbsp;de&nbsp;dígitos&nbsp;final&nbsp;de&nbsp;cada&nbsp;número<br>
 :param&nbsp;step:&nbsp;El&nbsp;número&nbsp;en&nbsp;que&nbsp;se&nbsp;incrementará&nbsp;el&nbsp;número&nbsp;de&nbsp;dígitos&nbsp;en&nbsp;cada&nbsp;vuelta<br>
 :return:&nbsp;Lista&nbsp;de&nbsp;los&nbsp;tiempos&nbsp;de&nbsp;cada&nbsp;multiplicacíon</tt></dd></dl>
- <dl><dt><a name="-time_mult_numeros_fft"><strong>time_mult_numeros_fft</strong></a>(n_pairs, num_digits_ini, num_digits_fin, step, fft_func=&lt;function fft at 0x7ff17dc672f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;mide&nbsp;el&nbsp;tiempo&nbsp;de&nbsp;multiplicación&nbsp;FFT&nbsp;de&nbsp;varios&nbsp;números<br>
+ <dl><dt><a name="-time_mult_numeros_fft"><strong>time_mult_numeros_fft</strong></a>(n_pairs, num_digits_ini, num_digits_fin, step, fft_func=&lt;function fft at 0x7ff3aa1092f0&gt;)</dt><dd><tt>Método&nbsp;que&nbsp;mide&nbsp;el&nbsp;tiempo&nbsp;de&nbsp;multiplicación&nbsp;FFT&nbsp;de&nbsp;varios&nbsp;números<br>
 &nbsp;<br>
 :param&nbsp;n_pairs:&nbsp;Número&nbsp;de&nbsp;parejas&nbsp;de&nbsp;números&nbsp;a&nbsp;multiplicar&nbsp;entre&nbsp;sí<br>
 :param&nbsp;num_digits_ini:&nbsp;Número&nbsp;de&nbsp;dígitos&nbsp;inicial&nbsp;de&nbsp;cada&nbsp;número<br>
