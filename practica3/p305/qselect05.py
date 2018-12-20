@@ -66,7 +66,6 @@ def split_pivot(t, ini, fin, pivot=None):
         return split(t, ini, fin)
     
     assert ini >= 0 and fin < len(t), "Los indices 'ini' y/o 'fin' se han introducido incorrectamente"
-    assert pivot in t, "pivot no está en la lista"
 
     pivotIndex = ini
 
@@ -166,7 +165,7 @@ def pivot_5(t, ini, fin):
     mid_lists = [t[i:i+5] for i in range(0, len(t), 5)]
     medians = [math.ceil(median(x)) for x in mid_lists]
     
-    return math.ceil(median(medians))
+    return qselect_5(medians, 0, len(medians)-1, len(medians)//2)
     
     
 
