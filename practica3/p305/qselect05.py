@@ -11,7 +11,7 @@ import math
 import timeit
 from random import shuffle
 from statistics import median
-
+import random
 
 
 def split(t, ini, fin):
@@ -219,3 +219,37 @@ def qsort_5(t, ini, fin):
         
         qsort_5(t, ini, pivotIndex-1)
         qsort_5(t, pivotIndex+1, fin)
+
+
+def time_qsort_5(step):
+    """
+    Método que mide el tiempo de multiplicación FFT de varios números
+
+    :param n_pairs: Número de parejas de números a multiplicar entre sí
+    :param num_digits_ini: Número de dígitos inicial de cada número
+    :param num_digits_fin: Número de dígitos final de cada número
+    :param step: El número en que se incrementará el número de dígitos en cada vuelta
+    :param fft_func: Método FFT a utilizar
+    :return: Lista de los tiempos de cada multiplicacíon
+    """
+
+    def local_qsort_5(step):
+        """
+        Método local que multiplica dos números aleatorios de usando FFT
+
+        :param num: Número de dígitos de ambos números
+        :return: Número producto
+        """
+        t = random.sample(range(step), step)
+        return qsort_5(t, 0, len(t)-1)
+
+    times = []
+
+    for i in range(10):
+        print(step)
+
+        # , setup = "from __main__ import mult_numeros, rand_numero, num_digits_actual", number = 1
+        times.append(timeit.timeit(lambda: local_qsort_5(step), number=1))
+        step += 1
+
+    return np.array(times)
